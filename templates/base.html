@@ -3,29 +3,18 @@
   <head>
     <meta charset="UTF-8" />
 
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0"
-    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <meta
       name="description"
       content="Portfolio profesional, pengalaman, kemampuan, dan proyek yang telah dikerjakan."
     />
 
-    <title>
-      {% block title %}
-        Portfolio Xander
-      {% endblock %}
-    </title>
+    <title>{% block title %} Portfolio Xander {% endblock %}</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
 
-    <link
-      rel="preconnect"
-      href="https://fonts.gstatic.com"
-      crossorigin
-    />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
     <link
       href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600;700&display=swap"
@@ -78,21 +67,18 @@
       href="{{ url_for('static', filename='css/portfolio-interactions.css') }}"
     />
 
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/portfolio-layout-refinement.css') }}"
+    />
+
     {% block styles %}{% endblock %}
   </head>
 
   <body>
-    <a
-      href="#mainContent"
-      class="public-skip-link"
-    >
-      Lewati ke konten utama
-    </a>
+    <a href="#mainContent" class="public-skip-link"> Lewati ke konten utama </a>
 
-    <header
-      class="public-header"
-      id="publicHeader"
-    >
+    <header class="public-header" id="publicHeader">
       <div class="public-container navigation-container">
         <a
           href="{{ url_for('home') }}"
@@ -100,19 +86,13 @@
           aria-label="Kembali ke halaman Home"
         >
           <span class="brand-mark">
-            {% if profile and profile.nama_lengkap %}
-              {{ profile.nama_lengkap[:1]|upper }}
-            {% else %}
-              X
-            {% endif %}
+            {% if profile and profile.nama_lengkap %} {{
+            profile.nama_lengkap[:1]|upper }} {% else %} X {% endif %}
           </span>
 
           <span class="brand-text">
-            {% if profile and profile.nama_panggilan %}
-              {{ profile.nama_panggilan }}
-            {% else %}
-              Portfolio Xander
-            {% endif %}
+            {% if profile and profile.nama_panggilan %} {{
+            profile.nama_panggilan }} {% else %} Portfolio Xander {% endif %}
           </span>
         </a>
 
@@ -124,10 +104,7 @@
           aria-controls="publicNavigation"
           aria-expanded="false"
         >
-          <i
-            data-lucide="menu"
-            id="mobileMenuIcon"
-          ></i>
+          <i data-lucide="menu" id="mobileMenuIcon"></i>
         </button>
 
         <nav
@@ -138,9 +115,15 @@
           <a
             href="{{ url_for('home') }}"
             class="navigation-link {% if request.endpoint == 'home' %}active{% endif %}"
-            {% if request.endpoint == 'home' %}
-              aria-current="page"
-            {% endif %}
+            {%
+            if
+            request.endpoint=""
+            ="home"
+            %}
+            aria-current="page"
+            {%
+            endif
+            %}
           >
             Home
           </a>
@@ -148,9 +131,15 @@
           <a
             href="{{ url_for('about') }}"
             class="navigation-link {% if request.endpoint == 'about' %}active{% endif %}"
-            {% if request.endpoint == 'about' %}
-              aria-current="page"
-            {% endif %}
+            {%
+            if
+            request.endpoint=""
+            ="about"
+            %}
+            aria-current="page"
+            {%
+            endif
+            %}
           >
             Tentang
           </a>
@@ -158,9 +147,15 @@
           <a
             href="{{ url_for('skills') }}"
             class="navigation-link {% if request.endpoint == 'skills' %}active{% endif %}"
-            {% if request.endpoint == 'skills' %}
-              aria-current="page"
-            {% endif %}
+            {%
+            if
+            request.endpoint=""
+            ="skills"
+            %}
+            aria-current="page"
+            {%
+            endif
+            %}
           >
             Skills
           </a>
@@ -168,9 +163,15 @@
           <a
             href="{{ url_for('experience') }}"
             class="navigation-link {% if request.endpoint == 'experience' %}active{% endif %}"
-            {% if request.endpoint == 'experience' %}
-              aria-current="page"
-            {% endif %}
+            {%
+            if
+            request.endpoint=""
+            ="experience"
+            %}
+            aria-current="page"
+            {%
+            endif
+            %}
           >
             Pengalaman
           </a>
@@ -178,9 +179,15 @@
           <a
             href="{{ url_for('projects') }}"
             class="navigation-link {% if request.endpoint == 'projects' %}active{% endif %}"
-            {% if request.endpoint == 'projects' %}
-              aria-current="page"
-            {% endif %}
+            {%
+            if
+            request.endpoint=""
+            ="projects"
+            %}
+            aria-current="page"
+            {%
+            endif
+            %}
           >
             Proyek
           </a>
@@ -188,9 +195,15 @@
           <a
             href="{{ url_for('contact') }}"
             class="navigation-contact {% if request.endpoint == 'contact' %}active{% endif %}"
-            {% if request.endpoint == 'contact' %}
-              aria-current="page"
-            {% endif %}
+            {%
+            if
+            request.endpoint=""
+            ="contact"
+            %}
+            aria-current="page"
+            {%
+            endif
+            %}
           >
             Kontak
           </a>
@@ -198,24 +211,29 @@
       </div>
     </header>
 
-    <main id="mainContent">
-      {% block content %}{% endblock %}
-    </main>
+    <main id="mainContent">{% block content %}{% endblock %}</main>
 
     <footer class="public-footer">
       <div class="public-container footer-content">
         <div>
-          <strong>
-            {% if profile and profile.nama_lengkap %}
-              {{ profile.nama_lengkap }}
-            {% else %}
-              Portfolio Xander
-            {% endif %}
-          </strong>
+          <a
+            href="{{ url_for('auth.login') }}"
+            class="footer-admin-link"
+            aria-label="Buka login admin untuk memperbarui portfolio"
+            title="Login admin"
+          >
+            <strong>
+              {% if profile and profile.nama_lengkap %} {{ profile.nama_lengkap
+              }} {% else %} Portfolio Xander {% endif %}
+            </strong>
 
-          <p>
-            Portfolio profesional dan perjalanan belajar.
-          </p>
+            <span class="footer-admin-hint" aria-hidden="true">
+              <i data-lucide="lock-keyhole"></i>
+              Admin
+            </span>
+          </a>
+
+          <p>Portfolio profesional dan perjalanan belajar.</p>
         </div>
 
         <p class="footer-copyright">
@@ -226,20 +244,15 @@
 
     <script src="https://unpkg.com/lucide@latest"></script>
 
-    <script
-      src="{{ url_for('static', filename='js/public-interactions.js') }}"
-    ></script>
+    <script src="{{ url_for('static', filename='js/public-interactions.js') }}"></script>
 
     <script>
       document.addEventListener("DOMContentLoaded", () => {
-        const header =
-          document.getElementById("publicHeader");
+        const header = document.getElementById("publicHeader");
 
-        const menuButton =
-          document.getElementById("mobileMenuButton");
+        const menuButton = document.getElementById("mobileMenuButton");
 
-        const navigation =
-          document.getElementById("publicNavigation");
+        const navigation = document.getElementById("publicNavigation");
 
         const renderIcons = () => {
           if (window.lucide) {
@@ -252,26 +265,15 @@
             return;
           }
 
-          navigation.classList.toggle(
-            "open",
-            isOpen,
-          );
+          navigation.classList.toggle("open", isOpen);
 
-          document.body.classList.toggle(
-            "navigation-open",
-            isOpen,
-          );
+          document.body.classList.toggle("navigation-open", isOpen);
 
-          menuButton.setAttribute(
-            "aria-expanded",
-            String(isOpen),
-          );
+          menuButton.setAttribute("aria-expanded", String(isOpen));
 
           menuButton.setAttribute(
             "aria-label",
-            isOpen
-              ? "Tutup navigasi"
-              : "Buka navigasi",
+            isOpen ? "Tutup navigasi" : "Buka navigasi",
           );
 
           menuButton.innerHTML = isOpen
@@ -287,92 +289,60 @@
 
         renderIcons();
 
-        menuButton?.addEventListener(
-          "click",
-          () => {
-            const isOpen =
-              navigation?.classList.contains("open")
-              ?? false;
+        menuButton?.addEventListener("click", () => {
+          const isOpen = navigation?.classList.contains("open") ?? false;
 
-            setMenuState(!isOpen);
-          },
-        );
+          setMenuState(!isOpen);
+        });
 
-        navigation
-          ?.querySelectorAll("a")
-          .forEach((link) => {
-            link.addEventListener(
-              "click",
-              closeNavigation,
-            );
-          });
+        navigation?.querySelectorAll("a").forEach((link) => {
+          link.addEventListener("click", closeNavigation);
+        });
 
-        document.addEventListener(
-          "click",
-          (event) => {
-            const isOpen =
-              navigation?.classList.contains("open");
+        document.addEventListener("click", (event) => {
+          const isOpen = navigation?.classList.contains("open");
 
-            if (!isOpen) {
-              return;
-            }
+          if (!isOpen) {
+            return;
+          }
 
-            const clickedInsideNavigation =
-              navigation?.contains(event.target);
+          const clickedInsideNavigation = navigation?.contains(event.target);
 
-            const clickedMenuButton =
-              menuButton?.contains(event.target);
+          const clickedMenuButton = menuButton?.contains(event.target);
 
-            if (
-              !clickedInsideNavigation
-              && !clickedMenuButton
-            ) {
-              closeNavigation();
-            }
-          },
-        );
+          if (!clickedInsideNavigation && !clickedMenuButton) {
+            closeNavigation();
+          }
+        });
 
-        document.addEventListener(
-          "keydown",
-          (event) => {
-            if (
-              event.key === "Escape"
-              && navigation?.classList.contains("open")
-            ) {
-              closeNavigation();
-              menuButton?.focus();
-            }
-          },
-        );
+        document.addEventListener("keydown", (event) => {
+          if (
+            event.key === "Escape" &&
+            navigation?.classList.contains("open")
+          ) {
+            closeNavigation();
+            menuButton?.focus();
+          }
+        });
 
-        window.addEventListener(
-          "resize",
-          () => {
-            if (
-              window.innerWidth > 900
-              && navigation?.classList.contains("open")
-            ) {
-              closeNavigation();
-            }
-          },
-        );
+        window.addEventListener("resize", () => {
+          if (
+            window.innerWidth > 900 &&
+            navigation?.classList.contains("open")
+          ) {
+            closeNavigation();
+          }
+        });
 
         const updateHeaderState = () => {
-          header?.classList.toggle(
-            "scrolled",
-            window.scrollY > 20,
-          );
+          header?.classList.toggle("scrolled", window.scrollY > 20);
         };
 
         updateHeaderState();
 
-        window.addEventListener(
-          "scroll",
-          updateHeaderState,
-          {
-            passive: true,
-          },
-        );
+        window.addEventListener("scroll", updateHeaderState, {
+          passive: true,
+        });
       });
     </script>
 
