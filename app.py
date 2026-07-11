@@ -5,7 +5,6 @@ from pathlib import Path
 import resend
 from flask import (
     Flask,
-    app,
     current_app,
     jsonify,
     render_template,
@@ -32,12 +31,54 @@ from routes.projects import projects_bp
 from routes.skills import skills_bp
 from utils.cloudinary_config import configure_cloudinary
 
+
 BASE_DIR = Path(__file__).resolve().parent
 
-API_TEMPLATE_DIR = BASE_DIR / "api" / "templates"
-ROOT_TEMPLATE_DIR = BASE_DIR / "templates"
 
-TEMPLATE_DIR = API_TEMPLATE_DIR if API_TEMPLATE_DIR.exists() else ROOT_TEMPLATE_DIR
+def resolve_template_directory() -> Path:
+    """
+    Mencari folder template yang benar.
+
+    Saat lokal, template biasanya berada di:
+        /templates
+
+    Saat menggunakan entrypoint api/index.py di Vercel, salinan template
+    dapat ditempatkan di:
+        /api/templates
+    """
+    candidates = (
+        BASE_DIR / "templates",
+        BASE_DIR / "api" / "templates",
+    )
+
+    for directory in candidates:
+        home_template = directory / "public" / "home.html"
+        if home_template.is_file():
+            return directory
+
+    # Tetap gunakan lokasi standar agar pesan TemplateNotFound mudah dibaca
+    # jika file template memang tidak ikut ke deployment.
+    return BASE_DIR / "templates"
+
+
+def resolve_static_directory() -> Path:
+    """
+    Mencari folder static yang tersedia.
+    """
+    candidates = (
+        BASE_DIR / "static",
+        BASE_DIR / "api" / "static",
+    )
+
+    for directory in candidates:
+        if directory.is_dir():
+            return directory
+
+    return BASE_DIR / "static"
+
+
+TEMPLATE_DIR = resolve_template_directory()
+STATIC_DIR = resolve_static_directory()
 
 login_manager = LoginManager()
 
@@ -46,18 +87,11 @@ def create_app():
     app = Flask(
         __name__,
         template_folder=str(TEMPLATE_DIR),
-
+        static_folder=str(STATIC_DIR),
+        static_url_path="/static",
     )
+
     app.config.from_object(Config)
-
-    print("BASE_DIR:", BASE_DIR)
-    print("TEMPLATE_FOLDER:", app.template_folder)
-    print(
-        "HOME_TEMPLATE_EXISTS:",
-        (TEMPLATE_DIR / "public" / "home.html").is_file(),
-    )
-
-
 
     # Maksimal ukuran file upload: 5 MB.
     app.config["MAX_CONTENT_LENGTH"] = 5 * 1024 * 1024
@@ -74,17 +108,14 @@ def create_app():
     @login_manager.user_loader
     def load_user(user_id):
         try:
-            return db.session.get(
-                User,
-                int(user_id),
-            )
+            return db.session.get(User, int(user_id))
         except (TypeError, ValueError):
             return None
 
     # Konfigurasi Cloudinary.
     configure_cloudinary()
 
-    # Registrasi blueprint admin.
+    # Registrasi blueprint.
     app.register_blueprint(auth_bp)
     app.register_blueprint(admin_bp)
     app.register_blueprint(profile_bp)
@@ -97,7 +128,11 @@ def create_app():
         Mengambil seluruh data portfolio milik admin pertama.
         Data ini dipakai oleh semua halaman publik.
         """
-        owner = User.query.filter_by(role="admin").order_by(User.id.asc()).first()
+        owner = (
+            User.query.filter_by(role="admin")
+            .order_by(User.id.asc())
+            .first()
+        )
 
         profile = None
         public_skills = []
@@ -108,7 +143,9 @@ def create_app():
             profile = Profile.query.filter_by(user_id=owner.id).first()
 
             public_skills = (
-                Skill.query.filter_by(user_id=owner.id).order_by(Skill.id.asc()).all()
+                Skill.query.filter_by(user_id=owner.id)
+                .order_by(Skill.id.asc())
+                .all()
             )
 
             public_experiences = (
@@ -289,10 +326,7 @@ def create_app():
         safe_name = escape(name)
         safe_email = escape(sender_email)
         safe_subject = escape(clean_subject)
-        safe_message = escape(message).replace(
-            "\n",
-            "<br>",
-        )
+        safe_message = escape(message).replace("\n", "<br>")
 
         email_html = f"""
         <div style="
@@ -414,7 +448,7 @@ def create_app():
             params: resend.Emails.SendParams = {
                 "from": current_app.config["RESEND_FROM_EMAIL"],
                 "to": [current_app.config["CONTACT_RECEIVER_EMAIL"]],
-                "subject": (f"Portfolio Contact: {clean_subject}"),
+                "subject": f"Portfolio Contact: {clean_subject}",
                 "html": email_html,
                 "text": email_text,
                 "reply_to": sender_email,
@@ -434,14 +468,17 @@ def create_app():
             )
 
         except Exception:
-            current_app.logger.exception("Gagal mengirim email kontak melalui Resend.")
+            current_app.logger.exception(
+                "Gagal mengirim email kontak melalui Resend."
+            )
 
             return (
                 jsonify(
                     {
                         "status": "error",
                         "message": (
-                            "Pesan belum berhasil dikirim. " "Silakan coba kembali."
+                            "Pesan belum berhasil dikirim. "
+                            "Silakan coba kembali."
                         ),
                     }
                 ),
@@ -455,11 +492,15 @@ def create_app():
     @app.get("/db-check")
     def database_check():
         try:
-            result = db.session.execute(text("""
+            result = db.session.execute(
+                text(
+                    """
                     SELECT
                         DATABASE() AS database_name,
                         VERSION() AS database_version
-                    """)).mappings().one()
+                    """
+                )
+            ).mappings().one()
 
             return jsonify(
                 {
