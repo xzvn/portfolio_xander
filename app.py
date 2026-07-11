@@ -33,52 +33,8 @@ from utils.cloudinary_config import configure_cloudinary
 
 
 BASE_DIR = Path(__file__).resolve().parent
-
-
-def resolve_template_directory() -> Path:
-    """
-    Mencari folder template yang benar.
-
-    Saat lokal, template biasanya berada di:
-        /templates
-
-    Saat menggunakan entrypoint api/index.py di Vercel, salinan template
-    dapat ditempatkan di:
-        /api/templates
-    """
-    candidates = (
-        BASE_DIR / "templates",
-        BASE_DIR / "api" / "templates",
-    )
-
-    for directory in candidates:
-        home_template = directory / "public" / "home.html"
-        if home_template.is_file():
-            return directory
-
-    # Tetap gunakan lokasi standar agar pesan TemplateNotFound mudah dibaca
-    # jika file template memang tidak ikut ke deployment.
-    return BASE_DIR / "templates"
-
-
-def resolve_static_directory() -> Path:
-    """
-    Mencari folder static yang tersedia.
-    """
-    candidates = (
-        BASE_DIR / "static",
-        BASE_DIR / "api" / "static",
-    )
-
-    for directory in candidates:
-        if directory.is_dir():
-            return directory
-
-    return BASE_DIR / "static"
-
-
-TEMPLATE_DIR = resolve_template_directory()
-STATIC_DIR = resolve_static_directory()
+TEMPLATE_DIR = BASE_DIR / "templates"
+STATIC_DIR = BASE_DIR / "static"
 
 login_manager = LoginManager()
 
@@ -92,9 +48,12 @@ def create_app():
     )
 
     app.config.from_object(Config)
-
-    # Maksimal ukuran file upload: 5 MB.
     app.config["MAX_CONTENT_LENGTH"] = 5 * 1024 * 1024
+
+    home_template = TEMPLATE_DIR / "public" / "home.html"
+    print("BASE_DIR:", BASE_DIR)
+    print("TEMPLATE_DIR:", TEMPLATE_DIR)
+    print("HOME_TEMPLATE_EXISTS:", home_template.is_file())
 
     db.init_app(app)
     login_manager.init_app(app)
@@ -112,10 +71,8 @@ def create_app():
         except (TypeError, ValueError):
             return None
 
-    # Konfigurasi Cloudinary.
     configure_cloudinary()
 
-    # Registrasi blueprint.
     app.register_blueprint(auth_bp)
     app.register_blueprint(admin_bp)
     app.register_blueprint(profile_bp)
@@ -124,10 +81,6 @@ def create_app():
     app.register_blueprint(projects_bp)
 
     def get_public_data():
-        """
-        Mengambil seluruh data portfolio milik admin pertama.
-        Data ini dipakai oleh semua halaman publik.
-        """
         owner = (
             User.query.filter_by(role="admin")
             .order_by(User.id.asc())
@@ -167,10 +120,6 @@ def create_app():
             "projects": public_projects,
             "current_year": datetime.now().year,
         }
-
-    # =====================================================
-    # ROUTE HALAMAN PORTFOLIO PUBLIK
-    # =====================================================
 
     @app.get("/")
     def home():
@@ -214,16 +163,19 @@ def create_app():
             **get_public_data(),
         )
 
-    # =====================================================
-    # API PENGIRIMAN PESAN KONTAK DENGAN RESEND
-    # =====================================================
+    @app.get("/health")
+    def health():
+        return jsonify(
+            {
+                "status": "ok",
+                "template_exists": (
+                    TEMPLATE_DIR / "public" / "home.html"
+                ).is_file(),
+            }
+        )
 
     @app.post("/api/contact/send")
     def send_contact_email():
-        """
-        Menerima data formulir kontak dan mengirimkannya
-        ke email pemilik portfolio menggunakan Resend.
-        """
         data = request.get_json(silent=True) or {}
 
         name = str(data.get("name", "")).strip()
@@ -232,94 +184,70 @@ def create_app():
         message = str(data.get("message", "")).strip()
 
         if not name:
-            return (
-                jsonify(
-                    {
-                        "status": "error",
-                        "message": "Nama wajib diisi.",
-                    }
-                ),
-                400,
-            )
+            return jsonify(
+                {
+                    "status": "error",
+                    "message": "Nama wajib diisi.",
+                }
+            ), 400
 
         email_pattern = r"^[^\s@]+@[^\s@]+\.[^\s@]+$"
 
         if not re.fullmatch(email_pattern, sender_email):
-            return (
-                jsonify(
-                    {
-                        "status": "error",
-                        "message": "Format email tidak valid.",
-                    }
-                ),
-                400,
-            )
+            return jsonify(
+                {
+                    "status": "error",
+                    "message": "Format email tidak valid.",
+                }
+            ), 400
 
         if not subject:
-            return (
-                jsonify(
-                    {
-                        "status": "error",
-                        "message": "Subjek wajib diisi.",
-                    }
-                ),
-                400,
-            )
+            return jsonify(
+                {
+                    "status": "error",
+                    "message": "Subjek wajib diisi.",
+                }
+            ), 400
 
         if not message:
-            return (
-                jsonify(
-                    {
-                        "status": "error",
-                        "message": "Pesan wajib diisi.",
-                    }
-                ),
-                400,
-            )
+            return jsonify(
+                {
+                    "status": "error",
+                    "message": "Pesan wajib diisi.",
+                }
+            ), 400
 
         if len(name) > 100:
-            return (
-                jsonify(
-                    {
-                        "status": "error",
-                        "message": "Nama maksimal 100 karakter.",
-                    }
-                ),
-                400,
-            )
+            return jsonify(
+                {
+                    "status": "error",
+                    "message": "Nama maksimal 100 karakter.",
+                }
+            ), 400
 
         if len(sender_email) > 150:
-            return (
-                jsonify(
-                    {
-                        "status": "error",
-                        "message": "Email maksimal 150 karakter.",
-                    }
-                ),
-                400,
-            )
+            return jsonify(
+                {
+                    "status": "error",
+                    "message": "Email maksimal 150 karakter.",
+                }
+            ), 400
 
         if len(subject) > 150:
-            return (
-                jsonify(
-                    {
-                        "status": "error",
-                        "message": "Subjek maksimal 150 karakter.",
-                    }
-                ),
-                400,
-            )
+            return jsonify(
+                {
+                    "status": "error",
+                    "message": "Subjek maksimal 150 karakter.",
+                }
+            ), 400
 
         if len(message) > 500:
-            return (
-                jsonify(
-                    {
-                        "status": "error",
-                        "message": "Pesan maksimal 500 karakter.",
-                    }
-                ),
-                400,
-            )
+            return jsonify(
+                {
+                    "status": "error",
+                    "message": "Pesan maksimal 500 karakter.",
+                }
+            ), 400
 
         clean_subject = subject.replace("\r", " ").replace("\n", " ")
 
@@ -329,104 +257,45 @@ def create_app():
         safe_message = escape(message).replace("\n", "<br>")
 
         email_html = f"""
-        <div style="
-            margin: 0;
-            padding: 24px;
-            background: #f5f7fb;
-            font-family: Arial, sans-serif;
-            color: #202a3c;
-        ">
-            <div style="
-                max-width: 620px;
-                margin: 0 auto;
-                overflow: hidden;
-                border: 1px solid #e2e6ee;
-                border-radius: 18px;
-                background: #ffffff;
-            ">
-                <div style="
-                    padding: 24px;
-                    background: #182235;
-                    color: #ffffff;
-                ">
-                    <p style="
-                        margin: 0 0 8px;
-                        color: #aeb8ff;
-                        font-size: 12px;
-                        font-weight: bold;
-                        letter-spacing: 1px;
-                    ">
+        <div style="margin:0;padding:24px;background:#f5f7fb;
+                    font-family:Arial,sans-serif;color:#202a3c;">
+            <div style="max-width:620px;margin:0 auto;overflow:hidden;
+                        border:1px solid #e2e6ee;border-radius:18px;
+                        background:#ffffff;">
+                <div style="padding:24px;background:#182235;color:#ffffff;">
+                    <p style="margin:0 0 8px;color:#aeb8ff;font-size:12px;
+                              font-weight:bold;letter-spacing:1px;">
                         PESAN PORTFOLIO
                     </p>
-
-                    <h1 style="
-                        margin: 0;
-                        font-size: 24px;
-                    ">
+                    <h1 style="margin:0;font-size:24px;">
                         Pesan baru dari halaman kontak
                     </h1>
                 </div>
-
-                <div style="padding: 28px;">
-                    <table style="
-                        width: 100%;
-                        margin-bottom: 24px;
-                        border-collapse: collapse;
-                    ">
+                <div style="padding:28px;">
+                    <table style="width:100%;margin-bottom:24px;
+                                  border-collapse:collapse;">
                         <tr>
-                            <td style="
-                                width: 110px;
-                                padding: 8px 0;
-                                color: #687387;
-                            ">
+                            <td style="width:110px;padding:8px 0;color:#687387;">
                                 Nama
                             </td>
-
-                            <td style="
-                                padding: 8px 0;
-                                font-weight: bold;
-                            ">
+                            <td style="padding:8px 0;font-weight:bold;">
                                 {safe_name}
                             </td>
                         </tr>
-
                         <tr>
-                            <td style="
-                                padding: 8px 0;
-                                color: #687387;
-                            ">
-                                Email
-                            </td>
-
-                            <td style="padding: 8px 0;">
-                                {safe_email}
-                            </td>
+                            <td style="padding:8px 0;color:#687387;">Email</td>
+                            <td style="padding:8px 0;">{safe_email}</td>
                         </tr>
-
                         <tr>
-                            <td style="
-                                padding: 8px 0;
-                                color: #687387;
-                            ">
-                                Subjek
-                            </td>
-
-                            <td style="
-                                padding: 8px 0;
-                                font-weight: bold;
-                            ">
+                            <td style="padding:8px 0;color:#687387;">Subjek</td>
+                            <td style="padding:8px 0;font-weight:bold;">
                                 {safe_subject}
                             </td>
                         </tr>
                     </table>
-
-                    <div style="
-                        padding: 20px;
-                        border-left: 4px solid #5869d7;
-                        border-radius: 10px;
-                        background: #eef0ff;
-                        line-height: 1.7;
-                    ">
+                    <div style="padding:20px;border-left:4px solid #5869d7;
+                                border-radius:10px;background:#eef0ff;
+                                line-height:1.7;">
                         {safe_message}
                     </div>
                 </div>
@@ -472,22 +341,15 @@ def create_app():
                 "Gagal mengirim email kontak melalui Resend."
             )
 
-            return (
-                jsonify(
-                    {
-                        "status": "error",
-                        "message": (
-                            "Pesan belum berhasil dikirim. "
-                            "Silakan coba kembali."
-                        ),
-                    }
-                ),
-                500,
-            )
-
-    # =====================================================
-    # PEMERIKSAAN KONEKSI DATABASE
-    # =====================================================
+            return jsonify(
+                {
+                    "status": "error",
+                    "message": (
+                        "Pesan belum berhasil dikirim. "
+                        "Silakan coba kembali."
+                    ),
+                }
+            ), 500
 
     @app.get("/db-check")
     def database_check():
@@ -514,16 +376,13 @@ def create_app():
         except Exception as error:
             db.session.rollback()
 
-            return (
-                jsonify(
-                    {
-                        "status": "error",
-                        "message": "Flask gagal terhubung ke TiDB.",
-                        "detail": str(error),
-                    }
-                ),
-                500,
-            )
+            return jsonify(
+                {
+                    "status": "error",
+                    "message": "Flask gagal terhubung ke TiDB.",
+                    "detail": str(error),
+                }
+            ), 500
 
     return app
 
