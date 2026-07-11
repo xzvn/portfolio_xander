@@ -88,6 +88,11 @@
       href="{{ url_for('static', filename='css/portfolio-user-flow.css') }}"
     />
 
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/portfolio-mobile-refinement.css') }}"
+    />
+
     {% block styles %}{% endblock %}
   </head>
 
@@ -134,16 +139,22 @@
           aria-controls="publicNavigation"
           aria-expanded="false"
         >
-          <i
-            data-lucide="menu"
-            id="mobileMenuIcon"
-          ></i>
+          <span
+            class="mobile-menu-lines"
+            aria-hidden="true"
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </span>
         </button>
 
         <nav
           class="public-navigation"
           id="publicNavigation"
           aria-label="Navigasi utama"
+          aria-hidden="true"
+          tabindex="-1"
         >
           <a
             href="{{ url_for('home') }}"
@@ -214,6 +225,15 @@
       </div>
     </header>
 
+    <button
+      type="button"
+      class="mobile-navigation-overlay"
+      id="mobileNavigationOverlay"
+      aria-label="Tutup navigasi"
+      tabindex="-1"
+      aria-hidden="true"
+    ></button>
+
     <main id="mainContent">
       {% block content %}{% endblock %}
     </main>
@@ -259,151 +279,6 @@
       defer
     ></script>
 
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        const header =
-          document.getElementById("publicHeader");
-
-        const menuButton =
-          document.getElementById("mobileMenuButton");
-
-        const navigation =
-          document.getElementById("publicNavigation");
-
-        const renderIcons = () => {
-          if (window.lucide) {
-            window.lucide.createIcons();
-          }
-        };
-
-        const setMenuState = (isOpen) => {
-          if (!navigation || !menuButton) {
-            return;
-          }
-
-          navigation.classList.toggle(
-            "open",
-            isOpen,
-          );
-
-          document.body.classList.toggle(
-            "navigation-open",
-            isOpen,
-          );
-
-          menuButton.setAttribute(
-            "aria-expanded",
-            String(isOpen),
-          );
-
-          menuButton.setAttribute(
-            "aria-label",
-            isOpen
-              ? "Tutup navigasi"
-              : "Buka navigasi",
-          );
-
-          menuButton.innerHTML = isOpen
-            ? '<i data-lucide="x"></i>'
-            : '<i data-lucide="menu"></i>';
-
-          renderIcons();
-        };
-
-        const closeNavigation = () => {
-          setMenuState(false);
-        };
-
-        renderIcons();
-
-        menuButton?.addEventListener(
-          "click",
-          () => {
-            const isOpen =
-              navigation?.classList.contains("open")
-              ?? false;
-
-            setMenuState(!isOpen);
-          },
-        );
-
-        navigation
-          ?.querySelectorAll("a")
-          .forEach((link) => {
-            link.addEventListener(
-              "click",
-              closeNavigation,
-            );
-          });
-
-        document.addEventListener(
-          "click",
-          (event) => {
-            const isOpen =
-              navigation?.classList.contains("open");
-
-            if (!isOpen) {
-              return;
-            }
-
-            const clickedInsideNavigation =
-              navigation?.contains(event.target);
-
-            const clickedMenuButton =
-              menuButton?.contains(event.target);
-
-            if (
-              !clickedInsideNavigation
-              && !clickedMenuButton
-            ) {
-              closeNavigation();
-            }
-          },
-        );
-
-        document.addEventListener(
-          "keydown",
-          (event) => {
-            if (
-              event.key === "Escape"
-              && navigation?.classList.contains("open")
-            ) {
-              closeNavigation();
-              menuButton?.focus();
-            }
-          },
-        );
-
-        window.addEventListener(
-          "resize",
-          () => {
-            if (
-              window.innerWidth > 900
-              && navigation?.classList.contains("open")
-            ) {
-              closeNavigation();
-            }
-          },
-        );
-
-        const updateHeaderState = () => {
-          header?.classList.toggle(
-            "scrolled",
-            window.scrollY > 20,
-          );
-        };
-
-        updateHeaderState();
-
-        window.addEventListener(
-          "scroll",
-          updateHeaderState,
-          {
-            passive: true,
-          },
-        );
-      });
-    </script>
 
     {% block scripts %}{% endblock %}
   </body>

@@ -4,6 +4,192 @@ document.addEventListener("DOMContentLoaded", () => {
     ).matches;
 
     /*
+     * NAVIGASI MOBILE
+     *
+     * Menggunakan drawer dengan overlay, mengunci scroll halaman,
+     * dan menjaga status aria agar responsif di perangkat sentuh.
+     */
+    const initializePublicNavigation = () => {
+        const header =
+            document.getElementById("publicHeader");
+
+        const menuButton =
+            document.getElementById("mobileMenuButton");
+
+        const navigation =
+            document.getElementById("publicNavigation");
+
+        const overlay =
+            document.getElementById("mobileNavigationOverlay");
+
+        if (!header || !menuButton || !navigation || !overlay) {
+            return;
+        }
+
+        const mobileQuery =
+            window.matchMedia("(max-width: 820px)");
+
+        let lockedScrollY = 0;
+        let isOpen = false;
+
+        const updateHeaderState = () => {
+            header.classList.toggle(
+                "scrolled",
+                window.scrollY > 20
+            );
+        };
+
+        const lockPageScroll = () => {
+            lockedScrollY = window.scrollY;
+
+            document.body.style.position = "fixed";
+            document.body.style.top = `-${lockedScrollY}px`;
+            document.body.style.right = "0";
+            document.body.style.left = "0";
+            document.body.style.width = "100%";
+        };
+
+        const unlockPageScroll = () => {
+            document.body.style.position = "";
+            document.body.style.top = "";
+            document.body.style.right = "";
+            document.body.style.left = "";
+            document.body.style.width = "";
+
+            window.scrollTo(0, lockedScrollY);
+        };
+
+        const setMenuState = (
+            nextState,
+            { restoreFocus = false } = {}
+        ) => {
+            const shouldOpen =
+                Boolean(nextState) && mobileQuery.matches;
+
+            if (shouldOpen === isOpen) {
+                return;
+            }
+
+            isOpen = shouldOpen;
+
+            navigation.classList.toggle("open", isOpen);
+            overlay.classList.toggle("visible", isOpen);
+            menuButton.classList.toggle("active", isOpen);
+            document.body.classList.toggle(
+                "navigation-open",
+                isOpen
+            );
+
+            menuButton.setAttribute(
+                "aria-expanded",
+                String(isOpen)
+            );
+
+            menuButton.setAttribute(
+                "aria-label",
+                isOpen
+                    ? "Tutup navigasi"
+                    : "Buka navigasi"
+            );
+
+            navigation.setAttribute(
+                "aria-hidden",
+                String(!isOpen)
+            );
+
+            overlay.setAttribute(
+                "aria-hidden",
+                String(!isOpen)
+            );
+
+            if (isOpen) {
+                lockPageScroll();
+
+                window.requestAnimationFrame(() => {
+                    const activeLink =
+                        navigation.querySelector(
+                            '[aria-current="page"]'
+                        );
+
+                    const firstLink =
+                        navigation.querySelector("a");
+
+                    (activeLink || firstLink || navigation).focus({
+                        preventScroll: true,
+                    });
+                });
+            } else {
+                unlockPageScroll();
+
+                if (restoreFocus) {
+                    menuButton.focus({
+                        preventScroll: true,
+                    });
+                }
+            }
+        };
+
+        menuButton.addEventListener("click", (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            setMenuState(!isOpen);
+        });
+
+        overlay.addEventListener("click", () => {
+            setMenuState(false, {
+                restoreFocus: true,
+            });
+        });
+
+        navigation
+            .querySelectorAll("a")
+            .forEach((link) => {
+                link.addEventListener("click", () => {
+                    setMenuState(false);
+                });
+            });
+
+        document.addEventListener("keydown", (event) => {
+            if (event.key === "Escape" && isOpen) {
+                setMenuState(false, {
+                    restoreFocus: true,
+                });
+            }
+        });
+
+        mobileQuery.addEventListener("change", (event) => {
+            if (!event.matches && isOpen) {
+                setMenuState(false);
+            }
+
+            navigation.setAttribute(
+                "aria-hidden",
+                String(event.matches && !isOpen)
+            );
+        });
+
+        navigation.setAttribute(
+            "aria-hidden",
+            String(mobileQuery.matches)
+        );
+
+        overlay.setAttribute(
+            "aria-hidden",
+            "true"
+        );
+
+        updateHeaderState();
+
+        window.addEventListener(
+            "scroll",
+            updateHeaderState,
+            {
+                passive: true,
+            }
+        );
+    };
+
+    /*
      * Mengambil seluruh text node, termasuk teks
      * yang berada di dalam span atau elemen lainnya.
      */
@@ -450,6 +636,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     };
 
+    initializePublicNavigation();
     initializeTypewriter();
     initializeScrollProgress();
     initializeBackToTop();

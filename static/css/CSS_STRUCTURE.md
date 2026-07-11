@@ -38,3 +38,5 @@ Urutan pemanggilan pada `templates/base.html` jangan diubah karena CSS masih men
 - File ini membedakan kartu informasi dari tombol, memperjelas navigasi
   mobile, menyusun ulang alur Home, dan memberi CTA langkah berikutnya.
 - Jangan menambahkan efek klik pada kartu yang tidak melakukan tindakan.
+
+- `portfolio-mobile-refinement.css` — drawer navigasi mobile dan perapian hero/mobile; dimuat paling akhir.
