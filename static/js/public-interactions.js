@@ -4,6 +4,36 @@ document.addEventListener("DOMContentLoaded", () => {
     ).matches;
 
     /*
+     * LUCIDE ICONS
+     *
+     * Memproses seluruh elemen data-lucide menjadi SVG.
+     * Retry diperlukan agar ikon tetap muncul pada koneksi mobile
+     * ketika file CDN Lucide selesai dimuat sedikit lebih lambat.
+     */
+    const initializeLucideIcons = () => {
+        let retryCount = 0;
+        const maximumRetries = 20;
+
+        const renderIcons = () => {
+            if (
+                window.lucide
+                && typeof window.lucide.createIcons === "function"
+            ) {
+                window.lucide.createIcons();
+                return;
+            }
+
+            retryCount += 1;
+
+            if (retryCount <= maximumRetries) {
+                window.setTimeout(renderIcons, 100);
+            }
+        };
+
+        renderIcons();
+    };
+
+    /*
      * NAVIGASI MOBILE
      *
      * Menggunakan drawer dengan overlay, mengunci scroll halaman,
@@ -636,6 +666,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     };
 
+    initializeLucideIcons();
     initializePublicNavigation();
     initializeTypewriter();
     initializeScrollProgress();
