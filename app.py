@@ -1,5 +1,6 @@
 import re
 from datetime import datetime
+from pathlib import Path
 
 import resend
 from flask import (
@@ -30,12 +31,24 @@ from routes.projects import projects_bp
 from routes.skills import skills_bp
 from utils.cloudinary_config import configure_cloudinary
 
+BASE_DIR = Path(__file__).resolve().parent
+
 login_manager = LoginManager()
 
 
 def create_app():
-    app = Flask(__name__)
+    app = Flask(
+        __name__,
+        template_folder=str(BASE_DIR / "templates"),
+    )
     app.config.from_object(Config)
+
+    print("BASE_DIR:", BASE_DIR)
+    print("TEMPLATE_FOLDER:", app.template_folder)
+    print(
+        "HOME_TEMPLATE_EXISTS:",
+        (BASE_DIR / "templates" / "public" / "home.html").is_file(),
+    )
 
     # Maksimal ukuran file upload: 5 MB.
     app.config["MAX_CONTENT_LENGTH"] = 5 * 1024 * 1024
