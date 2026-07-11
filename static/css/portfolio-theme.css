@@ -1,0 +1,181 @@
+/* =========================================================
+   PORTFOLIO-THEME.CSS
+   Navy–indigo theme and global navigation overrides.
+   Generated from the former portfolio.css without changing
+   the original stylesheet load order.
+   ========================================================= */
+
+/* =========================================================
+   PALET WARNA PUBLIK
+   Navy = warna utama
+   Indigo = warna aksen dan interaksi
+   Tempatkan bagian ini paling bawah agar menimpa CSS lama.
+   ========================================================= */
+
+.public-header {
+  border-top: 4px solid var(--home-navy);
+  border-bottom: 1px solid rgba(24, 34, 53, 0.08);
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 8px 28px rgba(24, 34, 53, 0.06);
+  backdrop-filter: blur(16px);
+}
+
+.public-header.scrolled {
+  border-bottom-color: rgba(24, 34, 53, 0.12);
+  background: rgba(255, 255, 255, 0.98);
+  box-shadow: 0 12px 32px rgba(24, 34, 53, 0.09);
+}
+
+.brand-mark {
+  background: var(--home-navy);
+  color: #ffffff;
+  box-shadow: 0 10px 22px rgba(24, 34, 53, 0.16);
+}
+
+.brand-text {
+  color: var(--home-navy);
+}
+
+.navigation-link {
+  color: var(--home-muted);
+}
+
+.navigation-link:hover,
+.navigation-link.active {
+  color: var(--home-navy);
+}
+
+
+
+.navigation-contact {
+  background: var(--home-navy);
+  color: #ffffff;
+  box-shadow: 0 10px 22px rgba(24, 34, 53, 0.14);
+}
+
+.navigation-contact:hover {
+  background: var(--home-indigo);
+  box-shadow: 0 12px 25px rgba(88, 105, 215, 0.24);
+}
+
+.mobile-menu-button {
+  border-color: var(--home-border);
+  background: #ffffff;
+  color: var(--home-navy);
+}
+
+.mobile-menu-button:hover {
+  border-color: var(--home-indigo);
+  color: var(--home-indigo);
+}
+
+.navigation-link:focus-visible,
+.navigation-contact:focus-visible,
+.hero-primary-button:focus-visible,
+.hero-outline-button:focus-visible,
+.home-statistic-card:focus-visible,
+.home-explore-card:focus-visible,
+.featured-primary-link:focus-visible,
+.featured-secondary-link:focus-visible,
+.home-contact-button:focus-visible,
+.project-slider-controls button:focus-visible,
+.project-slider-dot:focus-visible {
+  outline: 3px solid rgba(88, 105, 215, 0.28);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .reveal-element {
+    opacity: 1;
+    transform: none;
+  }
+}
+/* =========================================================
+   HEADER NAVY DENGAN AKSEN INDIGO
+   ========================================================= */
+
+.public-header {
+  border-top: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--home-navy);
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.16);
+}
+
+.public-header.scrolled {
+  border-top: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(24, 34, 53, 0.96);
+  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.22);
+}
+
+.brand-mark {
+  background: var(--home-indigo);
+  color: #ffffff;
+  box-shadow: 0 10px 24px rgba(88, 105, 215, 0.28);
+}
+
+.brand-text {
+  color: #ffffff;
+}
+
+.navigation-link {
+  color: #b9c2d1;
+}
+
+.navigation-link:hover,
+.navigation-link.active {
+  color: #ffffff;
+}
+
+.navigation-link::after {
+  background: var(--home-indigo);
+}
+
+.navigation-contact {
+  background: var(--home-indigo);
+  color: #ffffff;
+  box-shadow: 0 10px 24px rgba(88, 105, 215, 0.24);
+}
+
+.navigation-contact:hover {
+  background: var(--home-indigo-dark);
+  color: #ffffff;
+}
+
+.mobile-menu-button {
+  border-color: rgba(255, 255, 255, 0.14);
+  background: var(--home-navy-light);
+  color: #ffffff;
+}
+
+/* Menu versi mobile */
+@media (max-width: 820px) {
+  .public-navigation {
+    border-color: rgba(255, 255, 255, 0.1);
+    background: var(--home-navy);
+  }
+
+  .navigation-link {
+    color: #c4ccda;
+  }
+
+  .navigation-link:hover,
+  .navigation-link.active {
+    background: var(--home-navy-light);
+    color: #ffffff;
+  }
+
+  .navigation-contact {
+    margin-top: 6px;
+    background: var(--home-indigo);
+  }
+}
