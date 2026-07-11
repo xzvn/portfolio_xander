@@ -17,6 +17,7 @@ from sqlalchemy import text
 
 from config import Config
 from models import (
+    ContactMessage,
     Experience,
     Profile,
     Project,
@@ -93,11 +94,7 @@ def create_app():
     app.register_blueprint(projects_bp)
 
     def get_public_data():
-        owner = (
-            User.query.filter_by(role="admin")
-            .order_by(User.id.asc())
-            .first()
-        )
+        owner = User.query.filter_by(role="admin").order_by(User.id.asc()).first()
 
         profile = None
         public_skills = []
@@ -108,9 +105,7 @@ def create_app():
             profile = Profile.query.filter_by(user_id=owner.id).first()
 
             public_skills = (
-                Skill.query.filter_by(user_id=owner.id)
-                .order_by(Skill.id.asc())
-                .all()
+                Skill.query.filter_by(user_id=owner.id).order_by(Skill.id.asc()).all()
             )
 
             public_experiences = (
@@ -190,9 +185,7 @@ def create_app():
                 "filesystem_template_exists": (
                     TEMPLATE_DIR / "public" / "home.html"
                 ).is_file(),
-                "embedded_loader_enabled": (
-                    configure_template_loader is not None
-                ),
+                "embedded_loader_enabled": (configure_template_loader is not None),
             }
         )
 
@@ -206,72 +199,137 @@ def create_app():
         message = str(data.get("message", "")).strip()
 
         if not name:
-            return jsonify(
-                {
-                    "status": "error",
-                    "message": "Nama wajib diisi.",
-                }
-            ), 400
+            return (
+                jsonify(
+                    {
+                        "status": "error",
+                        "message": "Nama wajib diisi.",
+                    }
+                ),
+                400,
+            )
 
         email_pattern = r"^[^\s@]+@[^\s@]+\.[^\s@]+$"
 
         if not re.fullmatch(email_pattern, sender_email):
-            return jsonify(
-                {
-                    "status": "error",
-                    "message": "Format email tidak valid.",
-                }
-            ), 400
+            return (
+                jsonify(
+                    {
+                        "status": "error",
+                        "message": "Format email tidak valid.",
+                    }
+                ),
+                400,
+            )
 
         if not subject:
-            return jsonify(
-                {
-                    "status": "error",
-                    "message": "Subjek wajib diisi.",
-                }
-            ), 400
+            return (
+                jsonify(
+                    {
+                        "status": "error",
+                        "message": "Subjek wajib diisi.",
+                    }
+                ),
+                400,
+            )
 
         if not message:
-            return jsonify(
-                {
-                    "status": "error",
-                    "message": "Pesan wajib diisi.",
-                }
-            ), 400
+            return (
+                jsonify(
+                    {
+                        "status": "error",
+                        "message": "Pesan wajib diisi.",
+                    }
+                ),
+                400,
+            )
 
         if len(name) > 100:
-            return jsonify(
-                {
-                    "status": "error",
-                    "message": "Nama maksimal 100 karakter.",
-                }
-            ), 400
+            return (
+                jsonify(
+                    {
+                        "status": "error",
+                        "message": "Nama maksimal 100 karakter.",
+                    }
+                ),
+                400,
+            )
 
         if len(sender_email) > 150:
-            return jsonify(
-                {
-                    "status": "error",
-                    "message": "Email maksimal 150 karakter.",
-                }
-            ), 400
+            return (
+                jsonify(
+                    {
+                        "status": "error",
+                        "message": "Email maksimal 150 karakter.",
+                    }
+                ),
+                400,
+            )
 
         if len(subject) > 150:
-            return jsonify(
-                {
-                    "status": "error",
-                    "message": "Subjek maksimal 150 karakter.",
-                }
-            ), 400
+            return (
+                jsonify(
+                    {
+                        "status": "error",
+                        "message": "Subjek maksimal 150 karakter.",
+                    }
+                ),
+                400,
+            )
 
         if len(message) > 500:
-            return jsonify(
-                {
-                    "status": "error",
-                    "message": "Pesan maksimal 500 karakter.",
-                }
-            ), 400
+            return (
+                jsonify(
+                    {
+                        "status": "error",
+                        "message": "Pesan maksimal 500 karakter.",
+                    }
+                ),
+                400,
+            )
 
         clean_subject = subject.replace("\r", " ").replace("\n", " ")
+
+        owner = User.query.filter_by(role="admin").order_by(User.id.asc()).first()
+
+        if owner is None:
+            return (
+                jsonify(
+                    {
+                        "status": "error",
+                        "message": "Akun admin penerima belum tersedia.",
+                    }
+                ),
+                503,
+            )
+
+        contact_message = ContactMessage(
+            user_id=owner.id,
+            name=name,
+            sender_email=sender_email,
+            subject=clean_subject,
+            message=message,
+            delivery_status="pending",
+        )
+
+        try:
+            db.session.add(contact_message)
+            db.session.commit()
+        except Exception:
+            db.session.rollback()
+            current_app.logger.exception("Gagal menyimpan pesan kontak ke database.")
+
+            return (
+                jsonify(
+                    {
+                        "status": "error",
+                        "message": (
+                            "Pesan belum dapat disimpan. " "Silakan coba kembali."
+                        ),
+                    }
+                ),
+                500,
+            )
 
         safe_name = escape(name)
         safe_email = escape(sender_email)
@@ -347,6 +405,16 @@ def create_app():
 
             result = resend.Emails.send(params)
 
+            email_id = (
+                result.get("id")
+                if isinstance(result, dict)
+                else getattr(result, "id", None)
+            )
+
+            contact_message.email_id = email_id
+            contact_message.delivery_status = "sent"
+            db.session.commit()
+
             return jsonify(
                 {
                     "status": "success",
@@ -354,37 +422,42 @@ def create_app():
                         "Pesan berhasil dikirim. "
                         "Terima kasih telah menghubungi saya."
                     ),
-                    "email_id": result.get("id"),
+                    "email_id": email_id,
                 }
             )
 
         except Exception:
-            current_app.logger.exception(
-                "Gagal mengirim email kontak melalui Resend."
-            )
+            db.session.rollback()
 
-            return jsonify(
-                {
-                    "status": "error",
-                    "message": (
-                        "Pesan belum berhasil dikirim. "
-                        "Silakan coba kembali."
-                    ),
-                }
-            ), 500
+            try:
+                contact_message.delivery_status = "failed"
+                db.session.commit()
+            except Exception:
+                db.session.rollback()
+
+            current_app.logger.exception("Gagal mengirim email kontak melalui Resend.")
+
+            return (
+                jsonify(
+                    {
+                        "status": "error",
+                        "message": (
+                            "Pesan sudah tersimpan, tetapi email belum "
+                            "berhasil dikirim. Silakan coba kembali."
+                        ),
+                    }
+                ),
+                500,
+            )
 
     @app.get("/db-check")
     def database_check():
         try:
-            result = db.session.execute(
-                text(
-                    """
+            result = db.session.execute(text("""
                     SELECT
                         DATABASE() AS database_name,
                         VERSION() AS database_version
-                    """
-                )
-            ).mappings().one()
+                    """)).mappings().one()
 
             return jsonify(
                 {
@@ -398,13 +471,16 @@ def create_app():
         except Exception as error:
             db.session.rollback()
 
-            return jsonify(
-                {
-                    "status": "error",
-                    "message": "Flask gagal terhubung ke TiDB.",
-                    "detail": str(error),
-                }
-            ), 500
+            return (
+                jsonify(
+                    {
+                        "status": "error",
+                        "message": "Flask gagal terhubung ke TiDB.",
+                        "detail": str(error),
+                    }
+                ),
+                500,
+            )
 
     return app
 

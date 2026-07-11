@@ -74,14 +74,10 @@ profile else "Portfolio Xander" }} {% endblock %} {% block content %}
   </section>
 
   <!-- STATISTIK -->
-  <section class="projects-statistics-section">
+  <section class="projects-statistics-section" aria-label="Ringkasan proyek">
     <div class="public-container">
       <div class="projects-statistics-grid projects-reveal">
-        <a
-          href="#projectCollection"
-          class="projects-statistic-card"
-          aria-label="Lihat daftar seluruh proyek"
-        >
+        <article class="projects-statistic-card">
           <span>
             <i data-lucide="folder-kanban"></i>
           </span>
@@ -90,24 +86,12 @@ profile else "Portfolio Xander" }} {% endblock %} {% block content %}
             <strong
               class="projects-animated-number"
               data-target="{{ projects|length }}"
-            >
-              0
-            </strong>
-
+            >0</strong>
             <p>Total Proyek</p>
           </div>
+        </article>
 
-          <i
-            data-lucide="arrow-up-right"
-            class="public-statistic-link-arrow"
-          ></i>
-        </a>
-
-        <a
-          href="{{ url_for('skills') }}"
-          class="projects-statistic-card"
-          aria-label="Buka halaman skills"
-        >
+        <article class="projects-statistic-card">
           <span>
             <i data-lucide="badge-check"></i>
           </span>
@@ -116,24 +100,12 @@ profile else "Portfolio Xander" }} {% endblock %} {% block content %}
             <strong
               class="projects-animated-number"
               data-target="{{ skills|length }}"
-            >
-              0
-            </strong>
-
+            >0</strong>
             <p>Skills Digunakan</p>
           </div>
+        </article>
 
-          <i
-            data-lucide="arrow-up-right"
-            class="public-statistic-link-arrow"
-          ></i>
-        </a>
-
-        <a
-          href="{{ url_for('experience') }}"
-          class="projects-statistic-card"
-          aria-label="Buka halaman pengalaman"
-        >
+        <article class="projects-statistic-card">
           <span>
             <i data-lucide="briefcase-business"></i>
           </span>
@@ -142,18 +114,10 @@ profile else "Portfolio Xander" }} {% endblock %} {% block content %}
             <strong
               class="projects-animated-number"
               data-target="{{ experiences|length }}"
-            >
-              0
-            </strong>
-
+            >0</strong>
             <p>Pengalaman</p>
           </div>
-
-          <i
-            data-lucide="arrow-up-right"
-            class="public-statistic-link-arrow"
-          ></i>
-        </a>
+        </article>
       </div>
     </div>
   </section>
@@ -456,21 +420,21 @@ profile else "Portfolio Xander" }} {% endblock %} {% block content %}
   <!-- CTA -->
   <section class="projects-cta-section">
     <div class="public-container">
-      <div class="projects-cta-card projects-reveal">
+      <div class="projects-cta-card projects-reveal portfolio-next-step">
         <div>
-          <span> MULAI KOLABORASI </span>
+          <span>LANGKAH TERAKHIR · 05 / 05</span>
 
-          <h2>Punya ide proyek yang ingin diwujudkan?</h2>
+          <h2>Punya ide, masukan, atau peluang kolaborasi?</h2>
 
           <p>
-            Mari berdiskusi mengenai kebutuhan, gagasan, dan solusi digital yang
-            dapat dikembangkan.
+            Setelah melihat karya saya, silakan kirim pesan untuk membicarakan
+            proyek, kesempatan belajar, atau kolaborasi.
           </p>
         </div>
 
         <a href="{{ url_for('contact') }}" class="projects-cta-button">
           <i data-lucide="send"></i>
-          Hubungi Saya
+          Lanjut ke Kontak
         </a>
       </div>
     </div>

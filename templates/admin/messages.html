@@ -1,0 +1,157 @@
+{% extends "admin/base_admin.html" %}
+
+{% block title %}Pesan Masuk | Portfolio Xander{% endblock %}
+{% block page_title %}Pesan Masuk{% endblock %}
+{% block page_description %}
+  Kelola pesan yang dikirim melalui formulir kontak portfolio.
+{% endblock %}
+
+{% block content %}
+<section class="message-summary-grid">
+  <article class="message-summary-card">
+    <span><i data-lucide="mails"></i></span>
+    <div>
+      <small>Total Pesan</small>
+      <strong>{{ total_messages }}</strong>
+    </div>
+  </article>
+
+  <article class="message-summary-card">
+    <span><i data-lucide="mail-warning"></i></span>
+    <div>
+      <small>Belum Dibaca</small>
+      <strong>{{ unread_messages }}</strong>
+    </div>
+  </article>
+</section>
+
+<section class="dashboard-card message-inbox-card">
+  <div class="message-inbox-header">
+    <div>
+      <h2>Kotak Masuk</h2>
+      <p>Pesan terbaru tampil paling atas.</p>
+    </div>
+
+    <form method="GET" class="message-toolbar">
+      <label class="message-search">
+        <i data-lucide="search"></i>
+        <input
+          type="search"
+          name="q"
+          value="{{ search }}"
+          placeholder="Cari nama, email, atau isi pesan"
+        >
+      </label>
+
+      <label class="message-status-filter">
+        <span class="sr-only">Filter status pesan</span>
+        <select name="status" onchange="this.form.submit()">
+          <option value="all" {% if status == 'all' %}selected{% endif %}>
+            Semua pesan
+          </option>
+          <option value="unread" {% if status == 'unread' %}selected{% endif %}>
+            Belum dibaca
+          </option>
+          <option value="read" {% if status == 'read' %}selected{% endif %}>
+            Sudah dibaca
+          </option>
+        </select>
+        <i data-lucide="chevron-down"></i>
+      </label>
+
+      <button type="submit" class="primary-button message-search-button">
+        Cari
+      </button>
+    </form>
+  </div>
+
+  {% if contact_messages %}
+    <div class="message-list">
+      {% for item in contact_messages %}
+        <article class="message-card {% if not item.is_read %}message-unread{% endif %}">
+          <div class="message-avatar">{{ item.name[:1]|upper }}</div>
+
+          <div class="message-content">
+            <div class="message-heading">
+              <div>
+                <div class="message-sender-line">
+                  <h3>{{ item.name }}</h3>
+                  {% if not item.is_read %}
+                    <span class="message-unread-badge">Baru</span>
+                  {% endif %}
+                  <span class="message-delivery message-delivery-{{ item.delivery_status }}">
+                    {% if item.delivery_status == 'sent' %}
+                      Email terkirim
+                    {% elif item.delivery_status == 'failed' %}
+                      Email gagal
+                    {% else %}
+                      Menunggu
+                    {% endif %}
+                  </span>
+                </div>
+
+                <a href="mailto:{{ item.sender_email }}" class="message-email">
+                  {{ item.sender_email }}
+                </a>
+              </div>
+
+              <time datetime="{{ item.created_at.isoformat() }}">
+                {{ item.created_at.strftime('%d/%m/%Y %H:%M') }}
+              </time>
+            </div>
+
+            <h4>{{ item.subject }}</h4>
+            <p class="message-body">{{ item.message }}</p>
+
+            <div class="message-actions">
+              <a
+                href="mailto:{{ item.sender_email }}?subject={{ ('Re: ' ~ item.subject)|urlencode }}"
+                class="secondary-button"
+              >
+                <i data-lucide="reply"></i>
+                Balas Email
+              </a>
+
+              <form
+                method="POST"
+                action="{{ url_for('admin.toggle_message_read', message_id=item.id) }}"
+              >
+                <button type="submit" class="secondary-button">
+                  <i data-lucide="{% if item.is_read %}mail-warning{% else %}mail-check{% endif %}"></i>
+                  {% if item.is_read %}
+                    Tandai Belum Dibaca
+                  {% else %}
+                    Tandai Sudah Dibaca
+                  {% endif %}
+                </button>
+              </form>
+
+              <form
+                method="POST"
+                action="{{ url_for('admin.delete_message', message_id=item.id) }}"
+                onsubmit="return confirm('Hapus pesan ini?')"
+              >
+                <button type="submit" class="message-delete-button">
+                  <i data-lucide="trash-2"></i>
+                  Hapus
+                </button>
+              </form>
+            </div>
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="message-empty-state">
+      <span><i data-lucide="mail-open"></i></span>
+      <h3>Belum ada pesan yang sesuai</h3>
+      <p>Pesan baru dari formulir kontak akan muncul di halaman ini.</p>
+      {% if search or status != 'all' %}
+        <a href="{{ url_for('admin.messages') }}" class="secondary-button">
+          Reset Filter
+        </a>
+      {% endif %}
+    </div>
+  {% endif %}
+</section>
+{% endblock %}

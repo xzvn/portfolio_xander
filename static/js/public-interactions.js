@@ -365,15 +365,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         const cardSelectors = [
-            ".public-skill-item",
-            ".skills-process-card",
-            ".experience-public-card",
-            ".experience-value-card",
             ".public-project-item",
-            ".projects-process-card",
-            ".contact-collaboration-card",
-            ".about-value-card",
-            ".about-info-card",
         ].join(",");
 
         const cards =

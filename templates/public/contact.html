@@ -114,14 +114,10 @@ profile and profile.linkedin else "" %}
   </section>
 
   <!-- STATISTIK -->
-  <section class="contact-statistics-section">
+  <section class="contact-statistics-section" aria-label="Ringkasan portfolio">
     <div class="public-container">
       <div class="contact-statistics-grid contact-reveal">
-        <a
-          href="{{ url_for('projects') }}"
-          class="contact-statistic-card"
-          aria-label="Buka halaman proyek"
-        >
+        <article class="contact-statistic-card">
           <span>
             <i data-lucide="folder-kanban"></i>
           </span>
@@ -130,24 +126,12 @@ profile and profile.linkedin else "" %}
             <strong
               class="contact-animated-number"
               data-target="{{ projects|length }}"
-            >
-              0
-            </strong>
-
+            >0</strong>
             <p>Proyek</p>
           </div>
+        </article>
 
-          <i
-            data-lucide="arrow-up-right"
-            class="public-statistic-link-arrow"
-          ></i>
-        </a>
-
-        <a
-          href="{{ url_for('skills') }}"
-          class="contact-statistic-card"
-          aria-label="Buka halaman skills"
-        >
+        <article class="contact-statistic-card">
           <span>
             <i data-lucide="badge-check"></i>
           </span>
@@ -156,24 +140,12 @@ profile and profile.linkedin else "" %}
             <strong
               class="contact-animated-number"
               data-target="{{ skills|length }}"
-            >
-              0
-            </strong>
-
+            >0</strong>
             <p>Skills</p>
           </div>
+        </article>
 
-          <i
-            data-lucide="arrow-up-right"
-            class="public-statistic-link-arrow"
-          ></i>
-        </a>
-
-        <a
-          href="{{ url_for('experience') }}"
-          class="contact-statistic-card"
-          aria-label="Buka halaman pengalaman"
-        >
+        <article class="contact-statistic-card">
           <span>
             <i data-lucide="briefcase-business"></i>
           </span>
@@ -182,18 +154,10 @@ profile and profile.linkedin else "" %}
             <strong
               class="contact-animated-number"
               data-target="{{ experiences|length }}"
-            >
-              0
-            </strong>
-
+            >0</strong>
             <p>Pengalaman</p>
           </div>
-
-          <i
-            data-lucide="arrow-up-right"
-            class="public-statistic-link-arrow"
-          ></i>
-        </a>
+        </article>
       </div>
     </div>
   </section>
@@ -573,21 +537,21 @@ profile and profile.linkedin else "" %}
   <!-- CTA -->
   <section class="contact-cta-section">
     <div class="public-container">
-      <div class="contact-cta-card contact-reveal">
+      <div class="contact-cta-card contact-reveal portfolio-next-step">
         <div>
-          <span> JELAJAHI PORTFOLIO </span>
+          <span>SELESAI MENJELAJAHI PORTFOLIO</span>
 
-          <h2>Kenali lebih jauh proses dan hasil karya saya.</h2>
+          <h2>Terima kasih sudah mengenal perjalanan saya.</h2>
 
           <p>
-            Lihat kemampuan, pengalaman, dan proyek yang telah saya kerjakan
-            selama proses pembelajaran.
+            Kembali ke halaman awal untuk melihat ringkasan portfolio atau
+            gunakan formulir di atas untuk mengirim pesan.
           </p>
         </div>
 
-        <a href="{{ url_for('projects') }}" class="contact-cta-button">
-          <i data-lucide="folder-kanban"></i>
-          Lihat Proyek
+        <a href="{{ url_for('home') }}" class="contact-cta-button">
+          <i data-lucide="house"></i>
+          Kembali ke Home
         </a>
       </div>
     </div>

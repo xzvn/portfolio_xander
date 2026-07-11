@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
   if (window.lucide) {
-    lucide.createIcons();
+    window.lucide.createIcons();
   }
 
   const sidebar = document.getElementById("adminSidebar");
@@ -12,66 +12,78 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
+  let lockedScrollPosition = 0;
+
+  const lockPageScroll = () => {
+    lockedScrollPosition = window.scrollY;
+    document.body.style.top = `-${lockedScrollPosition}px`;
+    document.body.classList.add("sidebar-open");
+  };
+
+  const unlockPageScroll = () => {
+    document.body.classList.remove("sidebar-open");
+    document.body.style.top = "";
+    window.scrollTo(0, lockedScrollPosition);
+  };
+
   const openSidebar = () => {
     sidebar.classList.add("open");
     sidebarOverlay.classList.add("visible");
-    document.body.classList.add("sidebar-open");
+    lockPageScroll();
 
     sidebar.setAttribute("aria-hidden", "false");
     sidebarOverlay.setAttribute("aria-hidden", "false");
-
     menuToggle.setAttribute("aria-expanded", "true");
     menuToggle.setAttribute("aria-label", "Tutup menu admin");
 
-    window.setTimeout(() => {
-      sidebarClose.focus();
-    }, 150);
+    window.setTimeout(() => sidebarClose.focus(), 120);
   };
 
-  const closeSidebar = () => {
+  const closeSidebar = ({ restoreFocus = false } = {}) => {
+    const wasOpen = sidebar.classList.contains("open");
+
     sidebar.classList.remove("open");
     sidebarOverlay.classList.remove("visible");
-    document.body.classList.remove("sidebar-open");
+
+    if (wasOpen) {
+      unlockPageScroll();
+    }
 
     sidebar.setAttribute("aria-hidden", "true");
     sidebarOverlay.setAttribute("aria-hidden", "true");
-
     menuToggle.setAttribute("aria-expanded", "false");
     menuToggle.setAttribute("aria-label", "Buka menu admin");
+
+    if (restoreFocus) {
+      menuToggle.focus();
+    }
   };
 
-  const toggleSidebar = () => {
-    const sidebarIsOpen = sidebar.classList.contains("open");
-
-    if (sidebarIsOpen) {
+  menuToggle.addEventListener("click", () => {
+    if (sidebar.classList.contains("open")) {
       closeSidebar();
     } else {
       openSidebar();
     }
-  };
+  });
 
-  menuToggle.addEventListener("click", toggleSidebar);
-  sidebarClose.addEventListener("click", closeSidebar);
-  sidebarOverlay.addEventListener("click", closeSidebar);
+  sidebarClose.addEventListener("click", () => {
+    closeSidebar({ restoreFocus: true });
+  });
+
+  sidebarOverlay.addEventListener("click", () => {
+    closeSidebar({ restoreFocus: true });
+  });
 
   document.addEventListener("keydown", (event) => {
     if (event.key === "Escape" && sidebar.classList.contains("open")) {
-      closeSidebar();
-      menuToggle.focus();
+      closeSidebar({ restoreFocus: true });
     }
   });
 
-  document
-    .querySelectorAll(".sidebar-link:not(.placeholder-link)")
-    .forEach((link) => {
-      link.addEventListener("click", () => {
-        closeSidebar();
-      });
-    });
-
-  document.querySelectorAll(".placeholder-link").forEach((link) => {
-    link.addEventListener("click", (event) => {
-      event.preventDefault();
-    });
+  sidebar.querySelectorAll("a.sidebar-link").forEach((link) => {
+    link.addEventListener("click", () => closeSidebar());
   });
+
+  closeSidebar();
 });

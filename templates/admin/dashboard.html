@@ -66,21 +66,23 @@ Portfolio Xander {% endblock %} {% block page_title %} Dashboard {% endblock %}
     <p class="stat-description">Proyek yang tersedia pada portfolio.</p>
   </article>
 
-  <article class="stat-card">
+  <a href="{{ url_for('admin.messages') }}" class="stat-card stat-card-link">
     <div class="stat-card-header">
       <span class="stat-icon">
         <i data-lucide="mail"></i>
       </span>
 
-      <span class="stat-status"> Belum tersedia </span>
+      <span class="stat-status">
+        {{ statistics.unread_messages }} belum dibaca
+      </span>
     </div>
 
     <p class="stat-title">Pesan Masuk</p>
 
-    <strong class="stat-number">0</strong>
+    <strong class="stat-number">{{ statistics.total_messages }}</strong>
 
     <p class="stat-description">Pesan yang dikirim melalui halaman kontak.</p>
-  </article>
+  </a>
 </section>
 
 <section class="dashboard-grid">

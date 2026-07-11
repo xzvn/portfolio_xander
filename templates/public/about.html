@@ -28,12 +28,12 @@ profile else "Portfolio Xander" }} {% endblock %} {% block content %}
         <div class="about-public-actions">
           <a href="{{ url_for('skills') }}" class="about-primary-button">
             <i data-lucide="badge-check"></i>
-            Lihat Skills
+            Lanjut ke Skills
           </a>
 
-          <a href="{{ url_for('contact') }}" class="about-secondary-button">
-            <i data-lucide="mail"></i>
-            Hubungi Saya
+          <a href="{{ url_for('projects') }}" class="about-secondary-button">
+            <i data-lucide="folder-kanban"></i>
+            Lihat Proyek
           </a>
         </div>
       </div>
@@ -78,10 +78,10 @@ profile else "Portfolio Xander" }} {% endblock %} {% block content %}
   </section>
 
   <!-- Statistik -->
-  <section class="about-statistics-section">
+  <section class="about-statistics-section" aria-label="Ringkasan portfolio">
     <div class="public-container">
       <div class="about-statistics-grid about-reveal">
-        <a href="{{ url_for('skills') }}" class="about-statistic-card">
+        <article class="about-statistic-card">
           <span>
             <i data-lucide="badge-check"></i>
           </span>
@@ -90,17 +90,12 @@ profile else "Portfolio Xander" }} {% endblock %} {% block content %}
             <strong
               class="about-animated-number"
               data-target="{{ skills|length }}"
-            >
-              0
-            </strong>
-
+            >0</strong>
             <p>Skills tersimpan</p>
           </div>
+        </article>
 
-          <i data-lucide="arrow-up-right" class="about-statistic-arrow"></i>
-        </a>
-
-        <a href="{{ url_for('experience') }}" class="about-statistic-card">
+        <article class="about-statistic-card">
           <span>
             <i data-lucide="briefcase-business"></i>
           </span>
@@ -109,17 +104,12 @@ profile else "Portfolio Xander" }} {% endblock %} {% block content %}
             <strong
               class="about-animated-number"
               data-target="{{ experiences|length }}"
-            >
-              0
-            </strong>
-
+            >0</strong>
             <p>Pengalaman</p>
           </div>
+        </article>
 
-          <i data-lucide="arrow-up-right" class="about-statistic-arrow"></i>
-        </a>
-
-        <a href="{{ url_for('projects') }}" class="about-statistic-card">
+        <article class="about-statistic-card">
           <span>
             <i data-lucide="folder-kanban"></i>
           </span>
@@ -128,15 +118,10 @@ profile else "Portfolio Xander" }} {% endblock %} {% block content %}
             <strong
               class="about-animated-number"
               data-target="{{ projects|length }}"
-            >
-              0
-            </strong>
-
+            >0</strong>
             <p>Proyek dikerjakan</p>
           </div>
-
-          <i data-lucide="arrow-up-right" class="about-statistic-arrow"></i>
-        </a>
+        </article>
       </div>
     </div>
   </section>
@@ -378,25 +363,26 @@ profile else "Portfolio Xander" }} {% endblock %} {% block content %}
   <!-- CTA -->
   <section class="about-cta-section">
     <div class="public-container">
-      <div class="about-cta-card about-reveal">
+      <div class="about-cta-card about-reveal portfolio-next-step">
         <div>
-          <span> MARI TERHUBUNG </span>
+          <span>LANGKAH BERIKUTNYA · 02 / 05</span>
 
-          <h2>Mari berdiskusi dan membangun sesuatu yang bermanfaat.</h2>
+          <h2>Kenali kemampuan yang saya bangun melalui proses belajar.</h2>
 
           <p>
-            Saya terbuka untuk berbagi ide, belajar bersama, dan mengerjakan
-            proyek baru.
+            Setelah mengetahui latar belakang saya, lanjutkan ke kemampuan
+            teknis dan keterampilan yang sedang saya kembangkan.
           </p>
         </div>
 
-        <a href="{{ url_for('contact') }}" class="about-cta-button">
-          <i data-lucide="send"></i>
-          Hubungi Saya
+        <a href="{{ url_for('skills') }}" class="about-cta-button">
+          <i data-lucide="badge-check"></i>
+          Lanjut ke Skills
         </a>
       </div>
     </div>
   </section>
+
 </div>
 {% endblock %} {% block scripts %}
 <script>

@@ -28,11 +28,11 @@ if profile else "Portfolio Xander" }} {% endblock %} {% block content %}
           </a>
 
           <a
-            href="{{ url_for('contact') }}"
+            href="{{ url_for('projects') }}"
             class="experience-secondary-button"
           >
-            <i data-lucide="mail"></i>
-            Hubungi Saya
+            <i data-lucide="folder-kanban"></i>
+            Lihat Proyek
           </a>
         </div>
       </div>
@@ -94,14 +94,10 @@ if profile else "Portfolio Xander" }} {% endblock %} {% block content %}
   </section>
 
   <!-- STATISTIK -->
-  <section class="experience-statistics-section">
+  <section class="experience-statistics-section" aria-label="Ringkasan pengalaman">
     <div class="public-container">
       <div class="experience-statistics-grid experience-reveal">
-        <a
-          href="#experienceCollection"
-          class="experience-statistic-card"
-          aria-label="Lihat daftar seluruh pengalaman"
-        >
+        <article class="experience-statistic-card">
           <span>
             <i data-lucide="briefcase-business"></i>
           </span>
@@ -110,24 +106,12 @@ if profile else "Portfolio Xander" }} {% endblock %} {% block content %}
             <strong
               class="experience-animated-number"
               data-target="{{ experiences|length }}"
-            >
-              0
-            </strong>
-
+            >0</strong>
             <p>Total Pengalaman</p>
           </div>
+        </article>
 
-          <i
-            data-lucide="arrow-up-right"
-            class="public-statistic-link-arrow"
-          ></i>
-        </a>
-
-        <a
-          href="{{ url_for('skills') }}"
-          class="experience-statistic-card"
-          aria-label="Buka halaman skills"
-        >
+        <article class="experience-statistic-card">
           <span>
             <i data-lucide="badge-check"></i>
           </span>
@@ -136,24 +120,12 @@ if profile else "Portfolio Xander" }} {% endblock %} {% block content %}
             <strong
               class="experience-animated-number"
               data-target="{{ skills|length }}"
-            >
-              0
-            </strong>
-
+            >0</strong>
             <p>Skills</p>
           </div>
+        </article>
 
-          <i
-            data-lucide="arrow-up-right"
-            class="public-statistic-link-arrow"
-          ></i>
-        </a>
-
-        <a
-          href="{{ url_for('projects') }}"
-          class="experience-statistic-card"
-          aria-label="Buka halaman proyek"
-        >
+        <article class="experience-statistic-card">
           <span>
             <i data-lucide="folder-kanban"></i>
           </span>
@@ -162,18 +134,10 @@ if profile else "Portfolio Xander" }} {% endblock %} {% block content %}
             <strong
               class="experience-animated-number"
               data-target="{{ projects|length }}"
-            >
-              0
-            </strong>
-
+            >0</strong>
             <p>Proyek</p>
           </div>
-
-          <i
-            data-lucide="arrow-up-right"
-            class="public-statistic-link-arrow"
-          ></i>
-        </a>
+        </article>
       </div>
     </div>
   </section>
@@ -411,25 +375,26 @@ if profile else "Portfolio Xander" }} {% endblock %} {% block content %}
   <!-- CTA -->
   <section class="experience-cta-section">
     <div class="public-container">
-      <div class="experience-cta-card experience-reveal">
+      <div class="experience-cta-card experience-reveal portfolio-next-step">
         <div>
-          <span> LANJUTKAN PERJALANAN </span>
+          <span>LANGKAH BERIKUTNYA · 04 / 05</span>
 
-          <h2>Pengalaman menjadi dasar untuk menghasilkan karya.</h2>
+          <h2>Lihat hasil yang dibangun dari kemampuan dan pengalaman tersebut.</h2>
 
           <p>
-            Lihat berbagai proyek yang telah saya kerjakan selama proses belajar
-            dan pengembangan kemampuan.
+            Proyek memperlihatkan proses saya mengubah pembelajaran menjadi
+            solusi digital yang dapat dilihat dan digunakan.
           </p>
         </div>
 
         <a href="{{ url_for('projects') }}" class="experience-cta-button">
           <i data-lucide="folder-kanban"></i>
-          Lihat Proyek
+          Lanjut ke Proyek
         </a>
       </div>
     </div>
   </section>
+
 </div>
 {% endblock %} {% block scripts %}
 <script>

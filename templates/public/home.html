@@ -1,7 +1,11 @@
-{% extends "base.html" %} {% block title %} Home | {{ profile.nama_lengkap if
-profile else "Portfolio Xander" }} {% endblock %} {% block content %}
+{% extends "base.html" %}
+
+{% block title %}
+  Home | {{ profile.nama_lengkap if profile else "Portfolio Xander" }}
+{% endblock %}
+
+{% block content %}
 <div class="interactive-home">
-  <!-- HERO DUA WARNA -->
   <section class="two-tone-hero">
     <div class="hero-dark-panel">
       <div class="hero-dark-content reveal-element">
@@ -17,47 +21,57 @@ profile else "Portfolio Xander" }} {% endblock %} {% block content %}
           data-typewriter-speed="50"
           data-typewriter-delay="400"
         >
-          {% if profile and profile.nama_lengkap %} {{ profile.nama_lengkap }}
-          {% else %} Portfolio Xander {% endif %}
+          {% if profile and profile.nama_lengkap %}
+            {{ profile.nama_lengkap }}
+          {% else %}
+            Portfolio Xander
+          {% endif %}
         </h1>
 
         <p class="hero-profession">
-          {% if profile and profile.prodi %} Mahasiswa {{ profile.prodi }} {%
-          else %} Mahasiswa dan Pengembang Teknologi {% endif %}
+          {% if profile and profile.prodi %}
+            Mahasiswa {{ profile.prodi }}
+          {% else %}
+            Mahasiswa dan Pengembang Teknologi
+          {% endif %}
         </p>
 
         <p class="hero-summary">
-          {% if profile and profile.universitas %} Saya sedang menempuh
-          pendidikan di {{ profile.universitas }} dan memiliki minat dalam
-          pengembangan sistem, pengelolaan data, serta perancangan antarmuka
-          digital. {% else %} Saya memiliki minat dalam pengembangan sistem,
-          pengelolaan data, dan perancangan antarmuka digital yang mudah
-          digunakan. {% endif %}
+          {% if profile and profile.universitas %}
+            Saya sedang menempuh pendidikan di {{ profile.universitas }} dan
+            memiliki minat dalam pengembangan sistem, pengelolaan data, serta
+            perancangan antarmuka digital.
+          {% else %}
+            Saya memiliki minat dalam pengembangan sistem, pengelolaan data,
+            dan perancangan antarmuka digital yang mudah digunakan.
+          {% endif %}
         </p>
 
         <div class="hero-button-group">
-          <a href="{{ url_for('projects') }}" class="hero-primary-button">
-            <span>Lihat Proyek</span>
-            <i data-lucide="arrow-up-right"></i>
+          <a href="#featuredWork" class="hero-primary-button">
+            <span>Lihat Proyek Pilihan</span>
+            <i data-lucide="arrow-down"></i>
           </a>
 
-          <a href="{{ url_for('contact') }}" class="hero-outline-button">
-            <i data-lucide="mail"></i>
-            <span>Hubungi Saya</span>
+          <a href="{{ url_for('about') }}" class="hero-outline-button">
+            <i data-lucide="user-round"></i>
+            <span>Tentang Saya</span>
           </a>
         </div>
 
         <div class="hero-contact-row">
           {% if profile and profile.alamat %}
-          <span>
-            <i data-lucide="map-pin"></i>
-            {{ profile.alamat }}
-          </span>
-          {% endif %} {% if profile and profile.email %}
-          <a href="mailto:{{ profile.email }}">
-            <i data-lucide="mail"></i>
-            {{ profile.email }}
-          </a>
+            <span>
+              <i data-lucide="map-pin"></i>
+              {{ profile.alamat }}
+            </span>
+          {% endif %}
+
+          {% if profile and profile.email %}
+            <a href="mailto:{{ profile.email }}">
+              <i data-lucide="mail"></i>
+              {{ profile.email }}
+            </a>
           {% endif %}
         </div>
       </div>
@@ -73,14 +87,16 @@ profile else "Portfolio Xander" }} {% endblock %} {% block content %}
 
         <div class="public-profile-image">
           {% if profile and profile.foto_url %}
-          <img
-            src="{{ profile.foto_url }}"
-            alt="Foto {{ profile.nama_lengkap }}"
-          />
+            <img
+              src="{{ profile.foto_url }}"
+              alt="Foto {{ profile.nama_lengkap }}"
+              decoding="async"
+              fetchpriority="high"
+            />
           {% else %}
-          <div class="public-profile-placeholder">
-            <i data-lucide="user-round"></i>
-          </div>
+            <div class="public-profile-placeholder">
+              <i data-lucide="user-round"></i>
+            </div>
           {% endif %}
         </div>
 
@@ -109,27 +125,179 @@ profile else "Portfolio Xander" }} {% endblock %} {% block content %}
     </div>
   </section>
 
-  <!-- STATISTIK INTERAKTIF -->
-  <section class="home-statistics-section">
+  <section class="home-guidance-section" aria-label="Panduan menjelajahi portfolio">
+    <div class="public-container">
+      <div class="home-guidance-card reveal-element">
+        <div class="home-guidance-copy">
+          <span class="home-section-label">MULAI DARI SINI</span>
+          <strong>Lihat hasil karya terlebih dahulu, lalu kenali proses di baliknya.</strong>
+        </div>
+
+        <ol class="home-guidance-steps">
+          <li class="active">
+            <span>01</span>
+            <div>
+              <strong>Proyek</strong>
+              <small>Lihat hasil nyata</small>
+            </div>
+          </li>
+
+          <li>
+            <span>02</span>
+            <div>
+              <strong>Kemampuan</strong>
+              <small>Kenali keahlian</small>
+            </div>
+          </li>
+
+          <li>
+            <span>03</span>
+            <div>
+              <strong>Pengalaman</strong>
+              <small>Pahami perjalanannya</small>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="featured-project-section" id="featuredWork">
+    <div class="public-container">
+      <div class="featured-project-heading reveal-element">
+        <div>
+          <span class="home-section-label">PROYEK PILIHAN</span>
+          <h2>Karya yang mewakili proses belajar saya</h2>
+        </div>
+
+        {% if projects|length > 1 %}
+          <div class="project-slider-controls">
+            <button
+              type="button"
+              id="previousProject"
+              aria-label="Proyek sebelumnya"
+            >
+              <i data-lucide="arrow-left"></i>
+            </button>
+
+            <button
+              type="button"
+              id="nextProject"
+              aria-label="Proyek berikutnya"
+            >
+              <i data-lucide="arrow-right"></i>
+            </button>
+          </div>
+        {% endif %}
+      </div>
+
+      {% if projects %}
+        <div
+          class="featured-project-slider reveal-element"
+          id="featuredProjectSlider"
+        >
+          {% for project in projects[:5] %}
+            <article
+              class="featured-project-slide {% if loop.first %}active{% endif %}"
+              data-featured-slide="{{ loop.index0 }}"
+              tabindex="{% if loop.first %}0{% else %}-1{% endif %}"
+              aria-hidden="{% if loop.first %}false{% else %}true{% endif %}"
+            >
+              <div class="featured-project-image">
+                {% if project.gambar_url %}
+                  <img
+                    src="{{ project.gambar_url }}"
+                    alt="{{ project.judul }}"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                {% else %}
+                  <div class="featured-image-placeholder">
+                    <i data-lucide="image"></i>
+                  </div>
+                {% endif %}
+
+                <span class="featured-project-index">
+                  {{ "%02d"|format(loop.index) }}
+                </span>
+              </div>
+
+              <div class="featured-project-content">
+                <span class="featured-project-label">FEATURED PROJECT</span>
+
+                <h3>{{ project.judul }}</h3>
+
+                <p>
+                  {{ project.deskripsi or "Deskripsi proyek belum tersedia." }}
+                </p>
+
+                <div class="featured-project-actions">
+                  <a
+                    href="{{ url_for('projects') }}"
+                    class="featured-primary-link"
+                  >
+                    Lihat Detail Proyek
+                    <i data-lucide="arrow-right"></i>
+                  </a>
+
+                  {% if project.link_project %}
+                    <a
+                      href="{{ project.link_project }}"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="featured-secondary-link"
+                    >
+                      Buka Website
+                      <i data-lucide="external-link"></i>
+                    </a>
+                  {% endif %}
+                </div>
+              </div>
+            </article>
+          {% endfor %}
+        </div>
+
+        {% if projects|length > 1 %}
+          <div class="project-slider-dots" id="projectSliderDots">
+            {% for project in projects[:5] %}
+              <button
+                type="button"
+                class="project-slider-dot {% if loop.first %}active{% endif %}"
+                data-slide="{{ loop.index0 }}"
+                aria-label="Tampilkan proyek {{ loop.index }}"
+                aria-current="{% if loop.first %}true{% else %}false{% endif %}"
+              ></button>
+            {% endfor %}
+          </div>
+        {% endif %}
+      {% else %}
+        <div class="home-project-empty reveal-element">
+          <i data-lucide="folder-kanban"></i>
+          <h3>Belum ada proyek</h3>
+          <p>Proyek akan tampil setelah ditambahkan melalui halaman admin.</p>
+        </div>
+      {% endif %}
+    </div>
+  </section>
+
+  <section class="home-statistics-section" aria-label="Ringkasan portfolio">
     <div class="public-container">
       <div class="home-statistics-grid reveal-element">
-        <a href="{{ url_for('skills') }}" class="home-statistic-card">
+        <article class="home-statistic-card" aria-label="{{ skills|length }} skills">
           <span class="home-statistic-icon">
             <i data-lucide="badge-check"></i>
           </span>
 
           <div>
-            <strong class="animated-number" data-target="{{ skills|length }}">
-              0
-            </strong>
-
+            <strong class="animated-number" data-target="{{ skills|length }}">0</strong>
             <span>Skills</span>
           </div>
+        </article>
 
-          <i data-lucide="arrow-up-right" class="home-statistic-arrow"></i>
-        </a>
-
-        <a href="{{ url_for('experience') }}" class="home-statistic-card">
+        <article
+          class="home-statistic-card"
+          aria-label="{{ experiences|length }} pengalaman"
+        >
           <span class="home-statistic-icon">
             <i data-lucide="briefcase-business"></i>
           </span>
@@ -138,258 +306,150 @@ profile else "Portfolio Xander" }} {% endblock %} {% block content %}
             <strong
               class="animated-number"
               data-target="{{ experiences|length }}"
-            >
-              0
-            </strong>
-
+            >0</strong>
             <span>Pengalaman</span>
           </div>
+        </article>
 
-          <i data-lucide="arrow-up-right" class="home-statistic-arrow"></i>
-        </a>
-
-        <a href="{{ url_for('projects') }}" class="home-statistic-card">
+        <article class="home-statistic-card" aria-label="{{ projects|length }} proyek">
           <span class="home-statistic-icon">
             <i data-lucide="folder-kanban"></i>
           </span>
 
           <div>
-            <strong class="animated-number" data-target="{{ projects|length }}">
-              0
-            </strong>
-
+            <strong class="animated-number" data-target="{{ projects|length }}">0</strong>
             <span>Proyek</span>
           </div>
-
-          <i data-lucide="arrow-up-right" class="home-statistic-arrow"></i>
-        </a>
+        </article>
       </div>
     </div>
   </section>
 
-  <!-- MENU EKSPLORASI -->
-  <section class="home-explore-section">
+  <section class="home-story-section">
     <div class="public-container">
       <div class="home-section-heading reveal-element">
         <div>
-          <span class="home-section-label"> EKSPLORASI PORTFOLIO </span>
-
-          <h2>Kenali perjalanan saya</h2>
+          <span class="home-section-label">DI BALIK KARYA</span>
+          <h2>Kenali kemampuan dan pengalaman saya secara ringkas</h2>
         </div>
 
         <p>
-          Jelajahi informasi mengenai profil, kemampuan, pengalaman, dan proyek
-          yang telah saya kerjakan.
+          Tiga bagian berikut membantu memahami siapa saya, kemampuan yang
+          dipelajari, dan pengalaman yang membentuk cara saya bekerja.
         </p>
       </div>
 
-      <div class="home-explore-grid">
-        <a
-          href="{{ url_for('about') }}"
-          class="home-explore-card reveal-element"
-          data-home-interactive
-        >
-          <div class="explore-card-number">01</div>
-
-          <span class="explore-card-icon">
+      <div class="home-story-grid">
+        <article class="home-story-card home-story-about reveal-element">
+          <span class="home-story-icon">
             <i data-lucide="user-round"></i>
           </span>
 
-          <h3>Tentang Saya</h3>
+          <p class="home-story-kicker">Tentang saya</p>
+
+          <h3>
+            Belajar teknologi melalui proyek yang dapat digunakan.
+          </h3>
 
           <p>
-            Informasi pribadi, pendidikan, dan fokus pengembangan kemampuan.
+            {% if profile and profile.prodi %}
+              Saya adalah mahasiswa {{ profile.prodi }}
+              {% if profile.universitas %}di {{ profile.universitas }}{% endif %}
+              yang tertarik pada pengembangan sistem, data, dan antarmuka.
+            {% else %}
+              Saya tertarik pada pengembangan sistem, data, dan antarmuka
+              digital yang mudah dipahami.
+            {% endif %}
           </p>
 
-          <span class="explore-card-action">
-            Selengkapnya
+          <a href="{{ url_for('about') }}" class="home-explicit-link">
+            Kenali Saya
             <i data-lucide="arrow-right"></i>
-          </span>
-        </a>
+          </a>
+        </article>
 
-        <a
-          href="{{ url_for('skills') }}"
-          class="home-explore-card reveal-element"
-          data-home-interactive
-        >
-          <div class="explore-card-number">02</div>
-
-          <span class="explore-card-icon">
+        <article class="home-story-card home-story-skills reveal-element">
+          <span class="home-story-icon">
             <i data-lucide="code-2"></i>
           </span>
 
-          <h3>Skills</h3>
+          <p class="home-story-kicker">Kemampuan utama</p>
+          <h3>Teknologi yang sedang saya kembangkan</h3>
 
-          <p>
-            Kemampuan teknis dan keterampilan yang terus dipelajari melalui
-            berbagai proyek.
-          </p>
+          {% if skills %}
+            <ul class="home-skill-list">
+              {% for skill in skills[:6] %}
+                <li>{{ skill.nama_skill }}</li>
+              {% endfor %}
+            </ul>
+          {% else %}
+            <p>Daftar kemampuan akan tampil setelah ditambahkan melalui admin.</p>
+          {% endif %}
 
-          <span class="explore-card-action">
-            Lihat Skills
+          <a href="{{ url_for('skills') }}" class="home-explicit-link">
+            Lihat Semua Skills
             <i data-lucide="arrow-right"></i>
-          </span>
-        </a>
+          </a>
+        </article>
 
-        <a
-          href="{{ url_for('experience') }}"
-          class="home-explore-card reveal-element"
-          data-home-interactive
-        >
-          <div class="explore-card-number">03</div>
-
-          <span class="explore-card-icon">
+        <article class="home-story-card home-story-experience reveal-element">
+          <span class="home-story-icon">
             <i data-lucide="briefcase-business"></i>
           </span>
 
-          <h3>Pengalaman</h3>
+          <p class="home-story-kicker">Pengalaman terbaru</p>
 
-          <p>
-            Perjalanan kerja, organisasi, kepanitiaan, dan pengalaman
-            pengembangan diri.
-          </p>
-
-          <span class="explore-card-action">
-            Lihat Pengalaman
-            <i data-lucide="arrow-right"></i>
-          </span>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- PROYEK TERBARU INTERAKTIF -->
-  <section class="featured-project-section">
-    <div class="public-container">
-      <div class="featured-project-heading reveal-element">
-        <div>
-          <span class="home-section-label"> PROYEK TERBARU </span>
-
-          <h2>Karya yang telah saya kerjakan</h2>
-        </div>
-
-        {% if projects|length > 1 %}
-        <div class="project-slider-controls">
-          <button
-            type="button"
-            id="previousProject"
-            aria-label="Proyek sebelumnya"
-          >
-            <i data-lucide="arrow-left"></i>
-          </button>
-
-          <button type="button" id="nextProject" aria-label="Proyek berikutnya">
-            <i data-lucide="arrow-right"></i>
-          </button>
-        </div>
-        {% endif %}
-      </div>
-
-      {% if projects %}
-      <div
-        class="featured-project-slider reveal-element"
-        id="featuredProjectSlider"
-      >
-        {% for project in projects[:5] %}
-        <article
-          class="featured-project-slide {% if loop.first %}active{% endif %}"
-          data-featured-slide="{{ loop.index0 }}"
-          tabindex="{% if loop.first %}0{% else %}-1{% endif %}"
-          aria-hidden="{% if loop.first %}false{% else %}true{% endif %}"
-        >
-          <div class="featured-project-image">
-            {% if project.gambar_url %}
-            <img src="{{ project.gambar_url }}" alt="{{ project.judul }}" />
-            {% else %}
-            <div class="featured-image-placeholder">
-              <i data-lucide="image"></i>
-            </div>
-            {% endif %}
-
-            <span class="featured-project-index">
-              {{ "%02d"|format(loop.index) }}
-            </span>
-          </div>
-
-          <div class="featured-project-content">
-            <span class="featured-project-label"> FEATURED PROJECT </span>
-
-            <h3>{{ project.judul }}</h3>
-
-            <p>{{ project.deskripsi or "Deskripsi proyek belum tersedia." }}</p>
-
-            <div class="featured-project-actions">
-              {% if project.link_project %}
-              <a
-                href="{{ project.link_project }}"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="featured-primary-link"
-              >
-                Buka Proyek
-                <i data-lucide="external-link"></i>
-              </a>
+          {% if experiences %}
+            {% set latest_experience = experiences[0] %}
+            <h3>{{ latest_experience.posisi }}</h3>
+            <p class="home-experience-company">
+              {{ latest_experience.perusahaan }}
+              {% if latest_experience.durasi %}
+                · {{ latest_experience.durasi }}
               {% endif %}
+            </p>
+            <p>
+              {{ latest_experience.deskripsi or "Deskripsi pengalaman belum tersedia." }}
+            </p>
+          {% else %}
+            <h3>Pengalaman akan segera ditambahkan</h3>
+            <p>Riwayat pengalaman akan tampil setelah dikelola melalui admin.</p>
+          {% endif %}
 
-              <a
-                href="{{ url_for('projects') }}"
-                class="featured-secondary-link"
-              >
-                Semua Proyek
-                <i data-lucide="arrow-right"></i>
-              </a>
-            </div>
-          </div>
+          <a href="{{ url_for('experience') }}" class="home-explicit-link">
+            Lihat Perjalanan Saya
+            <i data-lucide="arrow-right"></i>
+          </a>
         </article>
-        {% endfor %}
       </div>
-
-      {% if projects|length > 1 %}
-      <div class="project-slider-dots" id="projectSliderDots">
-        {% for project in projects[:5] %}
-        <button
-          type="button"
-          class="project-slider-dot {% if loop.first %}active{% endif %}"
-          data-slide="{{ loop.index0 }}"
-          aria-label="Tampilkan proyek {{ loop.index }}"
-          aria-current="{% if loop.first %}true{% else %}false{% endif %}"
-        ></button>
-        {% endfor %}
-      </div>
-      {% endif %} {% else %}
-      <div class="home-project-empty reveal-element">
-        <i data-lucide="folder-kanban"></i>
-        <h3>Belum ada proyek</h3>
-        <p>Proyek akan tampil setelah ditambahkan melalui halaman admin.</p>
-      </div>
-      {% endif %}
     </div>
   </section>
 
-  <!-- CTA -->
   <section class="home-contact-section">
     <div class="public-container">
       <div class="home-contact-card reveal-element">
         <div>
-          <span class="home-contact-label"> MARI TERHUBUNG </span>
+          <span class="home-contact-label">LANGKAH TERAKHIR</span>
 
-          <h2>Punya ide atau ingin berkolaborasi?</h2>
+          <h2>Tertarik berdiskusi atau berkolaborasi?</h2>
 
           <p>
-            Saya terbuka untuk berdiskusi mengenai proyek, teknologi, dan
-            kesempatan belajar baru.
+            Setelah melihat proyek, kemampuan, dan pengalaman saya, silakan
+            kirim pesan untuk membicarakan ide atau kesempatan baru.
           </p>
         </div>
 
         <a href="{{ url_for('contact') }}" class="home-contact-button">
           <i data-lucide="send"></i>
-          Hubungi Saya
+          Kirim Pesan
         </a>
       </div>
     </div>
   </section>
 </div>
-{% endblock %} {% block scripts %}
+{% endblock %}
+
+{% block scripts %}
 <script>
   document.addEventListener("DOMContentLoaded", () => {
     /*
@@ -522,33 +582,6 @@ profile else "Portfolio Xander" }} {% endblock %} {% block content %}
     sliderDots.forEach((dot) => {
       dot.addEventListener("click", () => {
         showProjectSlide(Number(dot.dataset.slide || 0));
-      });
-    });
-
-    /*
-     * Interaksi kartu eksplorasi.
-     */
-    const exploreCards = document.querySelectorAll("[data-home-interactive]");
-
-    exploreCards.forEach((card) => {
-      card.addEventListener("pointerenter", () => {
-        card.classList.add("is-home-active");
-      });
-
-      card.addEventListener("pointerleave", () => {
-        card.classList.remove("is-home-active");
-      });
-
-      card.addEventListener("focus", () => {
-        card.classList.add("is-home-active");
-      });
-
-      card.addEventListener("blur", () => {
-        card.classList.remove("is-home-active");
-      });
-
-      card.addEventListener("pointerdown", () => {
-        card.classList.add("is-home-active");
       });
     });
 

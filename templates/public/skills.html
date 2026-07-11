@@ -27,9 +27,9 @@ profile else "Portfolio Xander" }} {% endblock %} {% block content %}
             Lihat Skills
           </a>
 
-          <a href="{{ url_for('projects') }}" class="skills-secondary-button">
-            <i data-lucide="folder-kanban"></i>
-            Lihat Proyek
+          <a href="{{ url_for('experience') }}" class="skills-secondary-button">
+            <i data-lucide="briefcase-business"></i>
+            Lihat Pengalaman
           </a>
         </div>
       </div>
@@ -86,14 +86,10 @@ profile else "Portfolio Xander" }} {% endblock %} {% block content %}
   </section>
 
   <!-- STATISTIK -->
-  <section class="skills-statistics-section">
+  <section class="skills-statistics-section" aria-label="Ringkasan kemampuan">
     <div class="public-container">
       <div class="skills-statistics-grid skills-reveal">
-        <a
-          href="#skillCollection"
-          class="skills-statistic-card"
-          aria-label="Lihat daftar seluruh skills"
-        >
+        <article class="skills-statistic-card">
           <span class="skills-statistic-icon">
             <i data-lucide="badge-check"></i>
           </span>
@@ -102,24 +98,12 @@ profile else "Portfolio Xander" }} {% endblock %} {% block content %}
             <strong
               class="skills-animated-number"
               data-target="{{ skills|length }}"
-            >
-              0
-            </strong>
-
+            >0</strong>
             <p>Total Skills</p>
           </div>
+        </article>
 
-          <i
-            data-lucide="arrow-up-right"
-            class="public-statistic-link-arrow"
-          ></i>
-        </a>
-
-        <a
-          href="{{ url_for('projects') }}"
-          class="skills-statistic-card"
-          aria-label="Buka halaman proyek"
-        >
+        <article class="skills-statistic-card">
           <span class="skills-statistic-icon">
             <i data-lucide="folder-kanban"></i>
           </span>
@@ -128,24 +112,12 @@ profile else "Portfolio Xander" }} {% endblock %} {% block content %}
             <strong
               class="skills-animated-number"
               data-target="{{ projects|length }}"
-            >
-              0
-            </strong>
-
+            >0</strong>
             <p>Proyek</p>
           </div>
+        </article>
 
-          <i
-            data-lucide="arrow-up-right"
-            class="public-statistic-link-arrow"
-          ></i>
-        </a>
-
-        <a
-          href="{{ url_for('experience') }}"
-          class="skills-statistic-card"
-          aria-label="Buka halaman pengalaman"
-        >
+        <article class="skills-statistic-card">
           <span class="skills-statistic-icon">
             <i data-lucide="briefcase-business"></i>
           </span>
@@ -154,18 +126,10 @@ profile else "Portfolio Xander" }} {% endblock %} {% block content %}
             <strong
               class="skills-animated-number"
               data-target="{{ experiences|length }}"
-            >
-              0
-            </strong>
-
+            >0</strong>
             <p>Pengalaman</p>
           </div>
-
-          <i
-            data-lucide="arrow-up-right"
-            class="public-statistic-link-arrow"
-          ></i>
-        </a>
+        </article>
       </div>
     </div>
   </section>
@@ -439,25 +403,26 @@ profile else "Portfolio Xander" }} {% endblock %} {% block content %}
   <!-- CTA -->
   <section class="skills-cta-section">
     <div class="public-container">
-      <div class="skills-cta-card skills-reveal">
+      <div class="skills-cta-card skills-reveal portfolio-next-step">
         <div>
-          <span> LIHAT IMPLEMENTASI </span>
+          <span>LANGKAH BERIKUTNYA · 03 / 05</span>
 
-          <h2>Kemampuan akan lebih berarti ketika diterapkan.</h2>
+          <h2>Lihat bagaimana kemampuan tersebut digunakan dalam pengalaman nyata.</h2>
 
           <p>
-            Lihat beberapa proyek yang telah saya kerjakan menggunakan kemampuan
-            tersebut.
+            Pengalaman membantu menunjukkan cara saya belajar, bekerja sama,
+            dan menerapkan kemampuan dalam berbagai kegiatan.
           </p>
         </div>
 
-        <a href="{{ url_for('projects') }}" class="skills-cta-button">
-          <i data-lucide="folder-kanban"></i>
-          Lihat Proyek
+        <a href="{{ url_for('experience') }}" class="skills-cta-button">
+          <i data-lucide="briefcase-business"></i>
+          Lanjut ke Pengalaman
         </a>
       </div>
     </div>
   </section>
+
 </div>
 {% endblock %} {% block scripts %}
 <script>

@@ -20,11 +20,21 @@
       rel="stylesheet"
       href="{{ url_for('static', filename='css/admin.css') }}"
     />
+
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/admin-features.css') }}"
+    />
   </head>
 
   <body>
     <div class="admin-layout">
-      <aside class="admin-sidebar" id="adminSidebar" aria-hidden="true">
+      <aside
+        class="admin-sidebar"
+        id="adminSidebar"
+        aria-hidden="true"
+        aria-label="Navigasi admin"
+      >
         <div class="sidebar-header">
           <a href="{{ url_for('admin.dashboard') }}" class="sidebar-brand">
             <span class="sidebar-logo">XP</span>
@@ -94,10 +104,13 @@
           </a>
 
           <!-- Pesan -->
-          <a href="#" class="sidebar-link placeholder-link">
+          <a
+            href="{{ url_for('admin.messages') }}"
+            class="sidebar-link {% if request.endpoint in [ 'admin.messages', 'admin.toggle_message_read', 'admin.delete_message' ] %} active {% endif %}"
+          >
             <i data-lucide="mail"></i>
             <span>Pesan</span>
-            <span class="menu-badge">0</span>
+            <span class="menu-badge">{{ unread_message_count }}</span>
           </a>
 
           <p class="sidebar-label secondary-label">SISTEM</p>
@@ -160,13 +173,18 @@
           </div>
 
           <div class="topbar-actions">
-            <button
-              type="button"
-              class="topbar-icon-button"
-              aria-label="Notifikasi"
+            <a
+              href="{{ url_for('admin.messages') }}"
+              class="topbar-icon-button topbar-message-button"
+              aria-label="Buka pesan masuk"
             >
               <i data-lucide="bell"></i>
-            </button>
+              {% if unread_message_count > 0 %}
+              <span class="topbar-message-count">
+                {{ unread_message_count }}
+              </span>
+              {% endif %}
+            </a>
 
             <div class="topbar-profile">
               <div class="topbar-avatar">
@@ -205,9 +223,12 @@
       </div>
     </div>
 
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://unpkg.com/lucide@latest" defer></script>
 
-    <script src="{{ url_for('static', filename='js/admin.js') }}"></script>
+    <script
+      src="{{ url_for('static', filename='js/admin.js') }}"
+      defer
+    ></script>
 
     {% block scripts %}{% endblock %}
   </body>

@@ -95,18 +95,23 @@
                         {% endif %}
                     </label>
 
-                    <div class="admin-file-wrapper">
-                        <i
-                            data-lucide="upload"
-                            class="admin-file-icon"
-                        ></i>
-
+                    <div class="profile-crop-file-control">
                         <input
                             type="file"
                             id="foto_file"
                             name="foto_file"
+                            class="profile-file-input"
                             accept=".png,.jpg,.jpeg,.webp,image/png,image/jpeg,image/webp"
                         >
+
+                        <label for="foto_file" class="profile-file-trigger">
+                            <i data-lucide="scan-line"></i>
+                            Pilih dan Crop Foto
+                        </label>
+
+                        <span id="profileCropFileName" class="profile-crop-file-name">
+                            Belum memilih foto baru
+                        </span>
                     </div>
 
                     <p class="field-help">
@@ -447,87 +452,96 @@
         </button>
     </div>
 </form>
+
+<div class="photo-crop-modal" id="photoCropModal" hidden>
+    <button
+        type="button"
+        class="photo-crop-backdrop"
+        id="photoCropBackdrop"
+        aria-label="Tutup crop foto"
+    ></button>
+
+    <section
+        class="photo-crop-dialog"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="photoCropTitle"
+    >
+        <header class="photo-crop-header">
+            <div>
+                <span>CROP FOTO PROFIL</span>
+                <h2 id="photoCropTitle">Atur posisi foto</h2>
+                <p>Geser foto, perbesar, atau putar sampai terlihat pas.</p>
+            </div>
+
+            <button
+                type="button"
+                class="photo-crop-close"
+                id="photoCropClose"
+                aria-label="Tutup crop foto"
+            >
+                <i data-lucide="x"></i>
+            </button>
+        </header>
+
+        <div class="photo-crop-stage" id="photoCropStage">
+            <canvas
+                id="photoCropCanvas"
+                width="420"
+                height="420"
+                aria-label="Area crop foto profil"
+            ></canvas>
+            <span class="photo-crop-guide" aria-hidden="true"></span>
+        </div>
+
+        <div class="photo-crop-controls">
+            <div class="photo-crop-rotate-controls">
+                <button type="button" id="photoRotateLeft" class="secondary-button">
+                    <i data-lucide="rotate-ccw"></i>
+                    Putar Kiri
+                </button>
+
+                <button type="button" id="photoRotateRight" class="secondary-button">
+                    <i data-lucide="rotate-cw"></i>
+                    Putar Kanan
+                </button>
+
+                <button type="button" id="photoCropReset" class="secondary-button">
+                    <i data-lucide="refresh-cw"></i>
+                    Reset
+                </button>
+            </div>
+
+            <label class="photo-crop-zoom">
+                <span><i data-lucide="zoom-in"></i> Perbesar</span>
+                <input
+                    type="range"
+                    id="photoCropZoom"
+                    min="1"
+                    max="3"
+                    step="0.01"
+                    value="1"
+                >
+            </label>
+        </div>
+
+        <footer class="photo-crop-footer">
+            <button type="button" id="photoCropCancel" class="secondary-button">
+                Batal
+            </button>
+
+            <button type="button" id="photoCropApply" class="primary-button">
+                <i data-lucide="crop"></i>
+                Gunakan Foto Ini
+            </button>
+        </footer>
+    </section>
+</div>
 {% endblock %}
 
 {% block scripts %}
-<script>
-    document.addEventListener("DOMContentLoaded", () => {
-        const photoInput =
-            document.getElementById("foto_file");
-
-        const photoImage =
-            document.getElementById("profilePhotoImage");
-
-        const photoPlaceholder =
-            document.getElementById(
-                "profilePhotoPlaceholder"
-            );
-
-        let previewObjectUrl = null;
-
-        photoInput?.addEventListener("change", () => {
-            const selectedFile =
-                photoInput.files?.[0];
-
-            if (!selectedFile) {
-                return;
-            }
-
-            const allowedTypes = [
-                "image/png",
-                "image/jpeg",
-                "image/webp",
-            ];
-
-            const maximumFileSize =
-                5 * 1024 * 1024;
-
-            if (!allowedTypes.includes(selectedFile.type)) {
-                window.alert(
-                    "Format foto harus PNG, JPG, JPEG, atau WEBP."
-                );
-
-                photoInput.value = "";
-                return;
-            }
-
-            if (selectedFile.size > maximumFileSize) {
-                window.alert(
-                    "Ukuran foto maksimal 5 MB."
-                );
-
-                photoInput.value = "";
-                return;
-            }
-
-            if (!photoImage) {
-                return;
-            }
-
-            if (previewObjectUrl) {
-                URL.revokeObjectURL(
-                    previewObjectUrl
-                );
-            }
-
-            previewObjectUrl =
-                URL.createObjectURL(selectedFile);
-
-            photoImage.src = previewObjectUrl;
-            photoImage.hidden = false;
-
-            if (photoPlaceholder) {
-                photoPlaceholder.hidden = true;
-            }
-        });
-
-        window.addEventListener("beforeunload", () => {
-            if (previewObjectUrl) {
-                URL.revokeObjectURL(
-                    previewObjectUrl
-                );
-            }
-        });
-    });
-</script>
+<script
+    src="{{ url_for('static', filename='js/profile-crop.js') }}"
+    defer
+></script>
 {% endblock %}

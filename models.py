@@ -64,6 +64,12 @@ class User(UserMixin, db.Model):
         cascade="all, delete-orphan",
     )
 
+    contact_messages = db.relationship(
+        "ContactMessage",
+        back_populates="user",
+        cascade="all, delete-orphan",
+    )
+
     def __repr__(self):
         return f"<User {self.username}>"
 
@@ -99,11 +105,11 @@ class Profile(db.Model):
     semester = db.Column(db.String(20))
     alamat = db.Column(db.String(400))
     foto_url = db.Column(
-    db.String(255),
+        db.String(255),
     )
 
     foto_public_id = db.Column(
-    db.String(255),
+        db.String(255),
     )
 
     user = db.relationship(
@@ -252,32 +258,58 @@ class Project(db.Model):
         return f"<Project {self.judul}>"
 
 
-gambar_url = db.Column(
-    db.String(255),
-)
+class ContactMessage(db.Model):
+    __tablename__ = "contact_messages"
 
-gambar_public_id = db.Column(
-    db.String(255),
-)
+    id = db.Column(
+        BIGINT(unsigned=True),
+        primary_key=True,
+        autoincrement=True,
+    )
 
-link_project = db.Column(
-    db.String(255),
-)
+    user_id = db.Column(
+        BIGINT(unsigned=True),
+        db.ForeignKey(
+            "users.id",
+            onupdate="CASCADE",
+            ondelete="CASCADE",
+        ),
+        nullable=False,
+        index=True,
+    )
 
-created_at = db.Column(
-    db.DateTime,
-    nullable=False,
-    server_default=db.func.current_timestamp(),
-)
+    name = db.Column(db.String(100), nullable=False)
+    sender_email = db.Column(db.String(150), nullable=False)
+    subject = db.Column(db.String(150), nullable=False)
+    message = db.Column(db.Text, nullable=False)
+    email_id = db.Column(db.String(100))
+    delivery_status = db.Column(
+        db.String(20),
+        nullable=False,
+        default="pending",
+        server_default="pending",
+    )
+    is_read = db.Column(
+        db.Boolean,
+        nullable=False,
+        default=False,
+        server_default=db.text("0"),
+        index=True,
+    )
+    created_at = db.Column(
+        db.DateTime,
+        nullable=False,
+        server_default=db.func.current_timestamp(),
+        index=True,
+    )
 
-user = db.relationship(
-    "User",
-    back_populates="projects",
-)
+    user = db.relationship(
+        "User",
+        back_populates="contact_messages",
+    )
 
-
-def __repr__(self):
-    return f"<Project {self.judul}>"
+    def __repr__(self):
+        return f"<ContactMessage {self.sender_email}>"
 
 
 class ActivityLog(db.Model):

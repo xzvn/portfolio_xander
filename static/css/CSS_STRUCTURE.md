@@ -30,3 +30,11 @@ Urutan pemanggilan pada `templates/base.html` jangan diubah karena CSS masih men
 - Selector lama yang tidak dipakai oleh template publik atau JavaScript publik telah dihapus secara konservatif.
 - File CSS kosong yang tidak digunakan telah dihapus.
 - Sintaks semua file CSS telah divalidasi.
+
+
+## Lapisan alur pengguna
+
+- `portfolio-user-flow.css` dimuat paling akhir.
+- File ini membedakan kartu informasi dari tombol, memperjelas navigasi
+  mobile, menyusun ulang alur Home, dan memberi CTA langkah berikutnya.
+- Jangan menambahkan efek klik pada kartu yang tidak melakukan tindakan.

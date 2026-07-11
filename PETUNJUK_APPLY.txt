@@ -1,0 +1,36 @@
+PATCH ALUR PORTFOLIO YANG LEBIH USER FRIENDLY
+
+Project acuan:
+portfolio_xander(3).zip
+
+Cara memasang:
+1. Backup project saat ini.
+2. Ekstrak ZIP patch.
+3. Salin seluruh isi folder patch ke root project:
+   D:\PA ASDOS\portfolio_xander
+4. Pilih Replace the files in the destination.
+5. Jangan mengganti .env, database, atau folder admin.
+6. Restart Flask dan tekan Ctrl + F5.
+7. Setelah aman, jalankan:
+   git add .
+   git commit -m "Improve public portfolio user flow"
+   git push
+
+Perubahan utama:
+- Home sekarang mengalir: perkenalan -> proyek -> ringkasan -> kemampuan
+  dan pengalaman -> kontak.
+- Statistik tidak lagi berfungsi seperti tombol.
+- Kartu informasi tidak lagi semuanya memiliki efek tilt.
+- Navigasi mobile memiliki deskripsi singkat.
+- Bagian bawah setiap halaman mengarahkan ke langkah berikutnya.
+- embedded_templates.py sudah diperbarui untuk deployment Vercel.
+
+File baru:
+- static/css/portfolio-user-flow.css
+
+File yang diganti:
+- embedded_templates.py
+- templates/base.html
+- seluruh template publik
+- static/js/public-interactions.js
+- static/css/CSS_STRUCTURE.md

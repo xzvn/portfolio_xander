@@ -83,6 +83,11 @@
       href="{{ url_for('static', filename='css/portfolio-layout-refinement.css') }}"
     />
 
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/portfolio-user-flow.css') }}"
+    />
+
     {% block styles %}{% endblock %}
   </head>
 
@@ -147,7 +152,8 @@
               aria-current="page"
             {% endif %}
           >
-            Home
+            <span class="navigation-link-title">Home</span>
+            <span class="navigation-link-description">Mulai dari sini</span>
           </a>
 
           <a
@@ -157,7 +163,8 @@
               aria-current="page"
             {% endif %}
           >
-            Tentang
+            <span class="navigation-link-title">Tentang</span>
+            <span class="navigation-link-description">Profil dan pendidikan</span>
           </a>
 
           <a
@@ -167,7 +174,8 @@
               aria-current="page"
             {% endif %}
           >
-            Skills
+            <span class="navigation-link-title">Skills</span>
+            <span class="navigation-link-description">Kemampuan utama</span>
           </a>
 
           <a
@@ -177,7 +185,8 @@
               aria-current="page"
             {% endif %}
           >
-            Pengalaman
+            <span class="navigation-link-title">Pengalaman</span>
+            <span class="navigation-link-description">Perjalanan yang dijalani</span>
           </a>
 
           <a
@@ -187,7 +196,8 @@
               aria-current="page"
             {% endif %}
           >
-            Proyek
+            <span class="navigation-link-title">Proyek</span>
+            <span class="navigation-link-description">Karya yang sudah dibuat</span>
           </a>
 
           <a
@@ -197,7 +207,8 @@
               aria-current="page"
             {% endif %}
           >
-            Kontak
+            <span class="navigation-link-title">Kontak</span>
+            <span class="navigation-link-description">Kirim pesan langsung</span>
           </a>
         </nav>
       </div>
@@ -241,10 +252,11 @@
       </div>
     </footer>
 
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://unpkg.com/lucide@latest" defer></script>
 
     <script
       src="{{ url_for('static', filename='js/public-interactions.js') }}"
+      defer
     ></script>
 
     <script>
