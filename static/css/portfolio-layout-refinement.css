@@ -1,0 +1,666 @@
+/* =========================================================
+   PORTFOLIO-LAYOUT-REFINEMENT.CSS
+   Final layout refinement for denser, cleaner use of space.
+   Loaded after all public page styles.
+   ========================================================= */
+
+:root {
+  --public-container: 1240px;
+  --layout-section-space: clamp(76px, 6.5vw, 94px);
+  --layout-section-space-mobile: 60px;
+  --layout-heading-gap: clamp(28px, 4vw, 54px);
+}
+
+html {
+  scroll-padding-top: 88px;
+}
+
+body {
+  min-width: 280px;
+  text-rendering: optimizeLegibility;
+}
+
+.public-container {
+  width: min(calc(100% - 48px), var(--public-container));
+}
+
+/* Keep paragraphs readable instead of letting text stretch across a section. */
+.hero-summary,
+.about-public-intro > p,
+.skills-hero-content > p,
+.experience-hero-content > p,
+.projects-hero-content > p,
+.contact-hero-content > p,
+.home-section-heading > p,
+.about-section-heading > p,
+.skills-section-heading > p,
+.experience-section-heading > p,
+.projects-section-heading > p,
+.contact-section-heading > p {
+  max-width: 60ch;
+}
+
+/* =========================================================
+   HERO — shorter and more balanced on desktop
+   ========================================================= */
+
+.two-tone-hero {
+  min-height: 650px;
+}
+
+.hero-dark-content {
+  width: min(100%, 760px);
+  padding-top: 72px;
+  padding-bottom: 72px;
+}
+
+.hero-small-title {
+  margin-top: 27px;
+}
+
+.hero-dark-content h1 {
+  max-width: 12ch;
+  font-size: clamp(50px, 5.4vw, 76px);
+}
+
+.hero-profession {
+  margin-top: 17px;
+}
+
+.hero-summary {
+  margin-top: 14px;
+  line-height: 1.75;
+}
+
+.hero-button-group {
+  margin-top: 24px;
+}
+
+.hero-contact-row {
+  margin-top: 22px;
+}
+
+.about-public-hero,
+.skills-public-hero,
+.experience-public-hero,
+.projects-public-hero,
+.contact-public-hero {
+  padding-top: 132px;
+  padding-bottom: 88px;
+}
+
+.about-public-hero-layout,
+.skills-hero-layout,
+.experience-hero-layout,
+.projects-hero-layout,
+.contact-hero-layout {
+  gap: clamp(48px, 5vw, 74px);
+}
+
+.about-public-intro h1,
+.skills-hero-content h1,
+.experience-hero-content h1,
+.projects-hero-content h1,
+.contact-hero-content h1 {
+  max-width: 14ch;
+  font-size: clamp(44px, 4.8vw, 66px);
+}
+
+.about-public-intro > p,
+.skills-hero-content > p,
+.experience-hero-content > p,
+.projects-hero-content > p,
+.contact-hero-content > p {
+  margin-top: 18px;
+  line-height: 1.75;
+}
+
+.about-public-actions,
+.skills-hero-actions,
+.experience-hero-actions,
+.projects-hero-actions,
+.contact-hero-actions {
+  margin-top: 25px;
+}
+
+.skills-visual-main,
+.experience-visual-card,
+.projects-visual-window,
+.contact-visual-card {
+  min-height: 330px;
+}
+
+/* =========================================================
+   SECTION RHYTHM — use vertical space more efficiently
+   ========================================================= */
+
+.home-explore-section,
+.featured-project-section,
+.home-contact-section,
+.about-profile-section,
+.about-education-section,
+.about-cta-section,
+.skills-collection-section,
+.skills-process-section,
+.skills-cta-section,
+.experience-collection-section,
+.experience-values-section,
+.experience-cta-section,
+.projects-collection-section,
+.projects-process-section,
+.projects-cta-section,
+.contact-main-section,
+.contact-collaboration-section,
+.contact-cta-section {
+  padding-top: var(--layout-section-space);
+  padding-bottom: var(--layout-section-space);
+}
+
+.home-contact-section,
+.about-cta-section,
+.skills-cta-section,
+.experience-cta-section,
+.projects-cta-section,
+.contact-cta-section {
+  padding-top: 0;
+}
+
+.home-section-heading,
+.featured-project-heading,
+.about-section-heading,
+.skills-section-heading,
+.experience-section-heading,
+.projects-section-heading,
+.contact-section-heading {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 410px);
+  align-items: end;
+  gap: var(--layout-heading-gap);
+  margin-bottom: 34px;
+}
+
+.home-section-heading > p,
+.about-section-heading > p,
+.skills-section-heading > p,
+.experience-section-heading > p,
+.projects-section-heading > p,
+.contact-section-heading > p {
+  justify-self: end;
+  line-height: 1.7;
+}
+
+.home-section-heading h2,
+.featured-project-heading h2,
+.about-section-heading h2,
+.skills-section-heading h2,
+.experience-section-heading h2,
+.projects-section-heading h2,
+.contact-section-heading h2 {
+  max-width: 18ch;
+  line-height: 1.1;
+}
+
+/* =========================================================
+   HOME — reduce oversized empty card areas
+   ========================================================= */
+
+.home-explore-grid {
+  gap: 18px;
+}
+
+.home-explore-card {
+  display: flex;
+  min-height: 260px;
+  flex-direction: column;
+  padding: 25px;
+}
+
+.home-explore-card h3 {
+  margin-top: 30px;
+}
+
+.home-explore-card p {
+  max-width: 36ch;
+  line-height: 1.65;
+}
+
+.explore-card-action {
+  position: static;
+  margin-top: auto;
+  padding-top: 24px;
+}
+
+.featured-project-slider,
+.featured-project-slide,
+.featured-project-image {
+  min-height: 380px;
+}
+
+.featured-project-content {
+  padding: 40px;
+}
+
+.featured-project-content > p {
+  max-width: 52ch;
+  line-height: 1.7;
+}
+
+.home-contact-card,
+.about-cta-card,
+.skills-cta-card,
+.experience-cta-card,
+.projects-cta-card,
+.contact-cta-card {
+  min-height: 220px;
+  padding: 40px;
+}
+
+/* =========================================================
+   INFORMATION AND COLLECTION CARDS
+   ========================================================= */
+
+.about-profile-layout,
+.contact-main-layout {
+  gap: 20px;
+}
+
+.about-story-card,
+.about-education-main,
+.about-education-details,
+.contact-information-panel,
+.contact-form-panel {
+  padding: 30px;
+}
+
+.about-information-card {
+  min-height: 165px;
+}
+
+.public-skills-grid {
+  gap: 18px;
+}
+
+.public-skill-item {
+  min-height: 240px;
+  padding: 23px;
+}
+
+.public-skill-item-content p,
+.skills-process-card p,
+.experience-value-card p,
+.projects-process-card p,
+.contact-collaboration-card p {
+  max-width: 42ch;
+  line-height: 1.65;
+}
+
+.skills-process-card,
+.experience-value-card,
+.projects-process-card,
+.contact-collaboration-card {
+  min-height: 220px;
+  padding: 24px;
+}
+
+.skills-process-card h3,
+.experience-value-card h3,
+.projects-process-card h3,
+.contact-collaboration-card h3 {
+  margin-top: 30px;
+}
+
+.experience-public-card {
+  padding: 25px;
+}
+
+.experience-card-description {
+  max-width: 78ch;
+  line-height: 1.7;
+}
+
+.public-projects-grid {
+  gap: 20px;
+}
+
+.public-project-item-image {
+  height: 265px;
+  min-height: 0;
+}
+
+.public-project-item-content {
+  padding: 24px;
+}
+
+.public-project-item-content > p {
+  min-height: 0;
+  max-width: 58ch;
+  line-height: 1.7;
+}
+
+.projects-process-grid,
+.contact-collaboration-grid,
+.skills-process-grid,
+.experience-values-grid {
+  gap: 18px;
+}
+
+/* Contact panel no longer forces both columns to hold unnecessary blank space. */
+.contact-main-layout {
+  align-items: start;
+}
+
+.contact-information-panel {
+  min-height: 560px;
+}
+
+.contact-form-panel {
+  min-height: 0;
+}
+
+.contact-information-list {
+  margin-top: 24px;
+}
+
+.contact-social-section {
+  padding-top: 24px;
+}
+
+.contact-textarea-wrapper textarea {
+  min-height: 140px;
+}
+
+/* =========================================================
+   FOOTER ADMIN ENTRY
+   ========================================================= */
+
+.footer-admin-link {
+  display: inline-flex;
+  min-height: 36px;
+  align-items: center;
+  gap: 9px;
+  border-radius: 8px;
+  color: var(--public-dark);
+  text-decoration: none;
+  transition:
+    color 0.2s ease,
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.footer-admin-link strong {
+  transition: color 0.2s ease;
+}
+
+.footer-admin-hint {
+  display: inline-flex;
+  max-width: 0;
+  align-items: center;
+  gap: 5px;
+  overflow: hidden;
+  color: var(--home-indigo);
+  font-size: 8px;
+  font-weight: 700;
+  opacity: 0;
+  white-space: nowrap;
+  transition:
+    max-width 0.25s ease,
+    opacity 0.2s ease;
+}
+
+.footer-admin-hint svg {
+  width: 12px;
+  height: 12px;
+}
+
+.footer-admin-link:hover,
+.footer-admin-link:focus-visible {
+  color: var(--home-indigo);
+  transform: translateY(-1px);
+}
+
+.footer-admin-link:hover .footer-admin-hint,
+.footer-admin-link:focus-visible .footer-admin-hint {
+  max-width: 70px;
+  opacity: 1;
+}
+
+.footer-admin-link:focus-visible {
+  outline: 3px solid rgba(88, 105, 215, 0.22);
+  outline-offset: 4px;
+}
+
+/* =========================================================
+   RESPONSIVE REFINEMENT
+   ========================================================= */
+
+@media (max-width: 1050px) {
+  .public-container {
+    width: min(calc(100% - 40px), var(--public-container));
+  }
+
+  .two-tone-hero {
+    min-height: auto;
+  }
+
+  .hero-indigo-panel {
+    min-height: 500px;
+  }
+
+  .interactive-profile-card {
+    margin-top: 54px;
+    margin-bottom: 54px;
+  }
+}
+
+@media (max-width: 820px) {
+  .about-public-hero,
+  .skills-public-hero,
+  .experience-public-hero,
+  .projects-public-hero,
+  .contact-public-hero {
+    padding-top: 112px;
+    padding-bottom: 68px;
+  }
+
+  .home-section-heading,
+  .featured-project-heading,
+  .about-section-heading,
+  .skills-section-heading,
+  .experience-section-heading,
+  .projects-section-heading,
+  .contact-section-heading {
+    grid-template-columns: 1fr;
+    align-items: start;
+    gap: 16px;
+    margin-bottom: 30px;
+  }
+
+  .home-section-heading > p,
+  .about-section-heading > p,
+  .skills-section-heading > p,
+  .experience-section-heading > p,
+  .projects-section-heading > p,
+  .contact-section-heading > p {
+    justify-self: start;
+  }
+
+  .home-explore-section,
+  .featured-project-section,
+  .home-contact-section,
+  .about-profile-section,
+  .about-education-section,
+  .about-cta-section,
+  .skills-collection-section,
+  .skills-process-section,
+  .skills-cta-section,
+  .experience-collection-section,
+  .experience-values-section,
+  .experience-cta-section,
+  .projects-collection-section,
+  .projects-process-section,
+  .projects-cta-section,
+  .contact-main-section,
+  .contact-collaboration-section,
+  .contact-cta-section {
+    padding-top: var(--layout-section-space-mobile);
+    padding-bottom: var(--layout-section-space-mobile);
+  }
+
+  .home-contact-section,
+  .about-cta-section,
+  .skills-cta-section,
+  .experience-cta-section,
+  .projects-cta-section,
+  .contact-cta-section {
+    padding-top: 0;
+  }
+
+  .contact-information-panel {
+    min-height: auto;
+  }
+}
+
+@media (max-width: 700px) {
+  .public-container {
+    width: min(calc(100% - 28px), var(--public-container));
+  }
+
+  .hero-dark-content {
+    width: min(100% - 28px, 760px);
+    padding-top: 58px;
+    padding-bottom: 62px;
+  }
+
+  .hero-indigo-panel {
+    min-height: 420px;
+  }
+
+  .interactive-profile-card {
+    margin-top: 46px;
+    margin-bottom: 46px;
+  }
+
+  .home-explore-card,
+  .public-skill-item,
+  .skills-process-card,
+  .experience-value-card,
+  .projects-process-card,
+  .contact-collaboration-card {
+    min-height: auto;
+  }
+
+  .featured-project-content,
+  .home-contact-card,
+  .about-cta-card,
+  .skills-cta-card,
+  .experience-cta-card,
+  .projects-cta-card,
+  .contact-cta-card {
+    padding: 30px 24px;
+  }
+
+  .featured-project-slider,
+  .featured-project-slide {
+    min-height: 0;
+  }
+
+  .featured-project-image {
+    min-height: 260px;
+  }
+
+  .footer-admin-hint {
+    max-width: 70px;
+    opacity: 1;
+  }
+}
+
+@media (max-width: 520px) {
+  .hero-dark-content h1,
+  .about-public-intro h1,
+  .skills-hero-content h1,
+  .experience-hero-content h1,
+  .projects-hero-content h1,
+  .contact-hero-content h1 {
+    font-size: clamp(38px, 11vw, 46px);
+  }
+
+  .hero-summary,
+  .about-public-intro > p,
+  .skills-hero-content > p,
+  .experience-hero-content > p,
+  .projects-hero-content > p,
+  .contact-hero-content > p {
+    line-height: 1.7;
+  }
+
+  .home-explore-section,
+  .featured-project-section,
+  .home-contact-section,
+  .about-profile-section,
+  .about-education-section,
+  .about-cta-section,
+  .skills-collection-section,
+  .skills-process-section,
+  .skills-cta-section,
+  .experience-collection-section,
+  .experience-values-section,
+  .experience-cta-section,
+  .projects-collection-section,
+  .projects-process-section,
+  .projects-cta-section,
+  .contact-main-section,
+  .contact-collaboration-section,
+  .contact-cta-section {
+    padding-top: 52px;
+    padding-bottom: 52px;
+  }
+
+  .home-contact-section,
+  .about-cta-section,
+  .skills-cta-section,
+  .experience-cta-section,
+  .projects-cta-section,
+  .contact-cta-section {
+    padding-top: 0;
+  }
+
+  .home-explore-card,
+  .about-story-card,
+  .about-education-main,
+  .about-education-details,
+  .contact-information-panel,
+  .contact-form-panel,
+  .public-skill-item,
+  .experience-public-card,
+  .public-project-item-content,
+  .skills-process-card,
+  .experience-value-card,
+  .projects-process-card,
+  .contact-collaboration-card {
+    padding: 22px;
+  }
+
+  .public-project-item-image {
+    height: 220px;
+  }
+
+  .contact-textarea-wrapper textarea {
+    min-height: 130px;
+  }
+
+  .public-footer {
+    padding: 24px 0;
+  }
+
+  .footer-content {
+    gap: 14px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .footer-admin-link,
+  .footer-admin-link strong,
+  .footer-admin-hint {
+    transition: none;
+  }
+}
