@@ -11,6 +11,7 @@ from flask import (
     request,
 )
 from flask_login import LoginManager
+from jinja2 import TemplateNotFound
 from markupsafe import escape
 from sqlalchemy import text
 
@@ -31,6 +32,11 @@ from routes.projects import projects_bp
 from routes.skills import skills_bp
 from utils.cloudinary_config import configure_cloudinary
 
+try:
+    from template_loader import configure_template_loader
+except (ImportError, ModuleNotFoundError):
+    configure_template_loader = None
+
 
 BASE_DIR = Path(__file__).resolve().parent
 TEMPLATE_DIR = BASE_DIR / "templates"
@@ -46,6 +52,12 @@ def create_app():
         static_folder=str(STATIC_DIR),
         static_url_path="/static",
     )
+
+    if configure_template_loader is not None:
+        configure_template_loader(
+            app,
+            TEMPLATE_DIR,
+        )
 
     app.config.from_object(Config)
     app.config["MAX_CONTENT_LENGTH"] = 5 * 1024 * 1024
@@ -165,12 +177,22 @@ def create_app():
 
     @app.get("/health")
     def health():
+        try:
+            app.jinja_env.get_template("public/home.html")
+            template_loaded = True
+        except TemplateNotFound:
+            template_loaded = False
+
         return jsonify(
             {
                 "status": "ok",
-                "template_exists": (
+                "template_loaded": template_loaded,
+                "filesystem_template_exists": (
                     TEMPLATE_DIR / "public" / "home.html"
                 ).is_file(),
+                "embedded_loader_enabled": (
+                    configure_template_loader is not None
+                ),
             }
         )
 
