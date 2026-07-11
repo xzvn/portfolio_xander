@@ -1,0 +1,1082 @@
+{% extends "base.html" %} {% block title %} Kontak | {{ profile.nama_lengkap if
+profile else "Portfolio Xander" }} {% endblock %} {% block content %} {% set
+contact_email = profile.email if profile and profile.email else "" %} {% set
+contact_phone = "" %} {% if profile %} {% if profile.no_telepon %} {% set
+contact_phone = profile.no_telepon %} {% elif profile.telepon %} {% set
+contact_phone = profile.telepon %} {% elif profile.phone %} {% set contact_phone
+= profile.phone %} {% endif %} {% endif %} {% set github_url = profile.github if
+profile and profile.github else "" %} {% set linkedin_url = profile.linkedin if
+profile and profile.linkedin else "" %}
+
+<div class="contact-public-page">
+  <!-- HERO -->
+  <section class="contact-public-hero">
+    <div class="public-container contact-hero-layout">
+      <div class="contact-hero-content contact-reveal">
+        <span class="contact-page-label"> HUBUNGI SAYA </span>
+
+        <h1
+          data-typewriter
+          data-typewriter-speed="50"
+          data-typewriter-delay="400"
+        >
+          Mari berdiskusi dan membangun sesuatu yang bermanfaat.
+        </h1>
+
+        <p>
+          Terbuka untuk berdiskusi mengenai proyek, kolaborasi, pengembangan
+          sistem, maupun kesempatan untuk belajar dan bertumbuh bersama.
+        </p>
+
+        <div class="contact-hero-actions">
+          <a href="#contactSection" class="contact-primary-button">
+            <i data-lucide="message-square-text"></i>
+            Kirim Pesan
+          </a>
+
+          <a href="{{ url_for('projects') }}" class="contact-secondary-button">
+            <i data-lucide="folder-kanban"></i>
+            Lihat Proyek
+          </a>
+        </div>
+      </div>
+
+      <div class="contact-hero-visual contact-reveal">
+        <div class="contact-visual-card">
+          <div class="contact-visual-header">
+            <span class="contact-visual-icon">
+              <i data-lucide="send"></i>
+            </span>
+
+            <div>
+              <small>Contact Center</small>
+              <strong>Mari Terhubung</strong>
+            </div>
+          </div>
+
+          <div class="contact-visual-message">
+            <span class="contact-message-avatar">
+              {% if profile and profile.foto_url %}
+              <img
+                src="{{ profile.foto_url }}"
+                alt="{{ profile.nama_lengkap }}"
+              />
+              {% else %}
+              <i data-lucide="user-round"></i>
+              {% endif %}
+            </span>
+
+            <div class="contact-message-bubble">
+              <strong> Halo! </strong>
+
+              <p>
+                Terima kasih telah mengunjungi portfolio saya. Silakan kirimkan
+                pesan untuk memulai diskusi.
+              </p>
+
+              <small> Siap membalas pesan Anda </small>
+            </div>
+          </div>
+
+          <div class="contact-availability">
+            <span></span>
+
+            <div>
+              <strong>Tersedia untuk berdiskusi</strong>
+              <small>Respon akan diberikan secepatnya</small>
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-floating-card contact-floating-top">
+          <span>
+            <i data-lucide="mail"></i>
+          </span>
+
+          <div>
+            <strong>Email</strong>
+            <small>Komunikasi secara langsung</small>
+          </div>
+        </div>
+
+        <div class="contact-floating-card contact-floating-bottom">
+          <span>
+            <i data-lucide="messages-square"></i>
+          </span>
+
+          <div>
+            <strong>Kolaborasi</strong>
+            <small>Mari bertukar gagasan</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATISTIK -->
+  <section class="contact-statistics-section">
+    <div class="public-container">
+      <div class="contact-statistics-grid contact-reveal">
+        <a
+          href="{{ url_for('projects') }}"
+          class="contact-statistic-card"
+          aria-label="Buka halaman proyek"
+        >
+          <span>
+            <i data-lucide="folder-kanban"></i>
+          </span>
+
+          <div>
+            <strong
+              class="contact-animated-number"
+              data-target="{{ projects|length }}"
+            >
+              0
+            </strong>
+
+            <p>Proyek</p>
+          </div>
+
+          <i
+            data-lucide="arrow-up-right"
+            class="public-statistic-link-arrow"
+          ></i>
+        </a>
+
+        <a
+          href="{{ url_for('skills') }}"
+          class="contact-statistic-card"
+          aria-label="Buka halaman skills"
+        >
+          <span>
+            <i data-lucide="badge-check"></i>
+          </span>
+
+          <div>
+            <strong
+              class="contact-animated-number"
+              data-target="{{ skills|length }}"
+            >
+              0
+            </strong>
+
+            <p>Skills</p>
+          </div>
+
+          <i
+            data-lucide="arrow-up-right"
+            class="public-statistic-link-arrow"
+          ></i>
+        </a>
+
+        <a
+          href="{{ url_for('experience') }}"
+          class="contact-statistic-card"
+          aria-label="Buka halaman pengalaman"
+        >
+          <span>
+            <i data-lucide="briefcase-business"></i>
+          </span>
+
+          <div>
+            <strong
+              class="contact-animated-number"
+              data-target="{{ experiences|length }}"
+            >
+              0
+            </strong>
+
+            <p>Pengalaman</p>
+          </div>
+
+          <i
+            data-lucide="arrow-up-right"
+            class="public-statistic-link-arrow"
+          ></i>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- KONTAK UTAMA -->
+  <section class="contact-main-section" id="contactSection">
+    <div class="public-container">
+      <div class="contact-section-heading contact-reveal">
+        <div>
+          <span class="contact-section-label"> KONTAK </span>
+
+          <h2>Mari memulai percakapan</h2>
+        </div>
+
+        <p>
+          Gunakan informasi kontak atau formulir berikut untuk menyampaikan
+          pesan, gagasan, maupun kebutuhan proyek.
+        </p>
+      </div>
+
+      <div class="contact-main-layout">
+        <!-- INFORMASI KONTAK -->
+        <div class="contact-information-panel contact-reveal">
+          <div class="contact-information-heading">
+            <span> INFORMASI KONTAK </span>
+
+            <h3>Terhubung dengan saya</h3>
+
+            <p>
+              Pilih metode komunikasi yang paling sesuai. Informasi berikut
+              berasal dari data profil.
+            </p>
+          </div>
+
+          <div class="contact-information-list">
+            <!-- EMAIL -->
+            <article
+              class="contact-information-item"
+              tabindex="0"
+              aria-pressed="false"
+            >
+              <span class="contact-information-icon">
+                <i data-lucide="mail"></i>
+              </span>
+
+              <div>
+                <small>Email</small>
+
+                {% if contact_email %}
+                <a href="mailto:{{ contact_email }}"> {{ contact_email }} </a>
+                {% else %}
+                <strong>Belum tersedia</strong>
+                {% endif %}
+              </div>
+
+              {% if contact_email %}
+              <button
+                type="button"
+                class="copy-contact-button"
+                data-copy="{{ contact_email }}"
+                aria-label="Salin alamat email"
+              >
+                <i data-lucide="copy"></i>
+              </button>
+              {% endif %}
+            </article>
+
+            <!-- TELEPON -->
+            <article
+              class="contact-information-item"
+              tabindex="0"
+              aria-pressed="false"
+            >
+              <span class="contact-information-icon">
+                <i data-lucide="phone"></i>
+              </span>
+
+              <div>
+                <small>Nomor Telepon</small>
+
+                {% if contact_phone %}
+                <a href="tel:{{ contact_phone }}"> {{ contact_phone }} </a>
+                {% else %}
+                <strong>Belum tersedia</strong>
+                {% endif %}
+              </div>
+
+              {% if contact_phone %}
+              <button
+                type="button"
+                class="copy-contact-button"
+                data-copy="{{ contact_phone }}"
+                aria-label="Salin nomor telepon"
+              >
+                <i data-lucide="copy"></i>
+              </button>
+              {% endif %}
+            </article>
+
+            <!-- STATUS -->
+            <article
+              class="contact-information-item"
+              tabindex="0"
+              aria-pressed="false"
+            >
+              <span class="contact-information-icon">
+                <i data-lucide="circle-check-big"></i>
+              </span>
+
+              <div>
+                <small>Status</small>
+                <strong>Terbuka untuk kolaborasi</strong>
+              </div>
+
+              <span class="contact-status-indicator"> Aktif </span>
+            </article>
+          </div>
+
+          <p class="contact-information-hint">
+            <i data-lucide="mouse-pointer-click"></i>
+            <span class="contact-hint-desktop">
+              Arahkan kursor untuk menyorot informasi
+            </span>
+            <span class="contact-hint-mobile">
+              Sentuh kartu untuk menyorot informasi
+            </span>
+          </p>
+
+          <!-- SOSIAL MEDIA -->
+          <div class="contact-social-section">
+            <span> TEMUKAN SAYA </span>
+
+            <div class="contact-social-list">
+              {% if github_url %}
+              <a
+                href="{{ github_url }}"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <i data-lucide="github"></i>
+                GitHub
+                <i data-lucide="arrow-up-right"></i>
+              </a>
+              {% endif %} {% if linkedin_url %}
+              <a
+                href="{{ linkedin_url }}"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <i data-lucide="linkedin"></i>
+                LinkedIn
+                <i data-lucide="arrow-up-right"></i>
+              </a>
+              {% endif %} {% if not github_url and not linkedin_url %}
+              <p>Tautan media sosial belum ditambahkan.</p>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+
+        <!-- FORMULIR -->
+        <div class="contact-form-panel contact-reveal">
+          <div class="contact-form-heading">
+            <span class="contact-form-icon">
+              <i data-lucide="message-square-text"></i>
+            </span>
+
+            <div>
+              <small>KIRIM PESAN</small>
+              <h3>Tuliskan pesan Anda</h3>
+            </div>
+          </div>
+
+          <form
+            id="contactPublicForm"
+            data-endpoint="{{ url_for('send_contact_email') }}"
+            novalidate
+          >
+            <div class="contact-form-grid">
+              <div class="contact-form-group">
+                <label for="contactName">
+                  Nama
+                  <span>*</span>
+                </label>
+
+                <div class="contact-input-wrapper">
+                  <i data-lucide="user-round"></i>
+
+                  <input
+                    type="text"
+                    id="contactName"
+                    name="name"
+                    placeholder="Masukkan nama Anda"
+                    required
+                  />
+                </div>
+
+                <small class="contact-field-error"></small>
+              </div>
+
+              <div class="contact-form-group">
+                <label for="contactEmail">
+                  Email
+                  <span>*</span>
+                </label>
+
+                <div class="contact-input-wrapper">
+                  <i data-lucide="mail"></i>
+
+                  <input
+                    type="email"
+                    id="contactEmail"
+                    name="email"
+                    placeholder="nama@email.com"
+                    required
+                  />
+                </div>
+
+                <small class="contact-field-error"></small>
+              </div>
+            </div>
+
+            <div class="contact-form-group">
+              <label for="contactSubject">
+                Subjek
+                <span>*</span>
+              </label>
+
+              <div class="contact-input-wrapper">
+                <i data-lucide="text"></i>
+
+                <input
+                  type="text"
+                  id="contactSubject"
+                  name="subject"
+                  placeholder="Tuliskan subjek pesan"
+                  required
+                />
+              </div>
+
+              <small class="contact-field-error"></small>
+            </div>
+
+            <div class="contact-form-group">
+              <div class="contact-textarea-label">
+                <label for="contactMessage">
+                  Pesan
+                  <span>*</span>
+                </label>
+
+                <small> <span id="contactCharacterCount">0</span>/500 </small>
+              </div>
+
+              <div class="contact-textarea-wrapper">
+                <i data-lucide="message-square-more"></i>
+
+                <textarea
+                  id="contactMessage"
+                  name="message"
+                  rows="7"
+                  maxlength="500"
+                  placeholder="Tuliskan pesan Anda..."
+                  required
+                ></textarea>
+              </div>
+
+              <small class="contact-field-error"></small>
+            </div>
+
+            <button
+              type="submit"
+              class="contact-submit-button"
+              id="contactSubmitButton"
+            >
+              <span class="contact-submit-default">
+                <span>Kirim Pesan</span>
+                <i data-lucide="send"></i>
+              </span>
+
+              <span class="contact-submit-loading" aria-hidden="true">
+                <span class="contact-submit-spinner"></span>
+                Mengirim pesan...
+              </span>
+            </button>
+
+            <div
+              class="contact-form-notification"
+              id="contactFormNotification"
+              hidden
+            >
+              <i data-lucide="info"></i>
+              <span></span>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PILIHAN KOLABORASI -->
+  <section class="contact-collaboration-section">
+    <div class="public-container">
+      <div class="contact-section-heading contact-reveal">
+        <div>
+          <span class="contact-section-label"> KOLABORASI </span>
+
+          <h2>Hal yang dapat kita diskusikan</h2>
+        </div>
+
+        <p>
+          Beberapa topik yang dapat menjadi awal untuk bertukar gagasan dan
+          membangun solusi.
+        </p>
+      </div>
+
+      <div class="contact-collaboration-grid">
+        <article
+          class="contact-collaboration-card contact-reveal"
+          tabindex="0"
+          aria-pressed="false"
+        >
+          <span class="contact-collaboration-number"> 01 </span>
+
+          <span class="contact-collaboration-icon">
+            <i data-lucide="code-2"></i>
+          </span>
+
+          <h3>Pengembangan Sistem</h3>
+
+          <p>
+            Diskusi mengenai aplikasi web, sistem informasi, database, dan
+            implementasi fitur.
+          </p>
+        </article>
+
+        <article
+          class="contact-collaboration-card contact-reveal"
+          tabindex="0"
+          aria-pressed="false"
+        >
+          <span class="contact-collaboration-number"> 02 </span>
+
+          <span class="contact-collaboration-icon">
+            <i data-lucide="panels-top-left"></i>
+          </span>
+
+          <h3>Perancangan Tampilan</h3>
+
+          <p>
+            Membahas struktur halaman, pengalaman pengguna, dan tampilan
+            antarmuka.
+          </p>
+        </article>
+
+        <article
+          class="contact-collaboration-card contact-reveal"
+          tabindex="0"
+          aria-pressed="false"
+        >
+          <span class="contact-collaboration-number"> 03 </span>
+
+          <span class="contact-collaboration-icon">
+            <i data-lucide="lightbulb"></i>
+          </span>
+
+          <h3>Pertukaran Gagasan</h3>
+
+          <p>
+            Berbagi wawasan, pengalaman, dan ide baru untuk menyelesaikan
+            permasalahan.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="contact-cta-section">
+    <div class="public-container">
+      <div class="contact-cta-card contact-reveal">
+        <div>
+          <span> JELAJAHI PORTFOLIO </span>
+
+          <h2>Kenali lebih jauh proses dan hasil karya saya.</h2>
+
+          <p>
+            Lihat kemampuan, pengalaman, dan proyek yang telah saya kerjakan
+            selama proses pembelajaran.
+          </p>
+        </div>
+
+        <a href="{{ url_for('projects') }}" class="contact-cta-button">
+          <i data-lucide="folder-kanban"></i>
+          Lihat Proyek
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- TOAST -->
+  <div
+    class="contact-copy-toast"
+    id="contactCopyToast"
+    role="status"
+    aria-live="polite"
+  >
+    <i data-lucide="check"></i>
+    <span>Berhasil disalin</span>
+  </div>
+</div>
+{% endblock %} {% block scripts %}
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    /*
+     * Reveal animation.
+     */
+    const revealElements = document.querySelectorAll(".contact-reveal");
+
+    const revealObserver = new IntersectionObserver(
+      (entries, observer) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) {
+            return;
+          }
+
+          entry.target.classList.add("visible");
+          observer.unobserve(entry.target);
+        });
+      },
+      {
+        threshold: 0.12,
+      },
+    );
+
+    revealElements.forEach((element) => {
+      revealObserver.observe(element);
+    });
+
+    /*
+     * Animated statistics.
+     */
+    const numberElements = document.querySelectorAll(
+      ".contact-animated-number",
+    );
+
+    const numberObserver = new IntersectionObserver(
+      (entries, observer) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) {
+            return;
+          }
+
+          const element = entry.target;
+
+          const target = Number(element.dataset.target || 0);
+
+          let current = 0;
+
+          const increment = Math.max(1, Math.ceil(target / 20));
+
+          const timer = window.setInterval(() => {
+            current += increment;
+
+            if (current >= target) {
+              element.textContent = target;
+              window.clearInterval(timer);
+              return;
+            }
+
+            element.textContent = current;
+          }, 35);
+
+          observer.unobserve(element);
+        });
+      },
+      {
+        threshold: 0.7,
+      },
+    );
+
+    numberElements.forEach((element) => {
+      numberObserver.observe(element);
+    });
+
+    /*
+     * Interaksi kartu informasi dan kolaborasi.
+     */
+    const isTouchDevice = window.matchMedia(
+      "(hover: none), (pointer: coarse)",
+    ).matches;
+
+    const interactiveContactCards = document.querySelectorAll(
+      ".contact-information-item, .contact-collaboration-card",
+    );
+
+    let activeTouchCard = null;
+
+    const activateContactCard = (card) => {
+      if (!card) {
+        return;
+      }
+
+      card.classList.add("is-contact-active");
+      card.setAttribute("aria-pressed", "true");
+    };
+
+    const deactivateContactCard = (card) => {
+      if (!card) {
+        return;
+      }
+
+      card.classList.remove("is-contact-active");
+      card.setAttribute("aria-pressed", "false");
+    };
+
+    const toggleTouchCard = (card) => {
+      const alreadyActive = card.classList.contains("is-contact-active");
+
+      if (activeTouchCard && activeTouchCard !== card) {
+        deactivateContactCard(activeTouchCard);
+      }
+
+      if (alreadyActive && activeTouchCard === card) {
+        deactivateContactCard(card);
+        activeTouchCard = null;
+        return;
+      }
+
+      activateContactCard(card);
+      activeTouchCard = card;
+    };
+
+    interactiveContactCards.forEach((card) => {
+      if (!isTouchDevice) {
+        card.addEventListener("mouseenter", () => {
+          activateContactCard(card);
+        });
+
+        card.addEventListener("mouseleave", () => {
+          deactivateContactCard(card);
+        });
+
+        card.addEventListener("focus", () => {
+          activateContactCard(card);
+        });
+
+        card.addEventListener("blur", () => {
+          deactivateContactCard(card);
+        });
+      }
+
+      card.addEventListener("click", (event) => {
+        if (!isTouchDevice) {
+          return;
+        }
+
+        if (event.target.closest("a, button")) {
+          return;
+        }
+
+        toggleTouchCard(card);
+      });
+
+      card.addEventListener("keydown", (event) => {
+        if (event.target !== card) {
+          return;
+        }
+
+        if (event.key !== "Enter" && event.key !== " ") {
+          return;
+        }
+
+        event.preventDefault();
+        toggleTouchCard(card);
+      });
+    });
+
+    /*
+     * Copy email or phone.
+     */
+    const copyButtons = document.querySelectorAll(".copy-contact-button");
+
+    const copyToast = document.getElementById("contactCopyToast");
+
+    let toastTimer = null;
+
+    const showCopyToast = (message = "Berhasil disalin") => {
+      if (!copyToast) {
+        return;
+      }
+
+      const toastText = copyToast.querySelector("span");
+
+      if (toastText) {
+        toastText.textContent = message;
+      }
+
+      copyToast.classList.add("show");
+
+      window.clearTimeout(toastTimer);
+
+      toastTimer = window.setTimeout(() => {
+        copyToast.classList.remove("show");
+      }, 2200);
+    };
+
+    copyButtons.forEach((button) => {
+      button.addEventListener("click", async () => {
+        const value = button.dataset.copy || "";
+
+        if (!value) {
+          return;
+        }
+
+        const contactCard = button.closest(".contact-information-item");
+
+        activateContactCard(contactCard);
+        button.classList.add("is-copy-success");
+
+        try {
+          await navigator.clipboard.writeText(value);
+        } catch (error) {
+          const temporaryInput = document.createElement("textarea");
+
+          temporaryInput.value = value;
+          document.body.appendChild(temporaryInput);
+          temporaryInput.select();
+
+          document.execCommand("copy");
+          temporaryInput.remove();
+        }
+
+        showCopyToast(
+          button.getAttribute("aria-label")?.includes("telepon")
+            ? "Nomor telepon berhasil disalin"
+            : "Alamat email berhasil disalin",
+        );
+
+        window.setTimeout(() => {
+          button.classList.remove("is-copy-success");
+
+          if (!isTouchDevice) {
+            deactivateContactCard(contactCard);
+          }
+        }, 850);
+      });
+    });
+
+    /*
+     * Contact form.
+     */
+    const form = document.getElementById("contactPublicForm");
+
+    const messageInput = document.getElementById("contactMessage");
+
+    const characterCount = document.getElementById("contactCharacterCount");
+
+    const notification = document.getElementById("contactFormNotification");
+
+    const submitButton = document.getElementById("contactSubmitButton");
+
+    const formFields = form?.querySelectorAll("input, textarea") || [];
+
+    formFields.forEach((field) => {
+      const group = field.closest(".contact-form-group");
+
+      field.addEventListener("focus", () => {
+        group?.classList.add("is-field-active");
+      });
+
+      field.addEventListener("blur", () => {
+        group?.classList.remove("is-field-active");
+      });
+    });
+
+    const showNotification = (message, type = "info") => {
+      if (!notification) {
+        return;
+      }
+
+      notification.hidden = false;
+      notification.className = `contact-form-notification ${type}`;
+
+      const notificationText = notification.querySelector("span");
+
+      if (notificationText) {
+        notificationText.textContent = message;
+      }
+    };
+
+    messageInput?.addEventListener("input", () => {
+      if (characterCount) {
+        characterCount.textContent = messageInput.value.length;
+      }
+    });
+
+    const setFieldError = (field, message) => {
+      const group = field.closest(".contact-form-group");
+
+      const errorElement = group?.querySelector(".contact-field-error");
+
+      group?.classList.toggle("has-error", Boolean(message));
+
+      if (errorElement) {
+        errorElement.textContent = message;
+      }
+    };
+
+    const validateForm = () => {
+      if (!form) {
+        return false;
+      }
+
+      const name = form.elements.name.value.trim();
+
+      const email = form.elements.email.value.trim();
+
+      const subject = form.elements.subject.value.trim();
+
+      const message = form.elements.message.value.trim();
+
+      let valid = true;
+
+      setFieldError(form.elements.name, name ? "" : "Nama wajib diisi.");
+
+      if (!name) {
+        valid = false;
+      }
+
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      setFieldError(
+        form.elements.email,
+        !email
+          ? "Email wajib diisi."
+          : !emailPattern.test(email)
+            ? "Format email tidak valid."
+            : "",
+      );
+
+      if (!email || !emailPattern.test(email)) {
+        valid = false;
+      }
+
+      setFieldError(
+        form.elements.subject,
+        subject ? "" : "Subjek wajib diisi.",
+      );
+
+      if (!subject) {
+        valid = false;
+      }
+
+      setFieldError(form.elements.message, message ? "" : "Pesan wajib diisi.");
+
+      if (!message) {
+        valid = false;
+      }
+
+      return valid;
+    };
+
+    form?.querySelectorAll("input, textarea").forEach((field) => {
+      field.addEventListener("input", () => {
+        setFieldError(field, "");
+      });
+    });
+
+    const setSubmitLoading = (isLoading) => {
+      if (!submitButton) {
+        return;
+      }
+
+      submitButton.disabled = isLoading;
+      submitButton.classList.toggle("is-loading", isLoading);
+
+      submitButton.setAttribute("aria-busy", String(isLoading));
+    };
+
+    const resetContactForm = () => {
+      if (!form) {
+        return;
+      }
+
+      form.reset();
+
+      if (characterCount) {
+        characterCount.textContent = "0";
+      }
+
+      form.querySelectorAll(".contact-form-group").forEach((group) => {
+        group.classList.remove("has-error", "is-field-active");
+
+        const errorElement = group.querySelector(".contact-field-error");
+
+        if (errorElement) {
+          errorElement.textContent = "";
+        }
+      });
+    };
+
+    form?.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      if (submitButton?.disabled) {
+        return;
+      }
+
+      if (!validateForm()) {
+        showNotification("Periksa kembali kolom yang belum benar.", "error");
+
+        const firstInvalidField = form.querySelector(
+          ".contact-form-group.has-error input, " +
+            ".contact-form-group.has-error textarea",
+        );
+
+        firstInvalidField?.focus();
+        return;
+      }
+
+      const endpoint = form.dataset.endpoint || "";
+
+      if (!endpoint) {
+        showNotification("Endpoint pengiriman pesan belum tersedia.", "error");
+        return;
+      }
+
+      const payload = {
+        name: form.elements.name.value.trim(),
+        email: form.elements.email.value.trim(),
+        subject: form.elements.subject.value.trim(),
+        message: form.elements.message.value.trim(),
+      };
+
+      setSubmitLoading(true);
+
+      if (notification) {
+        notification.hidden = true;
+      }
+
+      try {
+        const response = await fetch(endpoint, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify(payload),
+        });
+
+        let result = {};
+
+        try {
+          result = await response.json();
+        } catch (error) {
+          result = {};
+        }
+
+        if (!response.ok) {
+          throw new Error(result.message || "Pesan belum berhasil dikirim.");
+        }
+
+        showNotification(
+          result.message ||
+            "Pesan berhasil dikirim. Terima kasih telah menghubungi saya.",
+          "success",
+        );
+
+        resetContactForm();
+
+        window.setTimeout(() => {
+          form.elements.name?.focus();
+        }, 120);
+      } catch (error) {
+        showNotification(
+          error.message ||
+            "Terjadi gangguan saat mengirim pesan. Silakan coba kembali.",
+          "error",
+        );
+      } finally {
+        setSubmitLoading(false);
+      }
+    });
+  });
+</script>
+{% endblock %}

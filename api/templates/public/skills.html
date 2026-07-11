@@ -1,0 +1,833 @@
+{% extends "base.html" %} {% block title %} Skills | {{ profile.nama_lengkap if
+profile else "Portfolio Xander" }} {% endblock %} {% block content %}
+<div class="skills-public-page">
+  <!-- HERO -->
+  <section class="skills-public-hero">
+    <div class="public-container skills-hero-layout">
+      <div class="skills-hero-content skills-reveal">
+        <span class="skills-page-label"> KEMAMPUAN </span>
+
+        <h1
+          data-typewriter
+          data-typewriter-speed="50"
+          data-typewriter-delay="400"
+        >
+          Kemampuan yang terus saya pelajari dan kembangkan.
+        </h1>
+
+        <p>
+          Kumpulan kemampuan teknis, pengolahan data, desain, dan penggunaan
+          berbagai perangkat pendukung yang saya pelajari melalui perkuliahan
+          maupun pengerjaan proyek.
+        </p>
+
+        <div class="skills-hero-actions">
+          <a href="#skillCollection" class="skills-primary-button">
+            <i data-lucide="arrow-down"></i>
+            Lihat Skills
+          </a>
+
+          <a href="{{ url_for('projects') }}" class="skills-secondary-button">
+            <i data-lucide="folder-kanban"></i>
+            Lihat Proyek
+          </a>
+        </div>
+      </div>
+
+      <div class="skills-hero-visual skills-reveal">
+        <div class="skills-visual-main">
+          <div class="skills-code-window">
+            <div class="skills-window-header">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+
+            <div class="skills-window-content">
+              <div class="skills-code-line">
+                <span class="code-number">01</span>
+                <span class="code-keyword">const</span>
+                <span class="code-variable">developer</span>
+                <span class="code-symbol">=</span>
+                <span class="code-bracket">{</span>
+              </div>
+
+              <div class="skills-code-line code-indent">
+                <span class="code-number">02</span>
+                <span class="code-property">skills</span>
+                <span class="code-symbol">:</span>
+                <span class="code-value"> {{ skills|length }} </span>
+                <span class="code-symbol">,</span>
+              </div>
+
+              <div class="skills-code-line code-indent">
+                <span class="code-number">03</span>
+                <span class="code-property">status</span>
+                <span class="code-symbol">:</span>
+                <span class="code-string"> "terus belajar" </span>
+                <span class="code-symbol">,</span>
+              </div>
+
+              <div class="skills-code-line code-indent">
+                <span class="code-number">04</span>
+                <span class="code-property">focus</span>
+                <span class="code-symbol">:</span>
+                <span class="code-string"> "teknologi" </span>
+              </div>
+
+              <div class="skills-code-line">
+                <span class="code-number">05</span>
+                <span class="code-bracket">};</span>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATISTIK -->
+  <section class="skills-statistics-section">
+    <div class="public-container">
+      <div class="skills-statistics-grid skills-reveal">
+        <a
+          href="#skillCollection"
+          class="skills-statistic-card"
+          aria-label="Lihat daftar seluruh skills"
+        >
+          <span class="skills-statistic-icon">
+            <i data-lucide="badge-check"></i>
+          </span>
+
+          <div>
+            <strong
+              class="skills-animated-number"
+              data-target="{{ skills|length }}"
+            >
+              0
+            </strong>
+
+            <p>Total Skills</p>
+          </div>
+
+          <i
+            data-lucide="arrow-up-right"
+            class="public-statistic-link-arrow"
+          ></i>
+        </a>
+
+        <a
+          href="{{ url_for('projects') }}"
+          class="skills-statistic-card"
+          aria-label="Buka halaman proyek"
+        >
+          <span class="skills-statistic-icon">
+            <i data-lucide="folder-kanban"></i>
+          </span>
+
+          <div>
+            <strong
+              class="skills-animated-number"
+              data-target="{{ projects|length }}"
+            >
+              0
+            </strong>
+
+            <p>Proyek</p>
+          </div>
+
+          <i
+            data-lucide="arrow-up-right"
+            class="public-statistic-link-arrow"
+          ></i>
+        </a>
+
+        <a
+          href="{{ url_for('experience') }}"
+          class="skills-statistic-card"
+          aria-label="Buka halaman pengalaman"
+        >
+          <span class="skills-statistic-icon">
+            <i data-lucide="briefcase-business"></i>
+          </span>
+
+          <div>
+            <strong
+              class="skills-animated-number"
+              data-target="{{ experiences|length }}"
+            >
+              0
+            </strong>
+
+            <p>Pengalaman</p>
+          </div>
+
+          <i
+            data-lucide="arrow-up-right"
+            class="public-statistic-link-arrow"
+          ></i>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- DAFTAR SKILLS -->
+  <section class="skills-collection-section" id="skillCollection">
+    <div class="public-container">
+      <div class="skills-section-heading skills-reveal">
+        <div>
+          <span class="skills-section-label"> DAFTAR SKILLS </span>
+
+          <h2>Kemampuan yang saya miliki</h2>
+        </div>
+
+        <p>
+          Gunakan pencarian atau filter untuk melihat kemampuan berdasarkan
+          kelompok yang tersedia.
+        </p>
+      </div>
+
+      {% if skills %}
+
+      <!-- TOOLBAR -->
+      <div class="skills-toolbar skills-reveal">
+        <div class="skills-search-box">
+          <i data-lucide="search"></i>
+
+          <input
+            type="search"
+            id="publicSkillSearch"
+            placeholder="Cari skill..."
+            autocomplete="off"
+          />
+
+          <button
+            type="button"
+            id="clearSkillSearch"
+            aria-label="Hapus pencarian"
+            hidden
+          >
+            <i data-lucide="x"></i>
+          </button>
+        </div>
+
+        <div
+          class="skills-filter-list"
+          role="group"
+          aria-label="Filter kategori skill"
+        >
+          <button
+            type="button"
+            class="skills-filter-button active"
+            data-category="all"
+          >
+            Semua
+          </button>
+
+          <button
+            type="button"
+            class="skills-filter-button"
+            data-category="development"
+          >
+            Development
+          </button>
+
+          <button
+            type="button"
+            class="skills-filter-button"
+            data-category="data"
+          >
+            Data
+          </button>
+
+          <button
+            type="button"
+            class="skills-filter-button"
+            data-category="design"
+          >
+            Design
+          </button>
+
+          <button
+            type="button"
+            class="skills-filter-button"
+            data-category="tools"
+          >
+            Tools
+          </button>
+        </div>
+      </div>
+
+      <!-- GRID SKILLS -->
+      <div class="public-skills-grid" id="publicSkillsGrid">
+        {% for skill in skills %} {% set skill_name = skill.nama_skill|lower %}
+        {# KATEGORI SKILL #} {% if "figma" in skill_name or "design" in
+        skill_name or "desain" in skill_name or "ui" in skill_name or "ux" in
+        skill_name or "canva" in skill_name %} {% set skill_category = "design"
+        %} {% elif "data" in skill_name or "sql" in skill_name or "excel" in
+        skill_name or "power bi" in skill_name or "tableau" in skill_name or
+        "analyst" in skill_name or "analisis" in skill_name %} {% set
+        skill_category = "data" %} {% elif "git" in skill_name or "github" in
+        skill_name or "docker" in skill_name or "postman" in skill_name or
+        "cloud" in skill_name or "vscode" in skill_name or "visual studio" in
+        skill_name %} {% set skill_category = "tools" %} {% else %} {% set
+        skill_category = "development" %} {% endif %} {# PERSENTASE SKILL #} {%
+        if "python" in skill_name %} {% set skill_percentage = 88 %} {% elif
+        "sql" in skill_name %} {% set skill_percentage = 85 %} {% elif "laravel"
+        in skill_name %} {% set skill_percentage = 82 %} {% elif "flask" in
+        skill_name %} {% set skill_percentage = 84 %} {% elif "javascript" in
+        skill_name %} {% set skill_percentage = 82 %} {% elif "html" in
+        skill_name %} {% set skill_percentage = 90 %} {% elif "css" in
+        skill_name %} {% set skill_percentage = 87 %} {% elif "figma" in
+        skill_name %} {% set skill_percentage = 80 %} {% elif "canva" in
+        skill_name %} {% set skill_percentage = 82 %} {% elif "excel" in
+        skill_name %} {% set skill_percentage = 83 %} {% elif "power bi" in
+        skill_name %} {% set skill_percentage = 78 %} {% elif "tableau" in
+        skill_name %} {% set skill_percentage = 76 %} {% elif "git" in
+        skill_name or "github" in skill_name %} {% set skill_percentage = 81 %}
+        {% elif "docker" in skill_name %} {% set skill_percentage = 72 %} {%
+        elif "postman" in skill_name %} {% set skill_percentage = 79 %} {% elif
+        "java" in skill_name %} {% set skill_percentage = 80 %} {% elif "php" in
+        skill_name %} {% set skill_percentage = 82 %} {% elif "mysql" in
+        skill_name %} {% set skill_percentage = 84 %} {% elif "postgresql" in
+        skill_name %} {% set skill_percentage = 80 %} {% else %} {% set
+        skill_percentage = 75 %} {% endif %}
+
+        <article
+          class="public-skill-item skills-blue-card skills-reveal"
+          data-skill-name="{{ skill.nama_skill|lower }}"
+          data-category="{{ skill_category }}"
+          data-skill-progress="{{ skill_percentage }}"
+          tabindex="0"
+          aria-label="Tampilkan tingkat penguasaan {{ skill.nama_skill }}"
+          aria-pressed="false"
+        >
+          <div class="public-skill-item-header">
+            <span class="public-skill-item-icon">
+              <i data-lucide="{{ skill.icon_class or 'code-2' }}"></i>
+            </span>
+
+            <span class="public-skill-category">
+              {% if skill_category == "development" %} Development {% elif
+              skill_category == "data" %} Data {% elif skill_category ==
+              "design" %} Design {% else %} Tools {% endif %}
+            </span>
+          </div>
+
+          <div class="public-skill-item-content">
+            <h3>{{ skill.nama_skill }}</h3>
+
+            <p>
+              Kemampuan yang dipelajari dan terus dikembangkan melalui latihan
+              serta pengerjaan proyek.
+            </p>
+          </div>
+
+          <div class="public-skill-progress">
+            <div class="skill-progress-heading">
+              <span> Tingkat penguasaan </span>
+
+              <strong class="skill-progress-value"> 0% </strong>
+            </div>
+
+            <span class="skill-progress-line" aria-hidden="true">
+              <span class="skill-progress-fill"></span>
+            </span>
+
+            <small class="skill-progress-hint">
+              Arahkan kursor atau sentuh kartu
+            </small>
+          </div>
+        </article>
+
+        {% endfor %}
+      </div>
+
+      <!-- EMPTY FILTER -->
+      <div class="skills-filter-empty" id="skillsFilterEmpty" hidden>
+        <span>
+          <i data-lucide="search-x"></i>
+        </span>
+
+        <h3>Skill tidak ditemukan</h3>
+
+        <p>Gunakan kata kunci atau kategori yang berbeda.</p>
+
+        <button type="button" id="resetSkillFilter">Tampilkan Semua</button>
+      </div>
+
+      {% else %}
+
+      <div class="skills-public-empty skills-reveal">
+        <span>
+          <i data-lucide="badge-check"></i>
+        </span>
+
+        <h3>Belum ada skill</h3>
+
+        <p>Skill akan tampil setelah ditambahkan melalui halaman admin.</p>
+      </div>
+
+      {% endif %}
+    </div>
+  </section>
+
+  <!-- PROSES BELAJAR -->
+  <section class="skills-process-section">
+    <div class="public-container">
+      <div class="skills-section-heading skills-reveal">
+        <div>
+          <span class="skills-section-label"> PROSES BELAJAR </span>
+
+          <h2>Cara saya mengembangkan kemampuan</h2>
+        </div>
+
+        <p>
+          Kemampuan tidak hanya dipelajari secara teori, tetapi juga diterapkan
+          melalui latihan dan proyek.
+        </p>
+      </div>
+
+      <div class="skills-process-grid">
+        <article class="skills-process-card skills-reveal">
+          <span class="skills-process-number"> 01 </span>
+
+          <span class="skills-process-icon">
+            <i data-lucide="book-open"></i>
+          </span>
+
+          <h3>Memahami Konsep</h3>
+
+          <p>
+            Mempelajari teori dan konsep dasar sebagai fondasi sebelum
+            menerapkannya.
+          </p>
+        </article>
+
+        <article class="skills-process-card skills-reveal">
+          <span class="skills-process-number"> 02 </span>
+
+          <span class="skills-process-icon">
+            <i data-lucide="terminal"></i>
+          </span>
+
+          <h3>Melakukan Praktik</h3>
+
+          <p>
+            Melatih kemampuan melalui latihan langsung, eksperimen, dan
+            penyelesaian masalah.
+          </p>
+        </article>
+
+        <article class="skills-process-card skills-reveal">
+          <span class="skills-process-number"> 03 </span>
+
+          <span class="skills-process-icon">
+            <i data-lucide="folder-kanban"></i>
+          </span>
+
+          <h3>Mengerjakan Proyek</h3>
+
+          <p>
+            Menggabungkan berbagai kemampuan menjadi proyek yang dapat digunakan
+            dan dikembangkan.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="skills-cta-section">
+    <div class="public-container">
+      <div class="skills-cta-card skills-reveal">
+        <div>
+          <span> LIHAT IMPLEMENTASI </span>
+
+          <h2>Kemampuan akan lebih berarti ketika diterapkan.</h2>
+
+          <p>
+            Lihat beberapa proyek yang telah saya kerjakan menggunakan kemampuan
+            tersebut.
+          </p>
+        </div>
+
+        <a href="{{ url_for('projects') }}" class="skills-cta-button">
+          <i data-lucide="folder-kanban"></i>
+          Lihat Proyek
+        </a>
+      </div>
+    </div>
+  </section>
+</div>
+{% endblock %} {% block scripts %}
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    /*
+     * Reveal animation.
+     */
+    const revealElements = document.querySelectorAll(".skills-reveal");
+
+    const revealObserver = new IntersectionObserver(
+      (entries, observer) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) {
+            return;
+          }
+
+          entry.target.classList.add("visible");
+          observer.unobserve(entry.target);
+        });
+      },
+      {
+        threshold: 0.12,
+      },
+    );
+
+    revealElements.forEach((element) => {
+      revealObserver.observe(element);
+    });
+
+    /*
+     * Animated statistics.
+     */
+    const numberElements = document.querySelectorAll(".skills-animated-number");
+
+    const numberObserver = new IntersectionObserver(
+      (entries, observer) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) {
+            return;
+          }
+
+          const element = entry.target;
+
+          const target = Number(element.dataset.target || 0);
+
+          let current = 0;
+
+          const increment = Math.max(1, Math.ceil(target / 20));
+
+          const timer = window.setInterval(() => {
+            current += increment;
+
+            if (current >= target) {
+              element.textContent = target;
+              window.clearInterval(timer);
+              return;
+            }
+
+            element.textContent = current;
+          }, 35);
+
+          observer.unobserve(element);
+        });
+      },
+      {
+        threshold: 0.7,
+      },
+    );
+
+    numberElements.forEach((element) => {
+      numberObserver.observe(element);
+    });
+
+    /*
+     * Search and category filter.
+     */
+    const searchInput = document.getElementById("publicSkillSearch");
+
+    const clearSearchButton = document.getElementById("clearSkillSearch");
+
+    const filterButtons = document.querySelectorAll(".skills-filter-button");
+
+    const skillItems = document.querySelectorAll(".public-skill-item");
+
+    const emptyState = document.getElementById("skillsFilterEmpty");
+
+    const resetFilterButton = document.getElementById("resetSkillFilter");
+
+    let activeCategory = "all";
+
+    const applySkillFilter = () => {
+      const keyword = searchInput?.value.trim().toLowerCase() || "";
+
+      let visibleItems = 0;
+
+      skillItems.forEach((skillItem) => {
+        const skillName = skillItem.dataset.skillName || "";
+
+        const category = skillItem.dataset.category || "";
+
+        const matchesSearch = skillName.includes(keyword);
+
+        const matchesCategory =
+          activeCategory === "all" || category === activeCategory;
+
+        const isVisible = matchesSearch && matchesCategory;
+
+        skillItem.hidden = !isVisible;
+
+        if (!isVisible) {
+          const progressBar = skillItem.querySelector(".skill-progress-fill");
+
+          const progressValue = skillItem.querySelector(
+            ".skill-progress-value",
+          );
+
+          skillItem.classList.remove("is-progress-active");
+
+          skillItem.setAttribute("aria-pressed", "false");
+
+          if (progressBar) {
+            progressBar.style.width = "0%";
+          }
+
+          if (progressValue) {
+            progressValue.textContent = "0%";
+          }
+
+          if (activeTouchCard === skillItem) {
+            activeTouchCard = null;
+          }
+        }
+
+        if (isVisible) {
+          visibleItems += 1;
+        }
+      });
+
+      if (emptyState) {
+        emptyState.hidden = visibleItems !== 0;
+      }
+
+      if (clearSearchButton) {
+        clearSearchButton.hidden = keyword.length === 0;
+      }
+    };
+
+    searchInput?.addEventListener("input", applySkillFilter);
+
+    clearSearchButton?.addEventListener("click", () => {
+      if (!searchInput) {
+        return;
+      }
+
+      searchInput.value = "";
+      searchInput.focus();
+
+      applySkillFilter();
+    });
+
+    filterButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        activeCategory = button.dataset.category || "all";
+
+        filterButtons.forEach((filterButton) => {
+          filterButton.classList.toggle("active", filterButton === button);
+        });
+
+        applySkillFilter();
+      });
+    });
+
+    resetFilterButton?.addEventListener("click", () => {
+      activeCategory = "all";
+
+      if (searchInput) {
+        searchInput.value = "";
+        searchInput.focus();
+      }
+
+      filterButtons.forEach((button) => {
+        button.classList.toggle("active", button.dataset.category === "all");
+      });
+
+      applySkillFilter();
+    });
+
+    /*
+     * Animated percentage progress bars.
+     */
+    /*
+     * Progress skill berjalan hanya ketika kartu
+     * diarahkan kursor, disentuh, atau mendapat fokus.
+     */
+    const interactiveSkillCards =
+      document.querySelectorAll(".skills-blue-card");
+
+    const isTouchDevice = window.matchMedia(
+      "(hover: none), (pointer: coarse)",
+    ).matches;
+
+    const animationFrames = new WeakMap();
+
+    let activeTouchCard = null;
+
+    const cancelProgressAnimation = (card) => {
+      const animationFrame = animationFrames.get(card);
+
+      if (animationFrame) {
+        window.cancelAnimationFrame(animationFrame);
+        animationFrames.delete(card);
+      }
+    };
+
+    const updateProgressDisplay = (card, currentValue) => {
+      const progressBar = card.querySelector(".skill-progress-fill");
+
+      const progressValue = card.querySelector(".skill-progress-value");
+
+      const safeValue = Math.min(100, Math.max(0, currentValue));
+
+      if (progressBar) {
+        progressBar.style.width = `${safeValue}%`;
+      }
+
+      if (progressValue) {
+        progressValue.textContent = `${Math.round(safeValue)}%`;
+      }
+    };
+
+    const resetSkillProgress = (card) => {
+      if (!card) {
+        return;
+      }
+
+      cancelProgressAnimation(card);
+
+      card.classList.remove("is-progress-active");
+
+      card.setAttribute("aria-pressed", "false");
+
+      updateProgressDisplay(card, 0);
+    };
+
+    const animateSkillProgress = (card) => {
+      if (!card) {
+        return;
+      }
+
+      cancelProgressAnimation(card);
+
+      const targetValue = Math.min(
+        100,
+        Math.max(0, Number(card.dataset.skillProgress || 0)),
+      );
+
+      const animationDuration = 1000;
+      const animationStart = performance.now();
+
+      card.classList.add("is-progress-active");
+
+      card.setAttribute("aria-pressed", "true");
+
+      updateProgressDisplay(card, 0);
+
+      const runAnimation = (currentTime) => {
+        const elapsedTime = currentTime - animationStart;
+
+        const progress = Math.min(elapsedTime / animationDuration, 1);
+
+        /*
+         * Cubic ease-out agar awal animasi cepat,
+         * kemudian melambat saat mendekati target.
+         */
+        const easedProgress = 1 - Math.pow(1 - progress, 3);
+
+        const currentValue = targetValue * easedProgress;
+
+        updateProgressDisplay(card, currentValue);
+
+        if (progress < 1) {
+          const frameId = window.requestAnimationFrame(runAnimation);
+
+          animationFrames.set(card, frameId);
+
+          return;
+        }
+
+        updateProgressDisplay(card, targetValue);
+
+        animationFrames.delete(card);
+      };
+
+      const frameId = window.requestAnimationFrame(runAnimation);
+
+      animationFrames.set(card, frameId);
+    };
+
+    const toggleTouchProgress = (card) => {
+      const isAlreadyActive = card.classList.contains("is-progress-active");
+
+      if (activeTouchCard && activeTouchCard !== card) {
+        resetSkillProgress(activeTouchCard);
+      }
+
+      if (isAlreadyActive && activeTouchCard === card) {
+        resetSkillProgress(card);
+        activeTouchCard = null;
+        return;
+      }
+
+      animateSkillProgress(card);
+      activeTouchCard = card;
+    };
+
+    interactiveSkillCards.forEach((card) => {
+      /*
+       * Kondisi awal harus selalu kosong.
+       */
+      resetSkillProgress(card);
+
+      /*
+       * Desktop: berjalan ketika mouse masuk.
+       */
+      if (!isTouchDevice) {
+        card.addEventListener("mouseenter", () => {
+          animateSkillProgress(card);
+        });
+
+        card.addEventListener("mouseleave", () => {
+          resetSkillProgress(card);
+        });
+      }
+
+      /*
+       * Mobile: sentuh untuk menjalankan.
+       */
+      card.addEventListener("click", () => {
+        if (!isTouchDevice) {
+          return;
+        }
+
+        toggleTouchProgress(card);
+      });
+
+      /*
+       * Dukungan keyboard.
+       */
+      card.addEventListener("focus", () => {
+        if (!isTouchDevice) {
+          animateSkillProgress(card);
+        }
+      });
+
+      card.addEventListener("blur", () => {
+        if (!isTouchDevice) {
+          resetSkillProgress(card);
+        }
+      });
+
+      card.addEventListener("keydown", (event) => {
+        if (event.key !== "Enter" && event.key !== " ") {
+          return;
+        }
+
+        event.preventDefault();
+
+        toggleTouchProgress(card);
+      });
+    });
+  });
+</script>
+{% endblock %}

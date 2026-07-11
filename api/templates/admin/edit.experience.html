@@ -1,0 +1,151 @@
+{% extends "admin/base_admin.html" %}
+
+{% block title %}
+    Edit Pengalaman | Portfolio Xander
+{% endblock %}
+
+{% block page_title %}
+    Edit Pengalaman
+{% endblock %}
+
+{% block page_description %}
+    Perbarui informasi pengalaman yang dipilih.
+{% endblock %}
+
+{% block content %}
+    <section class="edit-experience-container">
+        <article class="form-card">
+            <div class="form-card-header">
+                <div class="form-card-title">
+                    <span class="form-card-icon">
+                        <i data-lucide="pencil"></i>
+                    </span>
+
+                    <div>
+                        <h2>Edit Pengalaman</h2>
+
+                        <p>
+                            Perbarui data {{ experience.posisi }}.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <form
+                method="POST"
+                action="{{ url_for(
+                    'experiences.edit_experience',
+                    experience_id=experience.id
+                ) }}"
+                class="edit-experience-form"
+            >
+                <div class="form-group">
+                    <label for="posisi">
+                        Posisi atau Jabatan
+                        <span class="required-mark">*</span>
+                    </label>
+
+                    <div class="admin-input-wrapper">
+                        <i
+                            data-lucide="user-cog"
+                            class="admin-input-icon"
+                        ></i>
+
+                        <input
+                            type="text"
+                            id="posisi"
+                            name="posisi"
+                            value="{{ experience.posisi }}"
+                            maxlength="100"
+                            required
+                        >
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="perusahaan">
+                        Perusahaan atau Organisasi
+                        <span class="required-mark">*</span>
+                    </label>
+
+                    <div class="admin-input-wrapper">
+                        <i
+                            data-lucide="building-2"
+                            class="admin-input-icon"
+                        ></i>
+
+                        <input
+                            type="text"
+                            id="perusahaan"
+                            name="perusahaan"
+                            value="{{ experience.perusahaan }}"
+                            maxlength="100"
+                            required
+                        >
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="durasi">
+                        Durasi
+                    </label>
+
+                    <div class="admin-input-wrapper">
+                        <i
+                            data-lucide="calendar-range"
+                            class="admin-input-icon"
+                        ></i>
+
+                        <input
+                            type="text"
+                            id="durasi"
+                            name="durasi"
+                            value="{{ experience.durasi or '' }}"
+                            maxlength="50"
+                        >
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="deskripsi">
+                        Deskripsi
+                    </label>
+
+                    <div class="admin-textarea-wrapper">
+                        <i
+                            data-lucide="file-text"
+                            class="admin-textarea-icon"
+                        ></i>
+
+                        <textarea
+                            id="deskripsi"
+                            name="deskripsi"
+                            rows="6"
+                            maxlength="400"
+                        >{{ experience.deskripsi or '' }}</textarea>
+                    </div>
+                </div>
+
+                <div class="form-actions edit-experience-actions">
+                    <a
+                        href="{{ url_for(
+                            'experiences.manage_experiences'
+                        ) }}"
+                        class="secondary-button"
+                    >
+                        <i data-lucide="arrow-left"></i>
+                        Batal
+                    </a>
+
+                    <button
+                        type="submit"
+                        class="primary-button"
+                    >
+                        <i data-lucide="save"></i>
+                        Simpan Perubahan
+                    </button>
+                </div>
+            </form>
+        </article>
+    </section>
+{% endblock %}

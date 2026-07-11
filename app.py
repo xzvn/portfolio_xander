@@ -5,6 +5,7 @@ from pathlib import Path
 import resend
 from flask import (
     Flask,
+    app,
     current_app,
     jsonify,
     render_template,
@@ -33,13 +34,19 @@ from utils.cloudinary_config import configure_cloudinary
 
 BASE_DIR = Path(__file__).resolve().parent
 
+API_TEMPLATE_DIR = BASE_DIR / "api" / "templates"
+ROOT_TEMPLATE_DIR = BASE_DIR / "templates"
+
+TEMPLATE_DIR = API_TEMPLATE_DIR if API_TEMPLATE_DIR.exists() else ROOT_TEMPLATE_DIR
+
 login_manager = LoginManager()
 
 
 def create_app():
     app = Flask(
         __name__,
-        template_folder=str(BASE_DIR / "templates"),
+        template_folder=str(TEMPLATE_DIR),
+
     )
     app.config.from_object(Config)
 
@@ -47,8 +54,10 @@ def create_app():
     print("TEMPLATE_FOLDER:", app.template_folder)
     print(
         "HOME_TEMPLATE_EXISTS:",
-        (BASE_DIR / "templates" / "public" / "home.html").is_file(),
+        (TEMPLATE_DIR / "public" / "home.html").is_file(),
     )
+
+
 
     # Maksimal ukuran file upload: 5 MB.
     app.config["MAX_CONTENT_LENGTH"] = 5 * 1024 * 1024

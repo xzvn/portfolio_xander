@@ -1,0 +1,662 @@
+{% extends "base.html" %} {% block title %} Home | {{ profile.nama_lengkap if
+profile else "Portfolio Xander" }} {% endblock %} {% block content %}
+<div class="interactive-home">
+  <!-- HERO DUA WARNA -->
+  <section class="two-tone-hero">
+    <div class="hero-dark-panel">
+      <div class="hero-dark-content reveal-element">
+        <div class="hero-status">
+          <span class="hero-status-dot"></span>
+          <span>Portfolio Profesional</span>
+        </div>
+
+        <p class="hero-small-title">HALO, SAYA</p>
+
+        <h1
+          data-typewriter
+          data-typewriter-speed="50"
+          data-typewriter-delay="400"
+        >
+          {% if profile and profile.nama_lengkap %} {{ profile.nama_lengkap }}
+          {% else %} Portfolio Xander {% endif %}
+        </h1>
+
+        <p class="hero-profession">
+          {% if profile and profile.prodi %} Mahasiswa {{ profile.prodi }} {%
+          else %} Mahasiswa dan Pengembang Teknologi {% endif %}
+        </p>
+
+        <p class="hero-summary">
+          {% if profile and profile.universitas %} Saya sedang menempuh
+          pendidikan di {{ profile.universitas }} dan memiliki minat dalam
+          pengembangan sistem, pengelolaan data, serta perancangan antarmuka
+          digital. {% else %} Saya memiliki minat dalam pengembangan sistem,
+          pengelolaan data, dan perancangan antarmuka digital yang mudah
+          digunakan. {% endif %}
+        </p>
+
+        <div class="hero-button-group">
+          <a href="{{ url_for('projects') }}" class="hero-primary-button">
+            <span>Lihat Proyek</span>
+            <i data-lucide="arrow-up-right"></i>
+          </a>
+
+          <a href="{{ url_for('contact') }}" class="hero-outline-button">
+            <i data-lucide="mail"></i>
+            <span>Hubungi Saya</span>
+          </a>
+        </div>
+
+        <div class="hero-contact-row">
+          {% if profile and profile.alamat %}
+          <span>
+            <i data-lucide="map-pin"></i>
+            {{ profile.alamat }}
+          </span>
+          {% endif %} {% if profile and profile.email %}
+          <a href="mailto:{{ profile.email }}">
+            <i data-lucide="mail"></i>
+            {{ profile.email }}
+          </a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-indigo-panel">
+      <div
+        class="interactive-profile-card reveal-element"
+        id="interactiveProfileCard"
+      >
+        <div class="profile-decoration decoration-one"></div>
+        <div class="profile-decoration decoration-two"></div>
+
+        <div class="public-profile-image">
+          {% if profile and profile.foto_url %}
+          <img
+            src="{{ profile.foto_url }}"
+            alt="Foto {{ profile.nama_lengkap }}"
+          />
+          {% else %}
+          <div class="public-profile-placeholder">
+            <i data-lucide="user-round"></i>
+          </div>
+          {% endif %}
+        </div>
+
+        <div class="profile-floating-card profile-floating-top">
+          <span>
+            <i data-lucide="sparkles"></i>
+          </span>
+
+          <div>
+            <strong>Terus Berkembang</strong>
+            <small>Belajar melalui proyek</small>
+          </div>
+        </div>
+
+        <div class="profile-floating-card profile-floating-bottom">
+          <span>
+            <i data-lucide="circle-check"></i>
+          </span>
+
+          <div>
+            <strong>Siap Berkolaborasi</strong>
+            <small>Terbuka untuk kesempatan baru</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATISTIK INTERAKTIF -->
+  <section class="home-statistics-section">
+    <div class="public-container">
+      <div class="home-statistics-grid reveal-element">
+        <a href="{{ url_for('skills') }}" class="home-statistic-card">
+          <span class="home-statistic-icon">
+            <i data-lucide="badge-check"></i>
+          </span>
+
+          <div>
+            <strong class="animated-number" data-target="{{ skills|length }}">
+              0
+            </strong>
+
+            <span>Skills</span>
+          </div>
+
+          <i data-lucide="arrow-up-right" class="home-statistic-arrow"></i>
+        </a>
+
+        <a href="{{ url_for('experience') }}" class="home-statistic-card">
+          <span class="home-statistic-icon">
+            <i data-lucide="briefcase-business"></i>
+          </span>
+
+          <div>
+            <strong
+              class="animated-number"
+              data-target="{{ experiences|length }}"
+            >
+              0
+            </strong>
+
+            <span>Pengalaman</span>
+          </div>
+
+          <i data-lucide="arrow-up-right" class="home-statistic-arrow"></i>
+        </a>
+
+        <a href="{{ url_for('projects') }}" class="home-statistic-card">
+          <span class="home-statistic-icon">
+            <i data-lucide="folder-kanban"></i>
+          </span>
+
+          <div>
+            <strong class="animated-number" data-target="{{ projects|length }}">
+              0
+            </strong>
+
+            <span>Proyek</span>
+          </div>
+
+          <i data-lucide="arrow-up-right" class="home-statistic-arrow"></i>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- MENU EKSPLORASI -->
+  <section class="home-explore-section">
+    <div class="public-container">
+      <div class="home-section-heading reveal-element">
+        <div>
+          <span class="home-section-label"> EKSPLORASI PORTFOLIO </span>
+
+          <h2>Kenali perjalanan saya</h2>
+        </div>
+
+        <p>
+          Jelajahi informasi mengenai profil, kemampuan, pengalaman, dan proyek
+          yang telah saya kerjakan.
+        </p>
+      </div>
+
+      <div class="home-explore-grid">
+        <a
+          href="{{ url_for('about') }}"
+          class="home-explore-card reveal-element"
+          data-home-interactive
+        >
+          <div class="explore-card-number">01</div>
+
+          <span class="explore-card-icon">
+            <i data-lucide="user-round"></i>
+          </span>
+
+          <h3>Tentang Saya</h3>
+
+          <p>
+            Informasi pribadi, pendidikan, dan fokus pengembangan kemampuan.
+          </p>
+
+          <span class="explore-card-action">
+            Selengkapnya
+            <i data-lucide="arrow-right"></i>
+          </span>
+        </a>
+
+        <a
+          href="{{ url_for('skills') }}"
+          class="home-explore-card reveal-element"
+          data-home-interactive
+        >
+          <div class="explore-card-number">02</div>
+
+          <span class="explore-card-icon">
+            <i data-lucide="code-2"></i>
+          </span>
+
+          <h3>Skills</h3>
+
+          <p>
+            Kemampuan teknis dan keterampilan yang terus dipelajari melalui
+            berbagai proyek.
+          </p>
+
+          <span class="explore-card-action">
+            Lihat Skills
+            <i data-lucide="arrow-right"></i>
+          </span>
+        </a>
+
+        <a
+          href="{{ url_for('experience') }}"
+          class="home-explore-card reveal-element"
+          data-home-interactive
+        >
+          <div class="explore-card-number">03</div>
+
+          <span class="explore-card-icon">
+            <i data-lucide="briefcase-business"></i>
+          </span>
+
+          <h3>Pengalaman</h3>
+
+          <p>
+            Perjalanan kerja, organisasi, kepanitiaan, dan pengalaman
+            pengembangan diri.
+          </p>
+
+          <span class="explore-card-action">
+            Lihat Pengalaman
+            <i data-lucide="arrow-right"></i>
+          </span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROYEK TERBARU INTERAKTIF -->
+  <section class="featured-project-section">
+    <div class="public-container">
+      <div class="featured-project-heading reveal-element">
+        <div>
+          <span class="home-section-label"> PROYEK TERBARU </span>
+
+          <h2>Karya yang telah saya kerjakan</h2>
+        </div>
+
+        {% if projects|length > 1 %}
+        <div class="project-slider-controls">
+          <button
+            type="button"
+            id="previousProject"
+            aria-label="Proyek sebelumnya"
+          >
+            <i data-lucide="arrow-left"></i>
+          </button>
+
+          <button type="button" id="nextProject" aria-label="Proyek berikutnya">
+            <i data-lucide="arrow-right"></i>
+          </button>
+        </div>
+        {% endif %}
+      </div>
+
+      {% if projects %}
+      <div
+        class="featured-project-slider reveal-element"
+        id="featuredProjectSlider"
+      >
+        {% for project in projects[:5] %}
+        <article
+          class="featured-project-slide {% if loop.first %}active{% endif %}"
+          data-featured-slide="{{ loop.index0 }}"
+          tabindex="{% if loop.first %}0{% else %}-1{% endif %}"
+          aria-hidden="{% if loop.first %}false{% else %}true{% endif %}"
+        >
+          <div class="featured-project-image">
+            {% if project.gambar_url %}
+            <img src="{{ project.gambar_url }}" alt="{{ project.judul }}" />
+            {% else %}
+            <div class="featured-image-placeholder">
+              <i data-lucide="image"></i>
+            </div>
+            {% endif %}
+
+            <span class="featured-project-index">
+              {{ "%02d"|format(loop.index) }}
+            </span>
+          </div>
+
+          <div class="featured-project-content">
+            <span class="featured-project-label"> FEATURED PROJECT </span>
+
+            <h3>{{ project.judul }}</h3>
+
+            <p>{{ project.deskripsi or "Deskripsi proyek belum tersedia." }}</p>
+
+            <div class="featured-project-actions">
+              {% if project.link_project %}
+              <a
+                href="{{ project.link_project }}"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="featured-primary-link"
+              >
+                Buka Proyek
+                <i data-lucide="external-link"></i>
+              </a>
+              {% endif %}
+
+              <a
+                href="{{ url_for('projects') }}"
+                class="featured-secondary-link"
+              >
+                Semua Proyek
+                <i data-lucide="arrow-right"></i>
+              </a>
+            </div>
+          </div>
+        </article>
+        {% endfor %}
+      </div>
+
+      {% if projects|length > 1 %}
+      <div class="project-slider-dots" id="projectSliderDots">
+        {% for project in projects[:5] %}
+        <button
+          type="button"
+          class="project-slider-dot {% if loop.first %}active{% endif %}"
+          data-slide="{{ loop.index0 }}"
+          aria-label="Tampilkan proyek {{ loop.index }}"
+          aria-current="{% if loop.first %}true{% else %}false{% endif %}"
+        ></button>
+        {% endfor %}
+      </div>
+      {% endif %} {% else %}
+      <div class="home-project-empty reveal-element">
+        <i data-lucide="folder-kanban"></i>
+        <h3>Belum ada proyek</h3>
+        <p>Proyek akan tampil setelah ditambahkan melalui halaman admin.</p>
+      </div>
+      {% endif %}
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="home-contact-section">
+    <div class="public-container">
+      <div class="home-contact-card reveal-element">
+        <div>
+          <span class="home-contact-label"> MARI TERHUBUNG </span>
+
+          <h2>Punya ide atau ingin berkolaborasi?</h2>
+
+          <p>
+            Saya terbuka untuk berdiskusi mengenai proyek, teknologi, dan
+            kesempatan belajar baru.
+          </p>
+        </div>
+
+        <a href="{{ url_for('contact') }}" class="home-contact-button">
+          <i data-lucide="send"></i>
+          Hubungi Saya
+        </a>
+      </div>
+    </div>
+  </section>
+</div>
+{% endblock %} {% block scripts %}
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    /*
+     * Animasi elemen ketika masuk ke area layar.
+     */
+    const revealElements = document.querySelectorAll(".reveal-element");
+
+    const revealObserver = new IntersectionObserver(
+      (entries, observer) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) {
+            return;
+          }
+
+          entry.target.classList.add("revealed");
+          observer.unobserve(entry.target);
+        });
+      },
+      {
+        threshold: 0.14,
+      },
+    );
+
+    revealElements.forEach((element) => {
+      revealObserver.observe(element);
+    });
+
+    /*
+     * Animasi angka statistik.
+     */
+    const animatedNumbers = document.querySelectorAll(".animated-number");
+
+    const numberObserver = new IntersectionObserver(
+      (entries, observer) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) {
+            return;
+          }
+
+          const element = entry.target;
+          const target = Number(element.dataset.target || 0);
+
+          let current = 0;
+          const duration = 700;
+          const interval = 30;
+          const totalSteps = Math.max(duration / interval, 1);
+
+          const increment = target / totalSteps;
+
+          const timer = window.setInterval(() => {
+            current += increment;
+
+            if (current >= target) {
+              element.textContent = target;
+              window.clearInterval(timer);
+              return;
+            }
+
+            element.textContent = Math.floor(current);
+          }, interval);
+
+          observer.unobserve(element);
+        });
+      },
+      {
+        threshold: 0.6,
+      },
+    );
+
+    animatedNumbers.forEach((number) => {
+      numberObserver.observe(number);
+    });
+
+    /*
+     * Slider proyek.
+     */
+    const projectSlides = Array.from(
+      document.querySelectorAll(".featured-project-slide"),
+    );
+
+    const sliderDots = Array.from(
+      document.querySelectorAll(".project-slider-dot"),
+    );
+
+    const previousButton = document.getElementById("previousProject");
+
+    const nextButton = document.getElementById("nextProject");
+
+    let activeSlide = 0;
+
+    const showProjectSlide = (index) => {
+      if (!projectSlides.length) {
+        return;
+      }
+
+      activeSlide = (index + projectSlides.length) % projectSlides.length;
+
+      projectSlides.forEach((slide, slideIndex) => {
+        const isActive = slideIndex === activeSlide;
+
+        slide.classList.toggle("active", isActive);
+        slide.classList.toggle("is-featured-active", isActive);
+
+        slide.setAttribute("aria-hidden", String(!isActive));
+
+        slide.setAttribute("tabindex", isActive ? "0" : "-1");
+      });
+
+      sliderDots.forEach((dot, dotIndex) => {
+        const isActive = dotIndex === activeSlide;
+
+        dot.classList.toggle("active", isActive);
+
+        dot.setAttribute("aria-current", String(isActive));
+      });
+
+      if (window.lucide) {
+        lucide.createIcons();
+      }
+    };
+
+    previousButton?.addEventListener("click", () => {
+      showProjectSlide(activeSlide - 1);
+    });
+
+    nextButton?.addEventListener("click", () => {
+      showProjectSlide(activeSlide + 1);
+    });
+
+    sliderDots.forEach((dot) => {
+      dot.addEventListener("click", () => {
+        showProjectSlide(Number(dot.dataset.slide || 0));
+      });
+    });
+
+    /*
+     * Interaksi kartu eksplorasi.
+     */
+    const exploreCards = document.querySelectorAll("[data-home-interactive]");
+
+    exploreCards.forEach((card) => {
+      card.addEventListener("pointerenter", () => {
+        card.classList.add("is-home-active");
+      });
+
+      card.addEventListener("pointerleave", () => {
+        card.classList.remove("is-home-active");
+      });
+
+      card.addEventListener("focus", () => {
+        card.classList.add("is-home-active");
+      });
+
+      card.addEventListener("blur", () => {
+        card.classList.remove("is-home-active");
+      });
+
+      card.addEventListener("pointerdown", () => {
+        card.classList.add("is-home-active");
+      });
+    });
+
+    /*
+     * Keyboard dan swipe pada slider proyek.
+     */
+    const featuredSlider = document.getElementById("featuredProjectSlider");
+
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    const handleSliderSwipe = () => {
+      const swipeDistance = touchEndX - touchStartX;
+
+      if (Math.abs(swipeDistance) < 45) {
+        return;
+      }
+
+      if (swipeDistance < 0) {
+        showProjectSlide(activeSlide + 1);
+      } else {
+        showProjectSlide(activeSlide - 1);
+      }
+    };
+
+    featuredSlider?.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowRight") {
+        event.preventDefault();
+        showProjectSlide(activeSlide + 1);
+        projectSlides[activeSlide]?.focus();
+      }
+
+      if (event.key === "ArrowLeft") {
+        event.preventDefault();
+        showProjectSlide(activeSlide - 1);
+        projectSlides[activeSlide]?.focus();
+      }
+    });
+
+    featuredSlider?.addEventListener(
+      "touchstart",
+      (event) => {
+        touchStartX = event.changedTouches[0]?.screenX || 0;
+      },
+      {
+        passive: true,
+      },
+    );
+
+    featuredSlider?.addEventListener(
+      "touchend",
+      (event) => {
+        touchEndX = event.changedTouches[0]?.screenX || 0;
+
+        handleSliderSwipe();
+      },
+      {
+        passive: true,
+      },
+    );
+
+    /*
+     * Gerakan ringan kartu profil.
+     */
+    const profileCard = document.getElementById("interactiveProfileCard");
+
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+
+    const canUseProfileTilt = window.matchMedia(
+      "(hover: hover) and (pointer: fine)",
+    ).matches;
+
+    profileCard?.addEventListener("pointermove", (event) => {
+      if (
+        window.innerWidth < 900 ||
+        prefersReducedMotion ||
+        !canUseProfileTilt
+      ) {
+        return;
+      }
+
+      const bounds = profileCard.getBoundingClientRect();
+
+      const mouseX = event.clientX - bounds.left;
+
+      const mouseY = event.clientY - bounds.top;
+
+      const rotateY = (mouseX / bounds.width - 0.5) * 6;
+
+      const rotateX = (mouseY / bounds.height - 0.5) * -6;
+
+      profileCard.style.transform = `perspective(900px)
+        rotateX(${rotateX}deg)
+        rotateY(${rotateY}deg)
+        translateY(-4px)`;
+
+      profileCard.classList.add("is-profile-active");
+    });
+
+    profileCard?.addEventListener("pointerleave", () => {
+      profileCard.style.transform = "perspective(900px) rotateX(0) rotateY(0)";
+
+      profileCard.classList.remove("is-profile-active");
+    });
+
+    showProjectSlide(0);
+  });
+</script>
+{% endblock %}
