@@ -542,3 +542,283 @@
     transition: none !important;
   }
 }
+
+/* =========================================================
+   FINAL MOBILE ALIGNMENT — INTERNAL PUBLIC PAGES
+   Menjaga hero Tentang, Skills, Pengalaman, Proyek, dan
+   Kontak tetap lurus, ringkas, dan mudah dibaca pada mobile.
+   ========================================================= */
+
+@media (max-width: 760px) {
+  .about-public-hero,
+  .skills-public-hero,
+  .experience-public-hero,
+  .projects-public-hero,
+  .contact-public-hero {
+    padding:
+      calc(var(--public-mobile-header-height, 86px) + 24px)
+      0
+      58px !important;
+    background: var(--home-navy) !important;
+  }
+
+  .about-public-hero-layout,
+  .skills-hero-layout,
+  .experience-hero-layout,
+  .projects-hero-layout,
+  .contact-hero-layout {
+    display: block !important;
+    width: 100% !important;
+  }
+
+  .about-public-intro,
+  .skills-hero-content,
+  .experience-hero-content,
+  .projects-hero-content,
+  .contact-hero-content {
+    width: 100% !important;
+    max-width: none !important;
+    text-align: left !important;
+    transform: none !important;
+  }
+
+  .about-page-label,
+  .skills-page-label,
+  .experience-page-label,
+  .projects-page-label,
+  .contact-page-label {
+    display: inline-flex;
+    align-items: center;
+    min-height: 30px;
+    margin: 0;
+    padding: 0 11px;
+    border: 1px solid rgba(156, 171, 255, 0.2);
+    border-radius: 999px;
+    background: rgba(156, 171, 255, 0.08);
+    font-size: 9px;
+    letter-spacing: 0.13em;
+  }
+
+  .about-public-intro h1,
+  .skills-hero-content h1,
+  .experience-hero-content h1,
+  .projects-hero-content h1,
+  .contact-hero-content h1 {
+    width: 100% !important;
+    max-width: none !important;
+    margin: 15px 0 0 !important;
+    font-size: clamp(36px, 10.5vw, 44px) !important;
+    line-height: 1.06 !important;
+    letter-spacing: -0.025em;
+    text-align: left !important;
+    text-wrap: balance;
+    overflow-wrap: normal;
+    word-break: normal;
+    hyphens: none;
+    transform: none !important;
+  }
+
+  .about-public-intro > p,
+  .skills-hero-content > p,
+  .experience-hero-content > p,
+  .projects-hero-content > p,
+  .contact-hero-content > p {
+    width: 100% !important;
+    max-width: 40rem !important;
+    margin: 18px 0 0 !important;
+    font-size: 12.5px;
+    line-height: 1.72;
+    text-align: left !important;
+  }
+
+  .about-public-actions,
+  .skills-hero-actions,
+  .experience-hero-actions,
+  .projects-hero-actions,
+  .contact-hero-actions {
+    width: 100%;
+    justify-content: flex-start !important;
+    margin-top: 24px !important;
+  }
+
+  /* Visual berikut hanya dekoratif. Pada mobile disembunyikan agar
+     pengguna langsung masuk ke isi halaman tanpa ruang kosong panjang. */
+  .skills-hero-visual,
+  .experience-hero-visual,
+  .projects-hero-visual,
+  .contact-hero-visual {
+    display: none !important;
+  }
+
+  /* Foto pada halaman Tentang tetap dipertahankan karena informatif. */
+  .about-public-visual {
+    width: min(78%, 300px) !important;
+    margin: 36px auto 0 !important;
+    transform: none !important;
+  }
+
+  .about-reveal,
+  .skills-reveal,
+  .experience-reveal,
+  .projects-reveal,
+  .contact-reveal {
+    transform: none !important;
+  }
+}
+
+@media (max-width: 520px) {
+  .about-public-intro h1,
+  .skills-hero-content h1,
+  .experience-hero-content h1,
+  .projects-hero-content h1,
+  .contact-hero-content h1 {
+    font-size: clamp(34px, 10vw, 40px) !important;
+    line-height: 1.08 !important;
+  }
+
+  .about-public-intro > p,
+  .skills-hero-content > p,
+  .experience-hero-content > p,
+  .projects-hero-content > p,
+  .contact-hero-content > p {
+    font-size: 12px;
+  }
+
+  .about-public-actions,
+  .skills-hero-actions,
+  .experience-hero-actions,
+  .projects-hero-actions,
+  .contact-hero-actions {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .about-primary-button,
+  .about-secondary-button,
+  .skills-primary-button,
+  .skills-secondary-button,
+  .experience-primary-button,
+  .experience-secondary-button,
+  .projects-primary-button,
+  .projects-secondary-button,
+  .contact-primary-button,
+  .contact-secondary-button {
+    width: 100%;
+    min-height: 50px;
+  }
+}
+
+@media (max-width: 360px) {
+  .about-public-intro h1,
+  .skills-hero-content h1,
+  .experience-hero-content h1,
+  .projects-hero-content h1,
+  .contact-hero-content h1 {
+    font-size: 32px !important;
+  }
+}
+
+/* =========================================================
+   FINAL MOBILE TITLE CENTER FIX
+   Blok judul tetap berada tepat di tengah halaman, tetapi teks
+   di dalam blok dibuat rata kiri agar setiap baris tidak zig-zag.
+   ========================================================= */
+
+@media (max-width: 760px) {
+  .about-public-intro,
+  .skills-hero-content,
+  .experience-hero-content,
+  .projects-hero-content,
+  .contact-hero-content {
+    display: flex !important;
+    width: 100% !important;
+    align-items: center !important;
+    flex-direction: column !important;
+    text-align: center !important;
+  }
+
+  .about-page-label,
+  .skills-page-label,
+  .experience-page-label,
+  .projects-page-label,
+  .contact-page-label {
+    width: max-content !important;
+    max-width: 100% !important;
+    margin-right: auto !important;
+    margin-left: auto !important;
+  }
+
+  .about-public-intro h1,
+  .skills-hero-content h1,
+  .experience-hero-content h1,
+  .projects-hero-content h1,
+  .contact-hero-content h1 {
+    display: block !important;
+    width: min(100%, 15ch) !important;
+    max-width: 15ch !important;
+    margin: 18px auto 0 !important;
+    font-size: clamp(34px, 9.8vw, 43px) !important;
+    line-height: 1.08 !important;
+    letter-spacing: -0.025em !important;
+    text-align: left !important;
+    text-wrap: balance;
+    transform: none !important;
+  }
+
+  .about-public-intro h1.typewriter-active::after,
+  .about-public-intro h1.typewriter-complete::after,
+  .skills-hero-content h1.typewriter-active::after,
+  .skills-hero-content h1.typewriter-complete::after,
+  .experience-hero-content h1.typewriter-active::after,
+  .experience-hero-content h1.typewriter-complete::after,
+  .projects-hero-content h1.typewriter-active::after,
+  .projects-hero-content h1.typewriter-complete::after,
+  .contact-hero-content h1.typewriter-active::after,
+  .contact-hero-content h1.typewriter-complete::after {
+    display: none !important;
+  }
+
+  .about-public-intro > p,
+  .skills-hero-content > p,
+  .experience-hero-content > p,
+  .projects-hero-content > p,
+  .contact-hero-content > p {
+    width: min(100%, 42ch) !important;
+    max-width: 42ch !important;
+    margin: 20px auto 0 !important;
+    text-align: center !important;
+  }
+
+  .about-public-actions,
+  .skills-hero-actions,
+  .experience-hero-actions,
+  .projects-hero-actions,
+  .contact-hero-actions {
+    justify-content: center !important;
+    margin-right: auto !important;
+    margin-left: auto !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .about-public-intro h1,
+  .skills-hero-content h1,
+  .experience-hero-content h1,
+  .projects-hero-content h1,
+  .contact-hero-content h1 {
+    width: min(100%, 14ch) !important;
+    max-width: 14ch !important;
+    font-size: clamp(32px, 10vw, 38px) !important;
+  }
+
+  .about-public-intro > p,
+  .skills-hero-content > p,
+  .experience-hero-content > p,
+  .projects-hero-content > p,
+  .contact-hero-content > p {
+    width: min(100%, 36ch) !important;
+    max-width: 36ch !important;
+  }
+}
+
