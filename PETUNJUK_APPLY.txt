@@ -1,36 +1,38 @@
-PATCH ALUR PORTFOLIO YANG LEBIH USER FRIENDLY
+PATCH MODERNISASI HALAMAN ADMIN — SIDEBAR TIDAK DIUBAH
 
-Project acuan:
-portfolio_xander(3).zip
+Perubahan:
+- Background halaman admin memakai gradasi navy-indigo lembut.
+- Topbar menjadi glass modern dengan status workspace aktif.
+- Card tidak lagi putih polos; memakai permukaan bergradasi.
+- Statistik, form, tabel, pesan, proyek, pengalaman, dan profil
+  memiliki depth, border, shadow, serta hover profesional.
+- Input dan select lebih interaktif saat hover dan focus.
+- Card memiliki spotlight halus yang mengikuti pointer desktop.
+- Konten masuk dengan animasi reveal ringan.
+- Tombol memiliki ripple saat ditekan.
+- Mobile tetap responsif dan efek berat otomatis dikurangi.
+- Tampilan dan perilaku sidebar tetap seperti sebelumnya.
 
-Cara memasang:
-1. Backup project saat ini.
-2. Ekstrak ZIP patch.
-3. Salin seluruh isi folder patch ke root project:
+CARA MENERAPKAN
+
+1. Ekstrak ZIP.
+2. Salin seluruh isi patch ke:
    D:\PA ASDOS\portfolio_xander
-4. Pilih Replace the files in the destination.
-5. Jangan mengganti .env, database, atau folder admin.
-6. Restart Flask dan tekan Ctrl + F5.
-7. Setelah aman, jalankan:
-   git add .
-   git commit -m "Improve public portfolio user flow"
-   git push
+3. Pilih Replace the files in the destination.
+4. Restart Flask:
+   Ctrl + C
+   python app.py
+5. Buka halaman admin lalu tekan Ctrl + F5.
 
-Perubahan utama:
-- Home sekarang mengalir: perkenalan -> proyek -> ringkasan -> kemampuan
-  dan pengalaman -> kontak.
-- Statistik tidak lagi berfungsi seperti tombol.
-- Kartu informasi tidak lagi semuanya memiliki efek tilt.
-- Navigasi mobile memiliki deskripsi singkat.
-- Bagian bawah setiap halaman mengarahkan ke langkah berikutnya.
-- embedded_templates.py sudah diperbarui untuk deployment Vercel.
+FILE YANG DIGANTI / DITAMBAHKAN
 
-File baru:
-- static/css/portfolio-user-flow.css
-
-File yang diganti:
+- templates/admin/base_admin.html
+- static/css/admin-modern.css
+- static/js/admin-modern.js
 - embedded_templates.py
-- templates/base.html
-- seluruh template publik
-- static/js/public-interactions.js
-- static/css/CSS_STRUCTURE.md
+
+DEPLOY VERCEL
+
+git add .
+git commit -m "Modernize admin workspace interface"
+git push origin main

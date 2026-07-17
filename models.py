@@ -147,6 +147,13 @@ class Skill(db.Model):
         db.String(50),
     )
 
+    persentase = db.Column(
+        db.SmallInteger,
+        nullable=False,
+        default=75,
+        server_default="75",
+    )
+
     user = db.relationship(
         "User",
         back_populates="skills",

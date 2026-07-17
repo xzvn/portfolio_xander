@@ -648,3 +648,26 @@ a {
     flex-direction: column;
   }
 }
+
+:root {
+  --font-body: "Inter", sans-serif;
+  --font-heading: "Source Serif 4", serif;
+}
+
+body {
+  font-family: var(--font-body);
+}
+
+h1,
+h2,
+h3,
+.hero-dark-content h1,
+.about-public-intro h1,
+.skills-hero-content h1,
+.experience-hero-content h1,
+.projects-hero-content h1,
+.contact-hero-content h1 {
+  font-family: var(--font-heading) !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.025em !important;
+}

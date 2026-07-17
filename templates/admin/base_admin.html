@@ -12,7 +12,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap"
       rel="stylesheet"
     />
 
@@ -25,9 +25,19 @@
       rel="stylesheet"
       href="{{ url_for('static', filename='css/admin-features.css') }}"
     />
+
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/admin-modern.css', v='20260717-2') }}"
+    />
+
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/admin-editor.css', v='20260717-5') }}"
+    />
   </head>
 
-  <body>
+  <body class="admin-modern-theme">
     <div class="admin-layout">
       <aside
         class="admin-sidebar"
@@ -149,6 +159,14 @@
       <div class="sidebar-overlay" id="sidebarOverlay" aria-hidden="true"></div>
 
       <div class="admin-main">
+        <div class="admin-workspace-background" aria-hidden="true">
+          <span class="workspace-grid"></span>
+          <span class="workspace-glow workspace-glow-one"></span>
+          <span class="workspace-glow workspace-glow-two"></span>
+          <span class="workspace-orbit workspace-orbit-one"></span>
+          <span class="workspace-orbit workspace-orbit-two"></span>
+        </div>
+
         <header class="admin-topbar">
           <div class="topbar-left">
             <button
@@ -173,6 +191,15 @@
           </div>
 
           <div class="topbar-actions">
+            <div class="workspace-live-status" aria-label="Status workspace">
+              <span class="workspace-live-dot" aria-hidden="true"></span>
+
+              <span class="workspace-live-copy">
+                <strong>Workspace aktif</strong>
+                <small>Konten tersinkron</small>
+              </span>
+            </div>
+
             <a
               href="{{ url_for('admin.messages') }}"
               class="topbar-icon-button topbar-message-button"
@@ -227,6 +254,17 @@
 
     <script
       src="{{ url_for('static', filename='js/admin.js') }}"
+      defer
+    ></script>
+
+    <script
+      src="{{ url_for('static', filename='js/admin-modern.js', v='20260717-2') }}"
+      defer
+    ></script>
+
+
+    <script
+      src="{{ url_for('static', filename='js/admin-editor.js', v='20260717-5') }}"
       defer
     ></script>
 

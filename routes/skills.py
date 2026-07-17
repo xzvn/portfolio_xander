@@ -36,6 +36,18 @@ def clean_value(value):
     return value.strip()
 
 
+def parse_percentage(value):
+    try:
+        percentage = int(str(value).strip())
+    except (TypeError, ValueError):
+        return None
+
+    if percentage < 0 or percentage > 100:
+        return None
+
+    return percentage
+
+
 @skills_bp.route("/", methods=["GET", "POST"])
 @login_required
 def manage_skills():
@@ -43,6 +55,10 @@ def manage_skills():
         nama_skill = clean_value(request.form.get("nama_skill"))
 
         icon_class = clean_value(request.form.get("icon_class"))
+
+        persentase = parse_percentage(
+            request.form.get("persentase")
+        )
 
         if not nama_skill:
             flash(
@@ -54,6 +70,13 @@ def manage_skills():
         if len(nama_skill) > 50:
             flash(
                 "Nama skill maksimal 50 karakter.",
+                "warning",
+            )
+            return redirect(url_for("skills.manage_skills"))
+
+        if persentase is None:
+            flash(
+                "Persentase skill harus berupa angka 0 sampai 100.",
                 "warning",
             )
             return redirect(url_for("skills.manage_skills"))
@@ -77,6 +100,7 @@ def manage_skills():
             user_id=current_user.id,
             nama_skill=nama_skill,
             icon_class=icon_class,
+            persentase=persentase,
         )
 
         try:
@@ -127,9 +151,37 @@ def edit_skill(skill_id):
 
         icon_class = clean_value(request.form.get("icon_class"))
 
+        persentase = parse_percentage(
+            request.form.get("persentase")
+        )
+
         if not nama_skill:
             flash(
                 "Nama skill wajib diisi.",
+                "warning",
+            )
+
+            return render_template(
+                "admin/edit_skill.html",
+                skill=skill,
+                skill_icons=SKILL_ICONS,
+            )
+
+        if len(nama_skill) > 50:
+            flash(
+                "Nama skill maksimal 50 karakter.",
+                "warning",
+            )
+
+            return render_template(
+                "admin/edit_skill.html",
+                skill=skill,
+                skill_icons=SKILL_ICONS,
+            )
+
+        if persentase is None:
+            flash(
+                "Persentase skill harus berupa angka 0 sampai 100.",
                 "warning",
             )
 
@@ -162,6 +214,7 @@ def edit_skill(skill_id):
 
         skill.nama_skill = nama_skill
         skill.icon_class = icon_class
+        skill.persentase = persentase
 
         try:
             db.session.commit()

@@ -70,6 +70,7 @@ CREATE TABLE skills (
     user_id BIGINT UNSIGNED NOT NULL,
     nama_skill VARCHAR(50) NOT NULL,
     icon_class VARCHAR(50),
+    persentase TINYINT UNSIGNED NOT NULL DEFAULT 75,
     PRIMARY KEY (id),
     KEY skills_user_id_idx (user_id),
     CONSTRAINT skills_users_fk FOREIGN KEY (user_id) REFERENCES users (id) ON UPDATE CASCADE ON DELETE CASCADE

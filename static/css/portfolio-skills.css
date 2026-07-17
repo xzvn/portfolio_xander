@@ -887,3 +887,11 @@
     padding: 32px 24px;
   }
 }
+
+/* =========================================================
+   SKILL PERCENTAGE FROM ADMIN
+   ========================================================= */
+.skill-progress-fill{width:0}
+.public-skill-item:hover .skill-progress-fill{width:0}
+.skill-progress-value{color:var(--home-indigo);font-size:10px;font-weight:800}
+

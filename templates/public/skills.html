@@ -234,27 +234,7 @@ profile else "Portfolio Xander" }} {% endblock %} {% block content %}
         skill_name or "docker" in skill_name or "postman" in skill_name or
         "cloud" in skill_name or "vscode" in skill_name or "visual studio" in
         skill_name %} {% set skill_category = "tools" %} {% else %} {% set
-        skill_category = "development" %} {% endif %} {# PERSENTASE SKILL #} {%
-        if "python" in skill_name %} {% set skill_percentage = 88 %} {% elif
-        "sql" in skill_name %} {% set skill_percentage = 85 %} {% elif "laravel"
-        in skill_name %} {% set skill_percentage = 82 %} {% elif "flask" in
-        skill_name %} {% set skill_percentage = 84 %} {% elif "javascript" in
-        skill_name %} {% set skill_percentage = 82 %} {% elif "html" in
-        skill_name %} {% set skill_percentage = 90 %} {% elif "css" in
-        skill_name %} {% set skill_percentage = 87 %} {% elif "figma" in
-        skill_name %} {% set skill_percentage = 80 %} {% elif "canva" in
-        skill_name %} {% set skill_percentage = 82 %} {% elif "excel" in
-        skill_name %} {% set skill_percentage = 83 %} {% elif "power bi" in
-        skill_name %} {% set skill_percentage = 78 %} {% elif "tableau" in
-        skill_name %} {% set skill_percentage = 76 %} {% elif "git" in
-        skill_name or "github" in skill_name %} {% set skill_percentage = 81 %}
-        {% elif "docker" in skill_name %} {% set skill_percentage = 72 %} {%
-        elif "postman" in skill_name %} {% set skill_percentage = 79 %} {% elif
-        "java" in skill_name %} {% set skill_percentage = 80 %} {% elif "php" in
-        skill_name %} {% set skill_percentage = 82 %} {% elif "mysql" in
-        skill_name %} {% set skill_percentage = 84 %} {% elif "postgresql" in
-        skill_name %} {% set skill_percentage = 80 %} {% else %} {% set
-        skill_percentage = 75 %} {% endif %}
+        skill_category = "development" %} {% endif %} {% set skill_percentage = skill.persentase if skill.persentase is not none else 75 %}
 
         <article
           class="public-skill-item skills-blue-card skills-reveal"
@@ -262,7 +242,7 @@ profile else "Portfolio Xander" }} {% endblock %} {% block content %}
           data-category="{{ skill_category }}"
           data-skill-progress="{{ skill_percentage }}"
           tabindex="0"
-          aria-label="Tampilkan tingkat penguasaan {{ skill.nama_skill }}"
+          aria-label="{{ skill.nama_skill }}, tingkat penguasaan {{ skill_percentage }} persen"
           aria-pressed="false"
         >
           <div class="public-skill-item-header">

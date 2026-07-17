@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block page_description %}
-    Perbarui nama dan ikon skill yang dipilih.
+    Perbarui nama, ikon, dan persentase penguasaan skill.
 {% endblock %}
 
 {% block content %}
@@ -97,6 +97,63 @@
                     </div>
                 </div>
 
+
+                {% set percentage = skill.persentase if skill.persentase is not none else 75 %}
+                <div
+                    class="form-group skill-percentage-group"
+                    data-skill-percentage-editor
+                >
+                    <label for="persentase">
+                        Tingkat Penguasaan
+                        <span class="required-mark">*</span>
+                    </label>
+
+                    <div class="skill-percentage-control">
+                        <div class="admin-input-wrapper skill-percentage-number">
+                            <i data-lucide="gauge" class="admin-input-icon"></i>
+                            <input
+                                type="number"
+                                id="persentase"
+                                name="persentase"
+                                min="0"
+                                max="100"
+                                step="1"
+                                value="{{ percentage }}"
+                                inputmode="numeric"
+                                data-percentage-number
+                                required
+                            >
+                            <span class="skill-percentage-suffix">%</span>
+                        </div>
+
+                        <output
+                            class="skill-percentage-output"
+                            for="persentase persentaseRange"
+                            data-percentage-output
+                        >{{ percentage }}%</output>
+                    </div>
+
+                    <input
+                        type="range"
+                        id="persentaseRange"
+                        min="0"
+                        max="100"
+                        step="1"
+                        value="{{ percentage }}"
+                        class="skill-percentage-range"
+                        data-percentage-range
+                        aria-label="Atur tingkat penguasaan skill"
+                    >
+
+                    <span class="skill-percentage-preview" aria-hidden="true">
+                        <span data-percentage-fill style="width: {{ percentage }}%"></span>
+                    </span>
+
+                    <p class="field-help">
+                        Perubahan langsung digunakan pada halaman Skills publik.
+                    </p>
+                </div>
+
                 <div class="form-actions edit-skill-actions">
                     <a
                         href="{{ url_for('skills.manage_skills') }}"
@@ -117,4 +174,8 @@
             </form>
         </article>
     </section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/admin-skill-percentage.js') }}"></script>
 {% endblock %}

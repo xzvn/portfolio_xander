@@ -1,326 +1,331 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
+  <meta charset="utf-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+  >
 
-    <title>Login Admin | Portfolio Xander</title>
+  <meta
+    name="description"
+    content="Halaman autentikasi administrator Portfolio Xander."
+  >
 
-    <link
-        rel="preconnect"
-        href="https://fonts.googleapis.com"
-    >
+  <meta name="theme-color" content="#070e24">
 
-    <link
-        rel="preconnect"
-        href="https://fonts.gstatic.com"
-        crossorigin
-    >
+  <title>Admin Access | Portfolio Xander</title>
 
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
-        rel="stylesheet"
-    >
+  <link rel="preconnect" href="https://fonts.googleapis.com">
 
-    <link
-        rel="stylesheet"
-        href="{{ url_for('static', filename='css/login.css') }}"
-    >
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  >
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@500;600;700;800&display=swap"
+    rel="stylesheet"
+  >
+
+  <link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/login.css') }}"
+  >
 </head>
 
 <body>
-    <main class="login-page">
-        <section class="login-container">
+  <main
+    class="access-page"
+    data-access-page
+  >
+    <div
+      class="access-ambient"
+      aria-hidden="true"
+    >
+      <span class="ambient-grid"></span>
+      <span class="ambient-orbit orbit-a"></span>
+      <span class="ambient-orbit orbit-b"></span>
+      <span class="ambient-glow glow-a"></span>
+      <span class="ambient-glow glow-b"></span>
+      <span class="ambient-particle particle-a"></span>
+      <span class="ambient-particle particle-b"></span>
+      <span class="ambient-particle particle-c"></span>
+      <span class="ambient-cube cube-a"></span>
+      <span class="ambient-cube cube-b"></span>
+    </div>
 
-            <!-- Panel informasi -->
-            <div class="login-introduction">
-                <div class="brand">
-                    <a
-                        href="{{ url_for('home') }}"
-                        class="brand-logo"
-                        aria-label="Kembali ke halaman utama"
-                    >
-                        XP
-                    </a>
+    <header class="access-header">
+      <a
+        href="{{ url_for('home') }}"
+        class="access-brand"
+        aria-label="Kembali ke halaman Portfolio Xander"
+      >
+        <span class="access-brand-symbol">XP</span>
 
-                    <div>
-                        <p class="brand-name">Portfolio Xander</p>
-                        <p class="brand-caption">
-                            Portfolio Management System
-                        </p>
-                    </div>
+        <span class="access-brand-copy">
+          <strong>Portfolio Xander</strong>
+          <small>Private workspace</small>
+        </span>
+      </a>
+
+      <a
+        href="{{ url_for('home') }}"
+        class="access-header-link"
+      >
+        <i data-lucide="arrow-left"></i>
+        <span>Kembali ke portfolio</span>
+      </a>
+    </header>
+
+    <section class="access-layout">
+      <section class="access-story">
+        <div class="access-story-copy">
+          <p class="access-kicker">AREA ADMIN</p>
+
+          <h1>
+            Kelola portfolio.
+            <span>Kendalikan pengalaman.</span>
+          </h1>
+
+          <p class="access-story-description">
+            Satu ruang untuk memperbarui profil, kemampuan,
+            pengalaman, proyek, dan pesan dengan aman.
+          </p>
+
+          <div class="access-system-status">
+            <span class="system-indicator" aria-hidden="true"></span>
+
+            <strong>Sistem online</strong>
+
+            <span class="system-divider" aria-hidden="true"></span>
+
+            <small>Semua layanan aktif</small>
+          </div>
+        </div>
+
+        <div
+          class="access-sculpture"
+          aria-hidden="true"
+          data-sculpture
+        >
+          <span class="sculpture-platform"></span>
+          <span class="sculpture-orbit sculpture-orbit-one"></span>
+          <span class="sculpture-orbit sculpture-orbit-two"></span>
+          <span class="sculpture-spark spark-one"></span>
+          <span class="sculpture-spark spark-two"></span>
+          <span class="sculpture-spark spark-three"></span>
+
+          <span class="sculpture-x" data-sculpture-x>
+            X
+          </span>
+        </div>
+      </section>
+
+      <section
+        class="access-card"
+        aria-labelledby="loginTitle"
+        data-access-card
+      >
+        <span
+          class="access-card-glow"
+          aria-hidden="true"
+        ></span>
+
+        <div class="access-security-symbol">
+          <span class="security-hexagon">
+            <i data-lucide="lock-keyhole"></i>
+          </span>
+
+          <span class="security-ring security-ring-one"></span>
+          <span class="security-ring security-ring-two"></span>
+        </div>
+
+        <div class="access-card-heading">
+          <p class="access-card-kicker">SECURE ADMIN ACCESS</p>
+
+          <h2 id="loginTitle">
+            Selamat datang kembali
+          </h2>
+
+          <p>
+            Masuk untuk melanjutkan pengelolaan Portfolio Xander.
+          </p>
+        </div>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            <div class="access-flash-list">
+              {% for category, message in messages %}
+                <div
+                  class="access-flash access-flash-{{ category }}"
+                  role="alert"
+                >
+                  {% if category == 'success' %}
+                    <i data-lucide="circle-check"></i>
+                  {% elif category == 'danger' %}
+                    <i data-lucide="circle-alert"></i>
+                  {% elif category == 'warning' %}
+                    <i data-lucide="triangle-alert"></i>
+                  {% else %}
+                    <i data-lucide="info"></i>
+                  {% endif %}
+
+                  <span>{{ message }}</span>
                 </div>
+              {% endfor %}
+            </div>
+          {% endif %}
+        {% endwith %}
 
-                <div class="introduction-content">
-                    <div class="dashboard-preview">
-                        <div class="preview-header">
-                            <div class="preview-dots">
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </div>
+        <form
+          method="post"
+          action="{{ url_for('auth.login') }}"
+          class="access-form"
+          novalidate
+        >
+          <div class="access-field">
+            <label for="username">Username</label>
 
-                            <div class="preview-search"></div>
-                        </div>
+            <div
+              class="access-input"
+              data-input-wrapper
+            >
+              <i
+                data-lucide="user-round"
+                class="access-input-icon"
+              ></i>
 
-                        <div class="preview-body">
-                            <div class="preview-sidebar">
-                                <div class="preview-avatar"></div>
+              <input
+                type="text"
+                id="username"
+                name="username"
+                value="{{ username or '' }}"
+                placeholder="Masukkan username Anda"
+                autocomplete="username"
+                autocapitalize="none"
+                spellcheck="false"
+                required
+                autofocus
+              >
 
-                                <div class="preview-menu active"></div>
-                                <div class="preview-menu"></div>
-                                <div class="preview-menu short"></div>
-                                <div class="preview-menu"></div>
-                            </div>
+              <span
+                class="access-field-state"
+                aria-hidden="true"
+              ></span>
+            </div>
+          </div>
 
-                            <div class="preview-content">
-                                <div class="preview-title"></div>
+          <div class="access-field">
+            <label for="password">Password</label>
 
-                                <div class="preview-statistics">
-                                    <div class="preview-stat-card"></div>
-                                    <div class="preview-stat-card"></div>
-                                    <div class="preview-stat-card"></div>
-                                </div>
+            <div
+              class="access-input"
+              data-input-wrapper
+            >
+              <i
+                data-lucide="lock"
+                class="access-input-icon"
+              ></i>
 
-                                <div class="preview-chart">
-                                    <span class="chart-bar bar-one"></span>
-                                    <span class="chart-bar bar-two"></span>
-                                    <span class="chart-bar bar-three"></span>
-                                    <span class="chart-bar bar-four"></span>
-                                    <span class="chart-bar bar-five"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Masukkan password Anda"
+                autocomplete="current-password"
+                required
+              >
 
-                    <p class="introduction-label">
-                        ADMIN WORKSPACE
-                    </p>
-
-                    <h1>
-                        Kelola portfolio melalui satu dashboard.
-                    </h1>
-
-                    <p class="introduction-description">
-                        Perbarui informasi profil, skill, pengalaman,
-                        dan proyek secara mudah dalam sistem yang
-                        terstruktur.
-                    </p>
-
-                    <div class="feature-list">
-                        <div class="feature-item">
-                            <span class="feature-icon">
-                                <i data-lucide="panel-top"></i>
-                            </span>
-
-                            <div>
-                                <strong>Pengelolaan terpusat</strong>
-                                <p>
-                                    Semua konten dikelola melalui satu
-                                    dashboard.
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="feature-item">
-                            <span class="feature-icon">
-                                <i data-lucide="database"></i>
-                            </span>
-
-                            <div>
-                                <strong>Data tersimpan online</strong>
-                                <p>
-                                    Data portfolio tersimpan dan terhubung
-                                    dengan TiDB.
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="feature-item">
-                            <span class="feature-icon">
-                                <i data-lucide="refresh-cw"></i>
-                            </span>
-
-                            <div>
-                                <strong>Pembaruan langsung</strong>
-                                <p>
-                                    Perubahan data langsung ditampilkan
-                                    pada website.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <p class="introduction-footer">
-                    © 2026 Portfolio Xander
-                </p>
+              <button
+                type="button"
+                id="togglePassword"
+                class="access-password-toggle"
+                aria-label="Tampilkan password"
+                aria-pressed="false"
+              >
+                <i data-lucide="eye"></i>
+              </button>
             </div>
 
-            <!-- Panel form -->
-            <div class="login-form-panel">
-                <div class="mobile-brand">
-                    <div class="mobile-logo">XP</div>
+            <p
+              class="access-caps-warning"
+              id="capsLockWarning"
+              role="status"
+              aria-live="polite"
+              hidden
+            >
+              <i data-lucide="triangle-alert"></i>
+              Caps Lock sedang aktif
+            </p>
+          </div>
 
-                    <div>
-                        <p class="mobile-brand-name">
-                            Portfolio Xander
-                        </p>
+          <div class="access-options">
+            <label class="access-remember">
+              <input
+                type="checkbox"
+                name="remember"
+              >
 
-                        <p class="mobile-brand-caption">
-                            Admin Workspace
-                        </p>
-                    </div>
-                </div>
+              <span class="remember-box">
+                <i data-lucide="check"></i>
+              </span>
 
-                <div class="form-content">
-                    <div class="form-icon">
-                        <i data-lucide="shield-check"></i>
-                    </div>
+              <span>Ingat saya</span>
+            </label>
 
-                    <p class="form-label">ADMIN LOGIN</p>
+            <span class="access-secure-note">
+              <i data-lucide="shield-check"></i>
+              Sesi terlindungi
+            </span>
+          </div>
 
-                    <h2>Selamat Datang</h2>
+          <button
+            type="submit"
+            class="access-submit"
+            data-ripple-button
+          >
+            <span>Masuk ke Dashboard</span>
+            <i data-lucide="log-in"></i>
+          </button>
+        </form>
 
-                    <p class="form-description">
-                        Masuk menggunakan akun administrator untuk
-                        mengelola konten portfolio.
-                    </p>
+        <div class="access-card-footer">
+          <span></span>
 
-                    {% with messages = get_flashed_messages(with_categories=true) %}
-                        {% if messages %}
-                            <div class="flash-container">
-                                {% for category, message in messages %}
-                                    <div
-                                        class="flash-message flash-{{ category }}"
-                                        role="alert"
-                                    >
-                                        {% if category == "success" %}
-                                            <i data-lucide="circle-check"></i>
-                                        {% elif category == "danger" %}
-                                            <i data-lucide="circle-alert"></i>
-                                        {% else %}
-                                            <i data-lucide="info"></i>
-                                        {% endif %}
+          <p>Administrator only</p>
 
-                                        <span>{{ message }}</span>
-                                    </div>
-                                {% endfor %}
-                            </div>
-                        {% endif %}
-                    {% endwith %}
+          <span></span>
+        </div>
 
-                    <form
-                        method="POST"
-                        action="{{ url_for('auth.login') }}"
-                        class="login-form"
-                    >
-                        <div class="form-group">
-                            <label for="username">
-                                Username
-                            </label>
+        <a
+          href="{{ url_for('home') }}"
+          class="access-return-link"
+        >
+          <i data-lucide="arrow-left"></i>
+          <span>Kembali ke Portfolio</span>
+        </a>
+      </section>
+    </section>
 
-                            <div class="input-wrapper">
-                                <i
-                                    data-lucide="user-round"
-                                    class="input-icon"
-                                ></i>
+    <footer class="access-footer">
+      <p>
+        © Portfolio Xander.
+        <span>Ruang pengelolaan privat.</span>
+      </p>
+    </footer>
+  </main>
 
-                                <input
-                                    type="text"
-                                    id="username"
-                                    name="username"
-                                    value="{{ username or '' }}"
-                                    placeholder="Masukkan username"
-                                    autocomplete="username"
-                                    required
-                                    autofocus
-                                >
-                            </div>
-                        </div>
+  <script
+    src="https://unpkg.com/lucide@latest"
+    defer
+  ></script>
 
-                        <div class="form-group">
-                            <label for="password">
-                                Password
-                            </label>
-
-                            <div class="input-wrapper">
-                                <i
-                                    data-lucide="lock-keyhole"
-                                    class="input-icon"
-                                ></i>
-
-                                <input
-                                    type="password"
-                                    id="password"
-                                    name="password"
-                                    placeholder="Masukkan password"
-                                    autocomplete="current-password"
-                                    required
-                                >
-
-                                <button
-                                    type="button"
-                                    id="togglePassword"
-                                    class="password-toggle"
-                                    aria-label="Tampilkan password"
-                                >
-                                    <i data-lucide="eye"></i>
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="form-options">
-                            <label class="remember-option">
-                                <input
-                                    type="checkbox"
-                                    name="remember"
-                                >
-
-                                <span>Ingat saya</span>
-                            </label>
-
-                            <span class="secure-label">
-                                <i data-lucide="lock"></i>
-                                Secure Login
-                            </span>
-                        </div>
-
-                        <button
-                            type="submit"
-                            class="login-button"
-                        >
-                            <i data-lucide="log-in"></i>
-                            <span>Masuk ke Dashboard</span>
-                        </button>
-                    </form>
-
-                    <div class="form-divider">
-                        <span></span>
-                        <p>Portfolio Admin</p>
-                        <span></span>
-                    </div>
-
-                    <a
-                        href="{{ url_for('home') }}"
-                        class="back-link"
-                    >
-                        <i data-lucide="arrow-left"></i>
-                        <span>Kembali ke halaman portfolio</span>
-                    </a>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <script src="https://unpkg.com/lucide@latest"></script>
-
-    <script
-        src="{{ url_for('static', filename='js/login.js') }}"
-    ></script>
+  <script
+    src="{{ url_for('static', filename='js/login.js') }}"
+    defer
+  ></script>
 </body>
 </html>

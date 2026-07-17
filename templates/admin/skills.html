@@ -12,7 +12,7 @@ pada portfolio. {% endblock %} {% block content %}
 
         <div>
           <h2>Tambah Skill</h2>
-          <p>Masukkan nama dan ikon skill baru.</p>
+          <p>Masukkan nama, ikon, dan persentase penguasaan.</p>
         </div>
       </div>
     </div>
@@ -60,6 +60,62 @@ pada portfolio. {% endblock %} {% block content %}
         <p class="field-help">Ikon menggunakan gaya outline monokrom.</p>
       </div>
 
+
+      <div
+        class="form-group skill-percentage-group"
+        data-skill-percentage-editor
+      >
+        <label for="persentase">
+          Tingkat Penguasaan
+          <span class="required-mark">*</span>
+        </label>
+
+        <div class="skill-percentage-control">
+          <div class="admin-input-wrapper skill-percentage-number">
+            <i data-lucide="gauge" class="admin-input-icon"></i>
+            <input
+              type="number"
+              id="persentase"
+              name="persentase"
+              min="0"
+              max="100"
+              step="1"
+              value="75"
+              inputmode="numeric"
+              data-percentage-number
+              required
+            >
+            <span class="skill-percentage-suffix">%</span>
+          </div>
+
+          <output
+            class="skill-percentage-output"
+            for="persentase persentaseRange"
+            data-percentage-output
+          >75%</output>
+        </div>
+
+        <input
+          type="range"
+          id="persentaseRange"
+          min="0"
+          max="100"
+          step="1"
+          value="75"
+          class="skill-percentage-range"
+          data-percentage-range
+          aria-label="Atur tingkat penguasaan skill"
+        >
+
+        <span class="skill-percentage-preview" aria-hidden="true">
+          <span data-percentage-fill style="width: 75%"></span>
+        </span>
+
+        <p class="field-help">
+          Nilai ini langsung ditampilkan pada halaman Skills publik.
+        </p>
+      </div>
+
       <button type="submit" class="primary-button skill-submit-button">
         <i data-lucide="plus"></i>
         Tambah Skill
@@ -89,6 +145,7 @@ pada portfolio. {% endblock %} {% block content %}
           <tr>
             <th>Skill</th>
             <th>Ikon</th>
+            <th>Penguasaan</th>
             <th class="action-column">Aksi</th>
           </tr>
         </thead>
@@ -114,6 +171,19 @@ pada portfolio. {% endblock %} {% block content %}
               <code class="icon-code">
                 {{ skill.icon_class or "code-2" }}
               </code>
+            </td>
+
+            {% set percentage = skill.persentase if skill.persentase is not none else 75 %}
+            <td>
+              <div class="admin-skill-level">
+                <div>
+                  <strong>{{ percentage }}%</strong>
+                  <span>Penguasaan</span>
+                </div>
+                <span class="admin-skill-level-track" aria-hidden="true">
+                  <span style="width: {{ percentage }}%"></span>
+                </span>
+              </div>
             </td>
 
             <td>
@@ -216,33 +286,7 @@ pada portfolio. {% endblock %} {% block content %}
     });
   });
 
-  document.addEventListener("DOMContentLoaded", () => {
-    const progressBars = document.querySelectorAll(
-      ".public-skill-progress-fill",
-    );
 
-    const progressObserver = new IntersectionObserver(
-      (entries, observer) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) {
-            return;
-          }
-
-          const bar = entry.target;
-          const progress = bar.dataset.progress || "0";
-
-          bar.style.width = `${progress}%`;
-          observer.unobserve(bar);
-        });
-      },
-      {
-        threshold: 0.35,
-      },
-    );
-
-    progressBars.forEach((bar) => {
-      progressObserver.observe(bar);
-    });
-  });
 </script>
+<script src="{{ url_for('static', filename='js/admin-skill-percentage.js') }}"></script>
 {% endblock %}

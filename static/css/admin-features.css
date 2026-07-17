@@ -696,3 +696,28 @@ body.photo-crop-open {
     width: 100%;
   }
 }
+
+/* =========================================================
+   SKILL PERCENTAGE ADMIN
+   ========================================================= */
+.skill-percentage-group{padding:16px;border:1px solid var(--admin-border,#e2e6ee);border-radius:13px;background:#f9faff}
+.skill-percentage-control{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:center}
+.skill-percentage-number input{padding-right:48px}
+.skill-percentage-number input::-webkit-outer-spin-button,.skill-percentage-number input::-webkit-inner-spin-button{margin:0;appearance:none}
+.skill-percentage-number input[type="number"]{appearance:textfield}
+.skill-percentage-suffix{position:absolute;top:50%;right:15px;color:var(--admin-muted,#687387);font-size:10px;font-weight:700;transform:translateY(-50%);pointer-events:none}
+.skill-percentage-output{display:inline-flex;min-width:66px;min-height:46px;align-items:center;justify-content:center;border-radius:11px;color:var(--admin-indigo,#5869d7);background:var(--admin-indigo-soft,#eef0ff);font-size:15px;font-weight:800}
+.skill-percentage-range{width:100%;height:6px;margin:15px 0 0;border-radius:999px;outline:0;background:linear-gradient(90deg,var(--admin-indigo,#5869d7) var(--skill-percentage,75%),#dfe4ee var(--skill-percentage,75%));appearance:none;cursor:pointer}
+.skill-percentage-range::-webkit-slider-thumb{width:20px;height:20px;border:4px solid #fff;border-radius:50%;background:var(--admin-indigo,#5869d7);box-shadow:0 4px 12px rgba(88,105,215,.3);appearance:none}
+.skill-percentage-range::-moz-range-thumb{width:13px;height:13px;border:4px solid #fff;border-radius:50%;background:var(--admin-indigo,#5869d7);box-shadow:0 4px 12px rgba(88,105,215,.3)}
+.skill-percentage-preview{display:block;height:6px;margin-top:12px;overflow:hidden;border-radius:999px;background:#e6eaf2}
+.skill-percentage-preview>span{display:block;width:0;height:100%;border-radius:inherit;background:linear-gradient(90deg,var(--admin-indigo,#5869d7),#8390ee);transition:width .2s ease}
+.skill-percentage-table{min-width:820px}
+.admin-skill-level{display:grid;min-width:145px;gap:8px}
+.admin-skill-level>div{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.admin-skill-level strong{color:var(--admin-indigo,#5869d7);font-size:11px}
+.admin-skill-level>div span{color:var(--admin-muted,#687387);font-size:8px}
+.admin-skill-level-track{display:block;height:5px;overflow:hidden;border-radius:999px;background:#e5e9f1}
+.admin-skill-level-track>span{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,var(--admin-indigo,#5869d7),#8592ed)}
+@media(max-width:480px){.skill-percentage-control{grid-template-columns:1fr}.skill-percentage-output{width:100%}}
+
