@@ -12,7 +12,7 @@ profile else "Portfolio Xander" }} {% endblock %} {% block content %}
           data-typewriter-speed="50"
           data-typewriter-delay="400"
         >
-          Kemampuan yang terus saya pelajari dan kembangkan.
+          {{ profile.skills_headline if profile and profile.skills_headline else "Kemampuan yang terus saya pelajari dan kembangkan." }}
         </h1>
 
         <p>

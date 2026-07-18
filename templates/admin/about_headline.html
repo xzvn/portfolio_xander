@@ -1,0 +1,226 @@
+{% extends "admin/base_admin.html" %}
+
+{% block title %}
+  Headline About | Portfolio Xander
+{% endblock %}
+
+{% block page_title %}
+  Headline About
+{% endblock %}
+
+{% block page_description %}
+  Atur judul utama yang tampil pada halaman Tentang Saya.
+{% endblock %}
+
+{% block content %}
+<section class="headline-editor-layout">
+  <article class="headline-editor-card">
+    <div class="headline-editor-ambient" aria-hidden="true">
+      <span></span>
+      <span></span>
+    </div>
+
+    <header class="headline-editor-header">
+      <div class="headline-editor-heading">
+        <span class="headline-editor-icon">
+          <i data-lucide="type"></i>
+        </span>
+
+        <div>
+          <p class="headline-editor-kicker">
+            ABOUT PAGE CONTENT
+          </p>
+
+          <h2>Ubah Headline Tentang Saya</h2>
+
+          <p>
+            Headline ini langsung digunakan sebagai judul besar
+            pada halaman About portfolio.
+          </p>
+        </div>
+      </div>
+
+      <span class="headline-editor-status">
+        <span></span>
+        Terhubung ke halaman About
+      </span>
+    </header>
+
+    <form
+      method="POST"
+      action="{{ url_for('profile.manage_about_headline') }}"
+      class="headline-editor-form"
+      data-headline-editor
+    >
+      <div class="headline-editor-grid">
+        <div class="headline-editor-fields">
+          <div class="headline-editor-section">
+            <div class="headline-section-number">01</div>
+
+            <div class="headline-section-copy">
+              <h3>Tulis headline</h3>
+
+              <p>
+                Gunakan kalimat yang singkat, personal,
+                dan menggambarkan perjalananmu.
+              </p>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="about_headline">
+              Headline halaman About
+              <span class="required-mark">*</span>
+            </label>
+
+            <div class="headline-textarea-wrapper">
+              <i
+                data-lucide="quote"
+                class="headline-textarea-icon"
+              ></i>
+
+              <textarea
+                id="about_headline"
+                name="about_headline"
+                rows="5"
+                maxlength="180"
+                placeholder="Contoh: Mengenal saya dan perjalanan yang sedang saya bangun."
+                data-headline-input
+                required
+              >{{ profile.about_headline if profile and profile.about_headline else default_headline }}</textarea>
+            </div>
+
+            <div class="headline-field-footer">
+              <span>
+                Tekan Enter untuk membuat perpindahan baris.
+              </span>
+
+              <strong data-headline-counter>
+                0/180
+              </strong>
+            </div>
+          </div>
+
+          <div class="headline-preset-section">
+            <div>
+              <h3>Inspirasi cepat</h3>
+              <p>Pilih salah satu lalu sesuaikan kembali.</p>
+            </div>
+
+            <div class="headline-preset-list">
+              <button
+                type="button"
+                data-headline-preset="Mengenal saya dan perjalanan yang sedang saya bangun."
+              >
+                Perjalanan pribadi
+              </button>
+
+              <button
+                type="button"
+                data-headline-preset="Belajar, bertumbuh, dan membangun solusi melalui teknologi."
+              >
+                Fokus teknologi
+              </button>
+
+              <button
+                type="button"
+                data-headline-preset="Dari rasa ingin tahu menuju karya yang dapat digunakan."
+              >
+                Fokus karya
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <aside class="headline-live-preview">
+          <div class="headline-preview-topbar">
+            <span>
+              <i data-lucide="scan-eye"></i>
+              Preview langsung
+            </span>
+
+            <span class="headline-live-badge">
+              <i data-lucide="radio"></i>
+              Live
+            </span>
+          </div>
+
+          <div class="headline-preview-canvas">
+            <p>TENTANG SAYA</p>
+
+            <h3 data-headline-preview>
+              {{ profile.about_headline if profile and profile.about_headline else default_headline }}
+            </h3>
+
+            <span class="headline-preview-line"></span>
+
+            <p class="headline-preview-description">
+              Headline akan tampil dengan ukuran besar
+              pada halaman About portfolio.
+            </p>
+          </div>
+
+          <a
+            href="{{ url_for('about') }}"
+            class="headline-preview-link"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <i data-lucide="external-link"></i>
+            Buka halaman About
+          </a>
+        </aside>
+      </div>
+
+      <footer class="headline-action-dock">
+        <div class="headline-save-state">
+          <span></span>
+
+          <div>
+            <strong data-headline-save-state>
+              Tidak ada perubahan baru
+            </strong>
+
+            <small>
+              Perubahan tersimpan setelah tombol ditekan.
+            </small>
+          </div>
+        </div>
+
+        <div class="headline-actions">
+          <a
+            href="{{ url_for('profile.manage_profile') }}"
+            class="secondary-button"
+          >
+            <i data-lucide="arrow-left"></i>
+            Kembali ke Profil
+          </a>
+
+          <button
+            type="submit"
+            class="primary-button headline-save-button"
+          >
+            <i data-lucide="save"></i>
+
+            <span>
+              <strong>Simpan Headline</strong>
+              <small>Perbarui halaman About</small>
+            </span>
+          </button>
+        </div>
+      </footer>
+    </form>
+  </article>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script
+  src="{{ url_for(
+    'static',
+    filename='js/admin-about-headline.js',
+    v='20260718-1'
+  ) }}"
+  defer
+></script>
+{% endblock %}

@@ -55,6 +55,12 @@ CREATE TABLE profiles (
     semester VARCHAR(20),
     alamat VARCHAR(400),
     foto_url VARCHAR(255),
+    about_headline VARCHAR(180),
+    home_headline VARCHAR(180),
+    skills_headline VARCHAR(180),
+    experience_headline VARCHAR(180),
+    projects_headline VARCHAR(180),
+    contact_headline VARCHAR(180),
     PRIMARY KEY (id),
     UNIQUE KEY profiles_user_id_uk (user_id),
     CONSTRAINT profiles_users_fk FOREIGN KEY (user_id) REFERENCES users (id) ON UPDATE CASCADE ON DELETE CASCADE

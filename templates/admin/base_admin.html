@@ -35,6 +35,17 @@
       rel="stylesheet"
       href="{{ url_for('static', filename='css/admin-editor.css', v='20260717-5') }}"
     />
+
+    <link
+      rel="stylesheet"
+      href="{{ url_for(
+        'static',
+        filename='css/admin-about-headline.css',
+        v='20260718-1'
+      ) }}"
+    />
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin-page-headlines.css', v='20260718-2') }}" />
   </head>
 
   <body class="admin-modern-theme">
@@ -84,6 +95,10 @@
           >
             <i data-lucide="user-round"></i>
             <span>Profil</span>
+          </a>
+          <!-- Headline Pages -->
+          <a href="{{ url_for('profile.manage_page_headlines') }}" class="sidebar-link {% if request.endpoint == 'profile.manage_page_headlines' %} active {% endif %}">
+            <i data-lucide="panel-top"></i><span>Headline Pages</span>
           </a>
 
           <!-- Skills -->

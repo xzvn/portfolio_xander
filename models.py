@@ -112,6 +112,30 @@ class Profile(db.Model):
         db.String(255),
     )
 
+    about_headline = db.Column(
+        db.String(180),
+    )
+
+    home_headline = db.Column(
+        db.String(180),
+    )
+
+    skills_headline = db.Column(
+        db.String(180),
+    )
+
+    experience_headline = db.Column(
+        db.String(180),
+    )
+
+    projects_headline = db.Column(
+        db.String(180),
+    )
+
+    contact_headline = db.Column(
+        db.String(180),
+    )
+
     user = db.relationship(
         "User",
         back_populates="profile",

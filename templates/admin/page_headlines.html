@@ -1,0 +1,98 @@
+{% extends "admin/base_admin.html" %}
+
+{% block title %}Headline Pages | Portfolio Xander{% endblock %}
+{% block page_title %}Headline Pages{% endblock %}
+{% block page_description %}Atur judul utama pada seluruh halaman portfolio.{% endblock %}
+
+{% block content %}
+<section class="headline-pages-workspace">
+  <article class="headline-pages-card">
+    <header class="headline-pages-header">
+      <div class="headline-pages-heading">
+        <span class="headline-pages-icon"><i data-lucide="panel-top"></i></span>
+        <div>
+          <p>PORTFOLIO CONTENT STUDIO</p>
+          <h2>Kelola Headline Seluruh Pages</h2>
+          <small>Pilih halaman, ubah headline, lalu lihat preview langsung.</small>
+        </div>
+      </div>
+      <span class="headline-pages-sync"><i data-lucide="database-zap"></i> Tersinkron ke TiDB</span>
+    </header>
+
+    <form method="POST" action="{{ url_for('profile.manage_page_headlines') }}" data-headline-pages-form>
+      <div class="headline-pages-grid">
+        <nav class="headline-pages-nav" aria-label="Pilih halaman">
+          {% for page in page_definitions %}
+          <button type="button" class="headline-pages-nav-item {% if loop.first %}is-active{% endif %}"
+                  data-page-selector="{{ page.key }}" aria-pressed="{{ 'true' if loop.first else 'false' }}">
+            <span><i data-lucide="{{ page.icon }}"></i></span>
+            <div><strong>{{ page.name }}</strong><small>{{ page.path }}</small></div>
+            <i data-lucide="chevron-right"></i>
+          </button>
+          {% endfor %}
+        </nav>
+
+        <div class="headline-pages-editors">
+          {% for page in page_definitions %}
+          <section class="headline-page-panel {% if loop.first %}is-active{% endif %}"
+                   data-page-panel="{{ page.key }}" {% if not loop.first %}hidden{% endif %}>
+            <div class="headline-page-panel-title">
+              <span>{{ "%02d"|format(loop.index) }}</span>
+              <div><p>HEADLINE {{ page.name|upper }}</p><h3>{{ page.title }}</h3><small>{{ page.description }}</small></div>
+            </div>
+
+            <div class="form-group">
+              <label for="{{ page.field }}">Headline {{ page.name }} <span class="required-mark">*</span></label>
+              <div class="headline-page-input-wrap">
+                <i data-lucide="quote"></i>
+                <textarea id="{{ page.field }}" name="{{ page.field }}" rows="5" maxlength="180"
+                          placeholder="{{ page.default }}" data-page-headline-input="{{ page.key }}" required>{{ page.value }}</textarea>
+              </div>
+              <div class="headline-page-input-footer">
+                <span>Maksimal 180 karakter.</span>
+                <strong data-page-counter="{{ page.key }}">0/180</strong>
+              </div>
+            </div>
+
+            <div class="headline-page-presets">
+              <div><strong>Inspirasi cepat</strong><small>Pilih lalu sesuaikan kembali.</small></div>
+              <div>
+                {% for preset in page.presets %}
+                <button type="button" data-page-preset="{{ page.key }}" data-preset-value="{{ preset }}">{{ loop.index }}</button>
+                {% endfor %}
+              </div>
+            </div>
+          </section>
+          {% endfor %}
+        </div>
+
+        <aside class="headline-pages-preview">
+          <header><span><i data-lucide="scan-eye"></i> Preview langsung</span><b><i data-lucide="radio"></i> LIVE</b></header>
+          <div class="headline-pages-preview-canvas">
+            <span data-preview-label>HOME</span>
+            <h3 data-headline-preview>{{ page_definitions[0].value }}</h3>
+            <em></em>
+            <p data-preview-description>Headline utama halaman Home.</p>
+          </div>
+          <a href="{{ url_for('home') }}" data-preview-link target="_blank" rel="noopener noreferrer">
+            <i data-lucide="external-link"></i><span data-preview-link-label>Buka halaman Home</span>
+          </a>
+        </aside>
+      </div>
+
+      <footer class="headline-pages-actions">
+        <div class="headline-pages-status"><span></span><div><strong data-headline-status>Tidak ada perubahan baru</strong><small>Semua headline disimpan sekaligus.</small></div></div>
+        <div>
+          <a href="{{ url_for('profile.manage_profile') }}" class="secondary-button"><i data-lucide="arrow-left"></i> Kembali</a>
+          <button type="submit" class="primary-button headline-pages-save"><i data-lucide="save"></i><span><strong>Simpan Semua Headline</strong><small>Perbarui enam halaman</small></span></button>
+        </div>
+      </footer>
+    </form>
+  </article>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script id="headlinePagesConfig" type="application/json">{{ page_configuration|tojson }}</script>
+<script src="{{ url_for('static', filename='js/admin-page-headlines.js', v='20260718-2') }}" defer></script>
+{% endblock %}

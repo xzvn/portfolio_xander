@@ -20,7 +20,7 @@ profile and profile.linkedin else "" %}
           data-typewriter-speed="50"
           data-typewriter-delay="400"
         >
-          Mari berdiskusi dan membangun sesuatu yang bermanfaat.
+          {{ profile.contact_headline if profile and profile.contact_headline else "Mari berdiskusi dan membangun sesuatu yang bermanfaat." }}
         </h1>
 
         <p>

@@ -12,7 +12,7 @@ profile else "Portfolio Xander" }} {% endblock %} {% block content %}
           data-typewriter-speed="50"
           data-typewriter-delay="400"
         >
-          Proyek yang dibangun dari proses belajar dan eksplorasi.
+          {{ profile.projects_headline if profile and profile.projects_headline else "Proyek yang dibangun dari proses belajar dan eksplorasi." }}
         </h1>
 
         <p>

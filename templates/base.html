@@ -96,6 +96,18 @@
       href="{{ url_for('static', filename='css/portfolio-mobile-refinement.css') }}"
     />
 
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/portfolio-headlines.css', v='20260718-2') }}" />
+
+    <link
+      rel="stylesheet"
+      href="{{ url_for(
+        'static',
+        filename='css/project-detail-image-fix.css',
+        v='20260718-1'
+      ) }}"
+    />
+
     {% block styles %}{% endblock %}
   </head>
 

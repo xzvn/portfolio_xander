@@ -21,7 +21,9 @@
           data-typewriter-speed="50"
           data-typewriter-delay="400"
         >
-          {% if profile and profile.nama_lengkap %}
+          {% if profile and profile.home_headline %}
+            {{ profile.home_headline }}
+          {% elif profile and profile.nama_lengkap %}
             {{ profile.nama_lengkap }}
           {% else %}
             Portfolio Xander
@@ -135,27 +137,66 @@
 
         <ol class="home-guidance-steps">
           <li class="active">
-            <span>01</span>
-            <div>
-              <strong>Proyek</strong>
-              <small>Lihat hasil nyata</small>
-            </div>
+            <a
+              href="{{ url_for('projects') }}"
+              class="home-guidance-link"
+              aria-label="Buka halaman Proyek"
+            >
+              <span>01</span>
+
+              <div>
+                <strong>Proyek</strong>
+                <small>Lihat hasil nyata</small>
+              </div>
+
+              <i
+                data-lucide="arrow-up-right"
+                class="home-guidance-arrow"
+                aria-hidden="true"
+              ></i>
+            </a>
           </li>
 
           <li>
-            <span>02</span>
-            <div>
-              <strong>Kemampuan</strong>
-              <small>Kenali keahlian</small>
-            </div>
+            <a
+              href="{{ url_for('skills') }}"
+              class="home-guidance-link"
+              aria-label="Buka halaman Kemampuan"
+            >
+              <span>02</span>
+
+              <div>
+                <strong>Kemampuan</strong>
+                <small>Kenali keahlian</small>
+              </div>
+
+              <i
+                data-lucide="arrow-up-right"
+                class="home-guidance-arrow"
+                aria-hidden="true"
+              ></i>
+            </a>
           </li>
 
           <li>
-            <span>03</span>
-            <div>
-              <strong>Pengalaman</strong>
-              <small>Pahami perjalanannya</small>
-            </div>
+            <a
+              href="{{ url_for('experience') }}"
+              class="home-guidance-link"
+              aria-label="Buka halaman Pengalaman"
+            >
+              <span>03</span>
+
+              <div>
+                <strong>Pengalaman</strong>
+                <small>Pahami perjalanannya</small>
+              </div>
+
+              <i
+                data-lucide="arrow-up-right"
+                class="home-guidance-arrow"
+                aria-hidden="true"
+              ></i>
+            </a>
           </li>
         </ol>
       </div>
