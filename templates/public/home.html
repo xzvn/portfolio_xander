@@ -283,20 +283,38 @@
   <section class="home-statistics-section" aria-label="Ringkasan portfolio">
     <div class="public-container">
       <div class="home-statistics-grid reveal-element">
-        <article class="home-statistic-card" aria-label="{{ skills|length }} skills">
+        <a
+          href="{{ url_for('skills') }}"
+          class="home-statistic-card"
+          aria-label="Buka halaman Skills, tersedia {{ skills|length }} skill"
+          title="Buka halaman Skills"
+        >
           <span class="home-statistic-icon">
             <i data-lucide="badge-check"></i>
           </span>
 
           <div>
-            <strong class="animated-number" data-target="{{ skills|length }}">0</strong>
-            <span>Skills</span>
-          </div>
-        </article>
+            <strong
+              class="animated-number"
+              data-target="{{ skills|length }}"
+            >0</strong>
 
-        <article
+            <span>Skills</span>
+            <small>Lihat kemampuan</small>
+          </div>
+
+          <i
+            data-lucide="arrow-up-right"
+            class="home-statistic-arrow"
+            aria-hidden="true"
+          ></i>
+        </a>
+
+        <a
+          href="{{ url_for('experience') }}"
           class="home-statistic-card"
-          aria-label="{{ experiences|length }} pengalaman"
+          aria-label="Buka halaman Pengalaman, tersedia {{ experiences|length }} pengalaman"
+          title="Buka halaman Pengalaman"
         >
           <span class="home-statistic-icon">
             <i data-lucide="briefcase-business"></i>
@@ -307,20 +325,44 @@
               class="animated-number"
               data-target="{{ experiences|length }}"
             >0</strong>
-            <span>Pengalaman</span>
-          </div>
-        </article>
 
-        <article class="home-statistic-card" aria-label="{{ projects|length }} proyek">
+            <span>Pengalaman</span>
+            <small>Lihat perjalanan</small>
+          </div>
+
+          <i
+            data-lucide="arrow-up-right"
+            class="home-statistic-arrow"
+            aria-hidden="true"
+          ></i>
+        </a>
+
+        <a
+          href="{{ url_for('projects') }}"
+          class="home-statistic-card"
+          aria-label="Buka halaman Proyek, tersedia {{ projects|length }} proyek"
+          title="Buka halaman Proyek"
+        >
           <span class="home-statistic-icon">
             <i data-lucide="folder-kanban"></i>
           </span>
 
           <div>
-            <strong class="animated-number" data-target="{{ projects|length }}">0</strong>
+            <strong
+              class="animated-number"
+              data-target="{{ projects|length }}"
+            >0</strong>
+
             <span>Proyek</span>
+            <small>Lihat hasil karya</small>
           </div>
-        </article>
+
+          <i
+            data-lucide="arrow-up-right"
+            class="home-statistic-arrow"
+            aria-hidden="true"
+          ></i>
+        </a>
       </div>
     </div>
   </section>

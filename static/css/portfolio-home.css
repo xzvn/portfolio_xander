@@ -1045,3 +1045,115 @@
     font-size: 31px;
   }
 }
+
+/* =========================================================
+   CLICKABLE PORTFOLIO STATISTICS
+   ========================================================= */
+
+.home-statistic-card {
+  color: inherit;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.home-statistic-card::after {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(
+      circle at 88% 20%,
+      rgba(88, 105, 215, 0.1),
+      transparent 34%
+    );
+  content: "";
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  pointer-events: none;
+}
+
+.home-statistic-card:hover::after,
+.home-statistic-card:focus-visible::after {
+  opacity: 1;
+}
+
+.home-statistic-card:focus-visible {
+  border-color: var(--home-indigo);
+  outline: 4px solid rgba(88, 105, 215, 0.16);
+  outline-offset: 3px;
+  box-shadow: 0 22px 46px rgba(26, 34, 53, 0.14);
+  transform: translateY(-5px);
+}
+
+.home-statistic-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.home-statistic-card div small {
+  margin-top: 5px;
+  color: #929bac;
+  font-size: 8px;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.home-statistic-card:hover div small,
+.home-statistic-card:focus-visible div small {
+  color: var(--home-indigo);
+}
+
+.home-statistic-card:hover .home-statistic-icon,
+.home-statistic-card:focus-visible .home-statistic-icon {
+  color: #ffffff;
+  background:
+    linear-gradient(
+      145deg,
+      var(--home-indigo),
+      #7585eb
+    );
+  box-shadow: 0 12px 24px rgba(88, 105, 215, 0.22);
+  transform: rotate(-4deg) scale(1.04);
+}
+
+.home-statistic-icon {
+  transition:
+    color 0.22s ease,
+    background 0.22s ease,
+    box-shadow 0.22s ease,
+    transform 0.22s ease;
+}
+
+.home-statistic-card:active {
+  transform: translateY(-2px) scale(0.99);
+}
+
+@media (max-width: 640px) {
+  .home-statistic-card {
+    min-height: 105px;
+  }
+
+  .home-statistic-arrow {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+@media (pointer: coarse) {
+  .home-statistic-card:hover {
+    transform: none;
+  }
+
+  .home-statistic-card:active {
+    border-color: #cdd4fb;
+    transform: scale(0.985);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-statistic-card,
+  .home-statistic-icon,
+  .home-statistic-arrow {
+    transition: none;
+  }
+}
+
