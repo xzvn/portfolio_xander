@@ -812,7 +812,7 @@ EMBEDDED_TEMPLATES = {'admin/about_headline.html': '{% extends "admin/base_admin
                          '  {% endif %}\n'
                          '</section>\n'
                          '{% endblock %}\n',
- 'admin/edit.experience.html': '{% extends "admin/base_admin.html" %}\n'
+ 'admin/edit_experience.html': '{% extends "admin/base_admin.html" %}\n'
                                '\n'
                                '{% block title %}\n'
                                '    Edit Pengalaman | Portfolio Xander\n'
