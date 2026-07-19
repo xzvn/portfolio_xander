@@ -3558,6 +3558,16 @@ EMBEDDED_TEMPLATES = {'admin/about_headline.html': '{% extends "admin/base_admin
               '      ) }}"\n'
               '    />\n'
               '\n'
+              '\n'
+              '    <link\n'
+              '      rel="stylesheet"\n'
+              '      href="{{ url_for(\n'
+              "        'static',\n"
+              "        filename='css/home-guidance-layout-fix.css',\n"
+              "        v='20260719-1'\n"
+              '      ) }}"\n'
+              '    />\n'
+              '\n'
               '    {% block styles %}{% endblock %}\n'
               '  </head>\n'
               '\n'
